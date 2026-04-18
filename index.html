@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -9,430 +9,436 @@
 <meta name="apple-mobile-web-app-title" content="Boda Tracker">
 <link rel="manifest" href="manifest.json">
 <title>Boda Tracker</title>
-<!-- Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap');
 :root{
-  --primary:#FF6B35;--pd:#E85A28;--pl:#FF8C5E;
-  --success:#06D6A0;--danger:#EF476F;--warn:#FFB703;--secondary:#F7B801;
-  --dark:#1A1A2E;--g50:#F8F9FA;--g100:#F1F3F5;--g200:#E9ECEF;
-  --g300:#DEE2E6;--g500:#ADB5BD;--g600:#6C757D;--g800:#343A40;
-  --white:#fff;--fd:'Bebas Neue',sans-serif;--fb:'Work Sans',sans-serif;
+  --primary:#FF6B35;--pd:#E85A28;--success:#06D6A0;--danger:#EF476F;--warn:#FFB703;--sec:#F7B801;
+  --dark:#1A1A2E;--g50:#F8F9FA;--g100:#F1F3F5;--g200:#E9ECEF;--g300:#DEE2E6;
+  --g500:#ADB5BD;--g600:#6C757D;--g800:#343A40;--white:#fff;
+  --fd:'Bebas Neue',sans-serif;--fb:'Work Sans',sans-serif;
   --rsm:8px;--rmd:12px;--rlg:16px;--rxl:24px;
   --shsm:0 2px 8px rgba(0,0,0,.08);--shmd:0 4px 16px rgba(0,0,0,.12);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:var(--fb);background:var(--g100);color:var(--dark);min-height:100vh;overflow-x:hidden}
-.page{display:none;min-height:100vh;animation:fi .25s ease}
-.page.active{display:block}
-@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--fb);background:var(--g100);color:var(--dark)}
 
-/* ── LOGIN ── */
-.lp{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:linear-gradient(160deg,var(--primary),var(--pd))}
-.app-icon{width:88px;height:88px;background:var(--white);border-radius:var(--rxl);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2.5rem;box-shadow:var(--shmd)}
-.lh h1{font-family:var(--fd);font-size:2.8rem;color:var(--white);letter-spacing:2px;text-align:center}
-.lh p{color:rgba(255,255,255,.85);font-size:1rem;text-align:center;margin-top:.25rem}
-.lcard{background:var(--white);border-radius:var(--rxl);padding:1.75rem;width:100%;max-width:400px;box-shadow:var(--shmd);margin-top:1.5rem}
-.tabs{display:flex;gap:6px;margin-bottom:1.25rem;background:var(--g100);padding:4px;border-radius:var(--rsm)}
-.tab{flex:1;padding:.6rem;border:none;background:transparent;border-radius:6px;font-family:var(--fb);font-weight:600;font-size:.9rem;cursor:pointer;transition:all .25s;color:var(--g600)}
-.tab.active{background:var(--primary);color:var(--white)}
+/* ── PAGES: fixed full-screen, no scroll ── */
+.page{display:none;position:fixed;inset:0;overflow:hidden;animation:fi .25s ease}
+.page.active{display:flex;flex-direction:column}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* scrollable inner content */
+.scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.scroll-area::-webkit-scrollbar{display:none}
+
+/* ── LOGIN PAGE ── */
+.lp{background:linear-gradient(160deg,var(--primary),var(--pd));justify-content:center;align-items:center;padding:1.5rem}
+.app-icon{width:80px;height:80px;background:var(--white);border-radius:var(--rxl);display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;font-size:2.2rem;box-shadow:var(--shmd)}
+.lh h1{font-family:var(--fd);font-size:2.6rem;color:var(--white);letter-spacing:2px;text-align:center}
+.lh p{color:rgba(255,255,255,.85);font-size:.95rem;text-align:center;margin-top:.2rem}
+.lcard{background:var(--white);border-radius:var(--rxl);padding:1.5rem;width:100%;max-width:400px;box-shadow:var(--shmd);margin-top:1.25rem}
+.lang-toggle{display:flex;gap:6px;margin-bottom:1.25rem;background:var(--g100);padding:4px;border-radius:var(--rsm)}
+.lang-btn{flex:1;padding:.55rem;border:none;background:transparent;border-radius:6px;font-family:var(--fb);font-weight:600;font-size:.85rem;cursor:pointer;transition:all .25s;color:var(--g600)}
+.lang-btn.active{background:var(--primary);color:var(--white)}
+
+/* phone input row */
+.phone-row{display:flex;gap:0;border:1.5px solid var(--g200);border-radius:var(--rsm);overflow:hidden;transition:all .25s}
+.phone-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,107,53,.12)}
+.phone-prefix{padding:.75rem .9rem;background:var(--g100);font-weight:700;font-size:.95rem;color:var(--dark);border-right:1.5px solid var(--g200);white-space:nowrap}
+.phone-input{flex:1;padding:.75rem .75rem;border:none;font-family:var(--fb);font-size:.95rem;background:transparent;color:var(--dark);outline:none}
+
+/* swahili big buttons */
+.sw-btns{display:flex;flex-direction:column;gap:.75rem}
+.sw-btn{padding:1rem;border:none;border-radius:var(--rmd);font-family:var(--fb);font-weight:700;font-size:1.1rem;cursor:pointer;transition:all .25s;text-align:center}
+.sw-btn-in{background:var(--primary);color:var(--white)}
+.sw-btn-up{background:var(--g100);color:var(--dark);border:1.5px solid var(--g200)}
+
+/* email tab */
+.etabs{display:flex;gap:6px;margin-bottom:1rem;background:var(--g100);padding:4px;border-radius:var(--rsm)}
+.etab{flex:1;padding:.55rem;border:none;background:transparent;border-radius:6px;font-family:var(--fb);font-weight:600;font-size:.85rem;cursor:pointer;color:var(--g600);transition:all .25s}
+.etab.active{background:var(--primary);color:var(--white)}
 
 /* ── FORMS ── */
-.fg{margin-bottom:1.1rem}
-.fl{display:block;margin-bottom:.4rem;font-weight:600;color:var(--dark);font-size:.85rem}
-.fi{width:100%;padding:.75rem 1rem;border:1.5px solid var(--g200);border-radius:var(--rsm);font-family:var(--fb);font-size:.95rem;transition:all .25s;background:var(--white);color:var(--dark)}
+.fg{margin-bottom:.9rem}
+.fl{display:block;margin-bottom:.35rem;font-weight:600;color:var(--dark);font-size:.82rem}
+.fi{width:100%;padding:.7rem .9rem;border:1.5px solid var(--g200);border-radius:var(--rsm);font-family:var(--fb);font-size:.92rem;transition:all .25s;background:var(--white);color:var(--dark)}
 .fi:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,107,53,.12)}
-textarea.fi{resize:vertical;min-height:80px}
-select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.otp-row{display:flex;gap:.5rem}
-.otp-row input{flex:1;text-align:center;font-size:1.4rem;font-weight:700;letter-spacing:.2rem;padding:.75rem .5rem}
+textarea.fi{resize:none;height:72px}
+select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.25rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
 
 /* ── BUTTONS ── */
-.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.25rem;border:none;border-radius:var(--rsm);font-family:var(--fb);font-weight:700;font-size:1rem;cursor:pointer;transition:all .25s;width:100%}
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.1rem;border:none;border-radius:var(--rsm);font-family:var(--fb);font-weight:700;font-size:.95rem;cursor:pointer;transition:all .25s;width:100%}
 .btn-p{background:var(--primary);color:var(--white)}
-.btn-p:hover{background:var(--pd);transform:translateY(-1px)}
-.btn-p:active{transform:translateY(0)}
-.btn-p:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-p:hover{background:var(--pd)}
+.btn-p:disabled{opacity:.6;cursor:not-allowed}
 .btn-danger{background:var(--danger);color:var(--white)}
 .btn-ghost{background:var(--g100);color:var(--dark)}
-.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
-.btn-sm{padding:.5rem 1rem;font-size:.85rem;width:auto}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary);width:auto;padding:.45rem 1rem;font-size:.85rem}
 
 /* ── SUBSCRIPTION ── */
-.sub-page{background:var(--g50);min-height:100vh;padding:2rem 1.25rem}
-.sub-card{background:var(--white);border-radius:var(--rxl);padding:1.75rem;max-width:500px;margin:0 auto;box-shadow:var(--shsm)}
-.price-box{text-align:center;background:linear-gradient(135deg,var(--primary),var(--pd));border-radius:var(--rlg);padding:1.75rem;margin-bottom:1.5rem;color:var(--white)}
-.price-num{font-family:var(--fd);font-size:3.5rem;letter-spacing:2px}
-.feat-list{list-style:none;margin-bottom:1.5rem}
-.feat-list li{padding:.7rem .5rem;display:flex;align-items:center;gap:.75rem;font-size:.95rem;border-bottom:1px solid var(--g100)}
+.sub-page{background:var(--g50)}
+.sub-scroll{padding:1.25rem}
+.sub-card{background:var(--white);border-radius:var(--rxl);padding:1.5rem;box-shadow:var(--shsm)}
+.price-box{text-align:center;background:linear-gradient(135deg,var(--primary),var(--pd));border-radius:var(--rlg);padding:1.5rem;margin-bottom:1.25rem;color:var(--white)}
+.price-num{font-family:var(--fd);font-size:3rem;letter-spacing:2px}
+.feat-list{list-style:none;margin-bottom:1.25rem}
+.feat-list li{padding:.6rem .5rem;display:flex;align-items:center;gap:.75rem;font-size:.9rem;border-bottom:1px solid var(--g100)}
 .feat-list li:last-child{border-bottom:none}
-.fcheck{width:22px;height:22px;background:var(--success);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
-.pm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
-.pm{padding:.9rem .5rem;border:2px solid var(--g200);border-radius:var(--rsm);text-align:center;cursor:pointer;transition:all .25s}
+.fcheck{width:20px;height:20px;background:var(--success);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+.pm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:1.25rem}
+.pm{padding:.8rem .4rem;border:2px solid var(--g200);border-radius:var(--rsm);text-align:center;cursor:pointer;transition:all .25s}
 .pm.sel{border-color:var(--primary);background:rgba(255,107,53,.05)}
-.pm-icon{font-size:1.75rem;margin-bottom:.3rem}
-.pm-name{font-size:.8rem;font-weight:600}
+.pm-icon{font-size:1.6rem;margin-bottom:.25rem}
+.pm-name{font-size:.78rem;font-weight:600}
 
 /* ── PAGE HEADER ── */
-.ph{background:linear-gradient(135deg,var(--primary),var(--pd));padding:1.25rem 1.1rem;color:var(--white);border-radius:0 0 var(--rxl) var(--rxl)}
+.ph{background:linear-gradient(135deg,var(--primary),var(--pd));padding:1rem 1.1rem;color:var(--white);border-radius:0 0 var(--rxl) var(--rxl);flex-shrink:0}
 .ph-row{display:flex;align-items:center;gap:.75rem}
-.bk{background:rgba(255,255,255,.22);border:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white);font-size:1.1rem;flex-shrink:0}
-.ph-title{font-family:var(--fd);font-size:1.9rem;letter-spacing:1px}
-.ph-sub{font-size:.9rem;opacity:.85;margin-top:2px}
+.bk{background:rgba(255,255,255,.22);border:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white);font-size:1rem;flex-shrink:0}
+.ph-title{font-family:var(--fd);font-size:1.7rem;letter-spacing:1px}
+.ph-sub{font-size:.82rem;opacity:.85;margin-top:1px}
 
 /* ── DASHBOARD ── */
-.stats-grid{padding:1.1rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}
-.sc{background:var(--white);padding:1.1rem;border-radius:var(--rlg);box-shadow:var(--shsm)}
-.sc-label{font-size:.78rem;color:var(--g600);margin-bottom:.3rem;font-weight:500}
-.sc-val{font-family:var(--fd);font-size:1.55rem;letter-spacing:.5px}
+.dash-page{background:var(--g100)}
+.stats-grid{padding:.9rem .9rem .5rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem}
+.sc{background:var(--white);padding:.9rem;border-radius:var(--rlg);box-shadow:var(--shsm)}
+.sc-label{font-size:.72rem;color:var(--g600);margin-bottom:.25rem;font-weight:500}
+.sc-val{font-family:var(--fd);font-size:1.35rem;letter-spacing:.5px}
 .sc.or .sc-val{color:var(--primary)}
 .sc.gr .sc-val{color:var(--success)}
 .sc.rd .sc-val{color:var(--danger)}
-.prog-card{background:var(--white);padding:1.25rem;border-radius:var(--rlg);box-shadow:var(--shsm);margin:0 1.1rem 1rem}
-.prog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
-.prog-pct{font-family:var(--fd);font-size:1.5rem;color:var(--primary)}
-.prog-track{background:var(--g200);height:10px;border-radius:100px;overflow:hidden;margin-bottom:.6rem}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:100px;transition:width .6s ease}
-.hbadge{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .8rem;border-radius:100px;font-size:.8rem;font-weight:700;margin-top:.6rem}
+.prog-card{background:var(--white);padding:1rem 1.1rem;border-radius:var(--rlg);box-shadow:var(--shsm);margin:.5rem .9rem}
+.prog-track{background:var(--g200);height:9px;border-radius:100px;overflow:hidden;margin:.6rem 0}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--sec));border-radius:100px;transition:width .6s ease}
+.hbadge{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:100px;font-size:.75rem;font-weight:700;margin-top:.5rem}
 .hg{background:rgba(6,214,160,.12);color:var(--success)}
 .hw{background:rgba(255,183,3,.15);color:#b07a00}
 .hb{background:rgba(239,71,111,.12);color:var(--danger)}
-.next-card{background:linear-gradient(135deg,var(--secondary),var(--warn));padding:1.1rem 1.25rem;border-radius:var(--rlg);margin:0 1.1rem 1rem;box-shadow:var(--shsm)}
+.next-card{background:linear-gradient(135deg,var(--sec),var(--warn));padding:.9rem 1.1rem;border-radius:var(--rlg);margin:.5rem .9rem;box-shadow:var(--shsm)}
 
 /* ── BOTTOM NAV ── */
-.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--white);padding:.5rem .75rem;box-shadow:0 -2px 12px rgba(0,0,0,.08);display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;z-index:100}
-.ni{display:flex;flex-direction:column;align-items:center;gap:2px;padding:.5rem;background:none;border:none;color:var(--g600);cursor:pointer;border-radius:var(--rsm);transition:all .25s}
+.bnav{background:var(--white);padding:.4rem .75rem calc(.4rem + env(safe-area-inset-bottom));box-shadow:0 -2px 12px rgba(0,0,0,.08);display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;flex-shrink:0}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;padding:.45rem;background:none;border:none;color:var(--g600);cursor:pointer;border-radius:var(--rsm);transition:all .25s}
 .ni.active{color:var(--primary);background:rgba(255,107,53,.08)}
-.ni-icon{font-size:1.3rem}
-.ni-label{font-size:.7rem;font-weight:600}
+.ni-icon{font-size:1.2rem}
+.ni-label{font-size:.65rem;font-weight:600}
 
 /* ── SECTION PAGES ── */
-.sp{background:var(--g100);min-height:100vh;padding-bottom:90px}
-.sc-content{padding:1.1rem}
-.add-btn{background:var(--primary);color:var(--white);border:none;padding:.75rem 1.25rem;border-radius:var(--rsm);font-weight:700;font-size:.95rem;cursor:pointer;margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;box-shadow:var(--shsm);transition:all .25s}
+.sp-page{background:var(--g100)}
+.sc-content{padding:.9rem}
+.add-btn{background:var(--primary);color:var(--white);border:none;padding:.65rem 1.1rem;border-radius:var(--rsm);font-weight:700;font-size:.9rem;cursor:pointer;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;box-shadow:var(--shsm);transition:all .25s}
 .add-btn:hover{background:var(--pd)}
-.item-list{display:flex;flex-direction:column;gap:.75rem}
-.ic{background:var(--white);padding:1.1rem 1.25rem;border-radius:var(--rlg);box-shadow:var(--shsm);border-left:4px solid var(--primary)}
-.ic.exp{border-left-color:var(--secondary)}
-.ic-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem}
-.ic-amt{font-family:var(--fd);font-size:1.6rem;letter-spacing:.5px}
-.ic-date{font-size:.78rem;color:var(--g600);background:var(--g100);padding:3px 8px;border-radius:var(--rsm)}
-.ic-detail{font-size:.85rem;color:var(--g600);margin-top:.2rem}
-.ic-actions{display:flex;gap:.5rem;margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--g100)}
-.abtn{padding:.35rem .75rem;border:none;border-radius:var(--rsm);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
+
+/* ── SWIPE-TO-DELETE LIST ── */
+.item-list{display:flex;flex-direction:column;gap:.65rem}
+.swipe-wrap{position:relative;overflow:hidden;border-radius:var(--rlg)}
+.del-bg{position:absolute;right:0;top:0;bottom:0;width:80px;background:var(--danger);display:flex;align-items:center;justify-content:center;border-radius:0 var(--rlg) var(--rlg) 0;flex-direction:column;gap:3px;cursor:pointer}
+.del-bg span{color:var(--white);font-size:.7rem;font-weight:700}
+.del-bg-icon{font-size:1.3rem}
+.ic{background:var(--white);padding:1rem 1.1rem;border-radius:var(--rlg);box-shadow:var(--shsm);border-left:4px solid var(--primary);position:relative;transform:translateX(0);transition:transform .25s ease;user-select:none;touch-action:pan-y}
+.ic.exp{border-left-color:var(--sec)}
+.ic-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem}
+.ic-amt{font-family:var(--fd);font-size:1.5rem;letter-spacing:.5px}
+.ic-date{font-size:.75rem;color:var(--g600);background:var(--g100);padding:3px 7px;border-radius:var(--rsm)}
+.ic-detail{font-size:.82rem;color:var(--g600);margin-top:.15rem}
+.ic-actions{display:flex;gap:.5rem;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--g100)}
+.abtn{padding:.3rem .65rem;border:none;border-radius:var(--rsm);font-size:.77rem;font-weight:600;cursor:pointer}
 .abtn-v{background:rgba(55,138,221,.1);color:#185FA5}
-.abtn-d{background:rgba(239,71,111,.1);color:var(--danger)}
-.empty{text-align:center;padding:3rem 1rem;color:var(--g500)}
-.empty-ico{font-size:3.5rem;margin-bottom:1rem;opacity:.3}
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--g500)}
+.empty-ico{font-size:3rem;margin-bottom:.75rem;opacity:.3}
 
 /* ── ANALYTICS ── */
-.chart-card{background:var(--white);border-radius:var(--rlg);padding:1.25rem;box-shadow:var(--shsm);margin-bottom:.75rem}
-.ct{font-weight:700;font-size:1rem;margin-bottom:1rem}
-.bar-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem}
-.bar-label{font-size:.82rem;color:var(--g600);min-width:70px}
-.bar-track{flex:1;background:var(--g100);border-radius:100px;height:10px;overflow:hidden}
+.chart-card{background:var(--white);border-radius:var(--rlg);padding:1rem 1.1rem;box-shadow:var(--shsm);margin-bottom:.65rem}
+.ct{font-weight:700;font-size:.92rem;margin-bottom:.85rem}
+.bar-row{display:flex;align-items:center;gap:.65rem;margin-bottom:.55rem}
+.bar-label{font-size:.78rem;color:var(--g600);min-width:60px}
+.bar-track{flex:1;background:var(--g100);border-radius:100px;height:9px;overflow:hidden}
 .bar-fill{height:100%;border-radius:100px;transition:width .5s ease}
-.bar-val{font-size:.82rem;font-weight:600;min-width:70px;text-align:right}
-.sum-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--g100)}
+.bar-val{font-size:.78rem;font-weight:600;min-width:55px;text-align:right}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid var(--g100)}
 .sum-row:last-child{border-bottom:none}
-
-/* ── PROFILE ── */
-.prow{display:flex;justify-content:space-between;align-items:center;padding:.85rem 0;border-bottom:1px solid var(--g100)}
-.prow:last-child{border-bottom:none}
-.pkey{font-size:.85rem;color:var(--g600);font-weight:500}
-.pval{font-size:.9rem;font-weight:600;color:var(--dark)}
+.export-btn{background:var(--success);color:var(--white);border:none;padding:.75rem 1.1rem;border-radius:var(--rsm);font-weight:700;font-size:.9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:var(--shsm);transition:all .25s;width:100%;justify-content:center;margin-bottom:.65rem}
 
 /* ── MODALS ── */
 .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:1000;align-items:flex-end;justify-content:center}
 .modal.active{display:flex}
-.mc{background:var(--white);border-radius:var(--rxl) var(--rxl) 0 0;padding:1.5rem;width:100%;max-height:92vh;overflow-y:auto;animation:su .3s ease}
+.mc{background:var(--white);border-radius:var(--rxl) var(--rxl) 0 0;padding:1.25rem;width:100%;max-height:88vh;overflow-y:auto;animation:su .3s ease}
 @keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem}
-.mt{font-family:var(--fd);font-size:1.7rem;letter-spacing:1px}
-.xbtn{background:var(--g100);border:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;color:var(--g600)}
-.upload-zone{border:2px dashed var(--g300);border-radius:var(--rsm);padding:1.5rem;text-align:center;cursor:pointer;transition:all .25s}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.mt{font-family:var(--fd);font-size:1.6rem;letter-spacing:1px}
+.xbtn{background:var(--g100);border:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--g600)}
+.upload-zone{border:2px dashed var(--g300);border-radius:var(--rsm);padding:1.25rem;text-align:center;cursor:pointer;transition:all .25s}
 .upload-zone:hover{border-color:var(--primary);background:rgba(255,107,53,.04)}
 .upload-zone input{display:none}
-.img-prev{margin-top:.75rem;border-radius:var(--rsm);overflow:hidden}
+.img-prev{margin-top:.65rem;border-radius:var(--rsm);overflow:hidden}
 .img-prev img{width:100%;height:auto;display:block}
-
-/* ── RECEIPT VIEWER ── */
 .rv-wrap{background:#111;border-radius:var(--rxl) var(--rxl) 0 0;padding:1rem;width:100%;max-height:92vh;overflow-y:auto}
 .rv-wrap img{width:100%;border-radius:var(--rsm)}
 
 /* ── TOAST ── */
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:var(--white);padding:.65rem 1.25rem;border-radius:100px;font-size:.88rem;font-weight:600;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none}
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:var(--white);padding:.6rem 1.1rem;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ── LOADER ── */
 .loader{position:fixed;inset:0;background:rgba(255,255,255,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;gap:1rem}
 .loader.hidden{display:none}
-.spin{border:3px solid var(--g200);border-top:3px solid var(--primary);border-radius:50%;width:36px;height:36px;animation:spin 1s linear infinite}
+.spin{border:3px solid var(--g200);border-top:3px solid var(--primary);border-radius:50%;width:34px;height:34px;animation:spin 1s linear infinite}
+.spinner{border:2.5px solid rgba(255,255,255,.3);border-top:2.5px solid var(--white);border-radius:50%;width:16px;height:16px;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.spinner{border:2.5px solid rgba(255,255,255,.3);border-top:2.5px solid var(--white);border-radius:50%;width:18px;height:18px;animation:spin 1s linear infinite}
-
-/* ── ALERT ── */
-.alert{padding:.85rem 1rem;border-radius:var(--rsm);margin-bottom:1rem;font-size:.9rem}
-.alert-e{background:rgba(239,71,111,.1);color:var(--danger);border:1px solid rgba(239,71,111,.3)}
-.alert-s{background:rgba(6,214,160,.1);color:#0a9e7a;border:1px solid rgba(6,214,160,.3)}
+.alert-e{background:rgba(239,71,111,.1);color:var(--danger);border:1px solid rgba(239,71,111,.3);padding:.75rem .9rem;border-radius:var(--rsm);margin-bottom:.85rem;font-size:.85rem}
 .hidden{display:none!important}
 </style>
 </head>
 <body>
 
-<!-- ── GLOBAL LOADER ── -->
-<div class="loader" id="loader">
-  <div class="spin"></div>
-  <div style="font-size:.9rem;color:var(--g600)">Loading…</div>
-</div>
-
-<!-- ── TOAST ── -->
+<div class="loader" id="loader"><div class="spin"></div><div style="font-size:.85rem;color:var(--g600)" id="loaderText">Inapakia...</div></div>
 <div class="toast" id="toast"></div>
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════
      LOGIN PAGE
-════════════════════════════════════════ -->
-<div id="loginPage" class="page">
-<div class="lp">
+══════════════════════════════════ -->
+<div id="loginPage" class="page lp">
   <div class="lh">
     <div class="app-icon">🏍️</div>
     <h1>BODA TRACKER</h1>
-    <p>Track Your Journey to Ownership</p>
+    <p id="lh-sub">Fuatilia Safari Yako ya Umiliki</p>
   </div>
   <div class="lcard">
-    <div class="tabs">
-      <button class="tab active" data-tab="phone">📱 Phone (OTP)</button>
-      <button class="tab" data-tab="email">✉️ Email</button>
+    <!-- Language toggle -->
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="sw" onclick="setLang('sw')">🇹🇿 Kiswahili</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 English</button>
     </div>
 
-    <!-- Phone OTP flow -->
-    <div id="phoneTab">
-      <div id="stepSendOTP">
-        <div class="fg">
-          <label class="fl">Phone Number (Tanzania)</label>
-          <input type="tel" class="fi" id="phoneInput" placeholder="+255 7XX XXX XXX">
-          <div style="font-size:.78rem;color:var(--g600);margin-top:.35rem">Enter with country code, e.g. +255712345678</div>
+    <!-- Swahili view: Phone only, two big buttons -->
+    <div id="swView">
+      <div class="fg">
+        <label class="fl" id="lbl-phone">Nambari ya Simu</label>
+        <div class="phone-row">
+          <span class="phone-prefix">🇹🇿 +255</span>
+          <input type="tel" class="phone-input" id="phoneInput" placeholder="765827355" maxlength="9" inputmode="numeric">
         </div>
-        <div id="phoneErr" class="alert alert-e hidden"></div>
-        <button class="btn btn-p" id="sendOTPBtn">Send OTP →</button>
+        <div style="font-size:.75rem;color:var(--g600);margin-top:.3rem" id="lbl-phone-hint">Ingiza nambari bila +255, mfano: 765827355</div>
       </div>
-      <div id="stepVerifyOTP" class="hidden">
-        <div style="text-align:center;margin-bottom:1.25rem">
-          <div style="font-size:2rem">📲</div>
-          <div style="font-weight:700;margin:.5rem 0 .25rem">Enter the 6-digit code</div>
-          <div style="font-size:.85rem;color:var(--g600)">Sent to <strong id="otpSentTo"></strong></div>
-        </div>
+      <div id="swOTPStep" class="hidden">
         <div class="fg">
-          <input type="text" class="fi otp-input" id="otpInput" placeholder="000000" maxlength="6" inputmode="numeric" style="text-align:center;font-size:1.8rem;letter-spacing:.3rem;font-weight:700">
+          <label class="fl" id="lbl-otp">Nambari ya Uthibitisho (OTP)</label>
+          <input type="text" class="fi" id="otpInput" placeholder="000000" maxlength="6" inputmode="numeric" style="text-align:center;font-size:1.6rem;letter-spacing:.3rem;font-weight:700">
         </div>
-        <div id="otpErr" class="alert alert-e hidden"></div>
-        <button class="btn btn-p" id="verifyOTPBtn">Verify & Login</button>
-        <button class="btn btn-ghost" id="resendOTPBtn" style="margin-top:.75rem">Resend code</button>
+      </div>
+      <div id="phoneErr" class="alert-e hidden"></div>
+      <div class="sw-btns" id="swAuthBtns">
+        <button class="sw-btn sw-btn-in" id="swSignInBtn" onclick="swAction('signin')">
+          <span id="lbl-signin">🔑 Ingia</span>
+        </button>
+        <button class="sw-btn sw-btn-up" id="swSignUpBtn" onclick="swAction('signup')">
+          <span id="lbl-signup">✨ Jisajili</span>
+        </button>
+      </div>
+      <div id="swVerifyBtns" class="hidden sw-btns">
+        <button class="sw-btn sw-btn-in" id="swVerifyBtn" onclick="verifyOTP()">
+          <span id="lbl-verify">✓ Thibitisha</span>
+        </button>
+        <button class="sw-btn sw-btn-up" onclick="cancelOTP()">
+          <span id="lbl-back">← Rudi Nyuma</span>
+        </button>
       </div>
     </div>
 
-    <!-- Email flow -->
-    <div id="emailTab" class="hidden">
-      <div class="fg">
-        <label class="fl">Email</label>
-        <input type="email" class="fi" id="emailInput" placeholder="you@email.com">
+    <!-- English view: tabs with email option -->
+    <div id="enView" class="hidden">
+      <div class="etabs">
+        <button class="etab active" data-etab="phone" onclick="enTab('phone')">📱 Phone</button>
+        <button class="etab" data-etab="email" onclick="enTab('email')">✉️ Email</button>
       </div>
-      <div class="fg">
-        <label class="fl">Password</label>
-        <input type="password" class="fi" id="passInput" placeholder="••••••••">
+      <div id="enPhoneTab">
+        <div id="enOTPStep1">
+          <div class="fg">
+            <label class="fl">Phone Number</label>
+            <div class="phone-row">
+              <span class="phone-prefix">🇹🇿 +255</span>
+              <input type="tel" class="phone-input" id="enPhoneInput" placeholder="765827355" maxlength="9" inputmode="numeric">
+            </div>
+          </div>
+          <div id="enPhoneErr" class="alert-e hidden"></div>
+          <button class="btn btn-p" id="enSendOTPBtn" onclick="enSendOTP()">Send OTP →</button>
+        </div>
+        <div id="enOTPStep2" class="hidden">
+          <div style="text-align:center;margin-bottom:1rem">
+            <div style="font-size:1.8rem">📲</div>
+            <div style="font-weight:700;margin:.4rem 0 .2rem">Enter the 6-digit code</div>
+            <div style="font-size:.82rem;color:var(--g600)">Sent to +255<span id="enOTPSentTo"></span></div>
+          </div>
+          <div class="fg"><input type="text" class="fi" id="enOTPInput" placeholder="000000" maxlength="6" inputmode="numeric" style="text-align:center;font-size:1.6rem;letter-spacing:.3rem;font-weight:700"></div>
+          <div id="enOTPErr" class="alert-e hidden"></div>
+          <button class="btn btn-p" onclick="enVerifyOTP()">Verify & Login</button>
+          <button class="btn btn-ghost" style="margin-top:.6rem" onclick="enCancelOTP()">← Back</button>
+        </div>
       </div>
-      <div id="emailErr" class="alert alert-e hidden"></div>
-      <div class="tabs" style="margin-bottom:1rem">
-        <button class="tab active" data-etab="signin">Sign In</button>
-        <button class="tab" data-etab="signup">Sign Up</button>
+      <div id="enEmailTab" class="hidden">
+        <div class="etabs" style="margin-bottom:.85rem">
+          <button class="etab active" data-mode="signin" onclick="setEmailMode('signin')">Sign In</button>
+          <button class="etab" data-mode="signup" onclick="setEmailMode('signup')">Sign Up</button>
+        </div>
+        <div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="emailIn" placeholder="you@email.com"></div>
+        <div class="fg"><label class="fl">Password</label><input type="password" class="fi" id="passIn" placeholder="••••••••"></div>
+        <div id="emailErr" class="alert-e hidden"></div>
+        <button class="btn btn-p" id="emailAuthBtn" onclick="emailAuth()">Sign In</button>
       </div>
-      <button class="btn btn-p" id="emailAuthBtn">Sign In</button>
     </div>
   </div>
 </div>
-</div>
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════
      SUBSCRIPTION PAGE
-════════════════════════════════════════ -->
-<div id="subscriptionPage" class="page">
-<div class="sub-page">
-  <div style="text-align:center;margin-bottom:1.5rem">
-    <h2 style="font-family:var(--fd);font-size:2.2rem;letter-spacing:1px">CHOOSE YOUR PLAN</h2>
-    <p style="color:var(--g600)">Unlock full access to Boda Tracker</p>
-  </div>
-  <div class="sub-card">
-    <div class="price-box">
-      <div class="price-num">TZS 30,000</div>
-      <div style="opacity:.9;font-size:1rem">per year · cancel anytime</div>
-    </div>
-    <ul class="feat-list">
-      <li><span class="fcheck">✓</span> Loan tracking &amp; repayment management</li>
-      <li><span class="fcheck">✓</span> Expense categories &amp; analytics</li>
-      <li><span class="fcheck">✓</span> Receipt photo upload &amp; storage</li>
-      <li><span class="fcheck">✓</span> Payment reminders &amp; health alerts</li>
-      <li><span class="fcheck">✓</span> Progress &amp; completion tracking</li>
-    </ul>
-    <div class="fg">
-      <label class="fl">Payment Method</label>
-      <div class="pm-grid">
-        <div class="pm" data-method="mpesa"><div class="pm-icon">📱</div><div class="pm-name">M-Pesa</div></div>
-        <div class="pm" data-method="airtel"><div class="pm-icon">💳</div><div class="pm-name">Airtel Money</div></div>
-        <div class="pm" data-method="tigo"><div class="pm-icon">💰</div><div class="pm-name">Tigo Pesa</div></div>
+══════════════════════════════════ -->
+<div id="subscriptionPage" class="page sub-page">
+  <div class="ph" style="border-radius:0"><div style="font-family:var(--fd);font-size:1.7rem;letter-spacing:1px" id="sub-title">CHAGUA MPANGO WAKO</div><div style="font-size:.82rem;opacity:.85" id="sub-sub">Fungua upatikanaji kamili wa Boda Tracker</div></div>
+  <div class="scroll-area"><div class="sub-scroll">
+    <div class="sub-card">
+      <div class="price-box"><div class="price-num">TZS 30,000</div><div style="opacity:.9;font-size:.95rem" id="sub-period">kwa mwaka · ghairi wakati wowote</div></div>
+      <ul class="feat-list">
+        <li><span class="fcheck">✓</span> <span id="f1">Ufuatiliaji wa mkopo na malipo</span></li>
+        <li><span class="fcheck">✓</span> <span id="f2">Makundi ya gharama na uchanganuzi</span></li>
+        <li><span class="fcheck">✓</span> <span id="f3">Upakiaji wa picha za risiti</span></li>
+        <li><span class="fcheck">✓</span> <span id="f4">Vikumbusho vya malipo</span></li>
+        <li><span class="fcheck">✓</span> <span id="f5">Usafirishaji wa data kwa Excel</span></li>
+      </ul>
+      <div class="fg"><label class="fl" id="lbl-pm">Njia ya Malipo</label>
+        <div class="pm-grid">
+          <div class="pm" data-method="mpesa"><div class="pm-icon">📱</div><div class="pm-name">M-Pesa</div></div>
+          <div class="pm" data-method="airtel"><div class="pm-icon">💳</div><div class="pm-name">Airtel Money</div></div>
+          <div class="pm" data-method="tigo"><div class="pm-icon">💰</div><div class="pm-name">Tigo Pesa</div></div>
+        </div>
       </div>
+      <button class="btn btn-p" id="subscribeBtn" onclick="subscribe()"><span id="lbl-sub-btn">Jiandikishe Sasa</span></button>
+      <p style="text-align:center;margin-top:.65rem;font-size:.78rem;color:var(--g600)" id="sub-note">Ombi la malipo litatumwa kwa simu yako</p>
     </div>
-    <button class="btn btn-p" id="subscribeBtn">Subscribe Now</button>
-    <p style="text-align:center;margin-top:.75rem;font-size:.82rem;color:var(--g600)">Payment prompt will be sent to your phone</p>
-  </div>
-</div>
+  </div></div>
 </div>
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════
      DASHBOARD PAGE
-════════════════════════════════════════ -->
-<div id="dashboardPage" class="page">
-<div style="padding-bottom:90px">
+══════════════════════════════════ -->
+<div id="dashboardPage" class="page dash-page">
   <div class="ph">
-    <div style="font-size:.9rem;opacity:.85">Welcome back,</div>
-    <div style="font-family:var(--fd);font-size:1.9rem;letter-spacing:1px" id="dashName">Rider</div>
-    <div id="dashMoto" style="font-size:.85rem;opacity:.75;margin-top:2px"></div>
+    <div style="font-size:.82rem;opacity:.85" id="lbl-welcome">Karibu tena,</div>
+    <div style="font-family:var(--fd);font-size:1.7rem;letter-spacing:1px" id="dashName">Dereva</div>
+    <div id="dashMoto" style="font-size:.78rem;opacity:.75;margin-top:1px"></div>
   </div>
-  <div id="noLoanBanner" class="hidden" style="margin:1rem 1.1rem 0;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);border-radius:var(--rsm);padding:.85rem 1rem;font-size:.88rem;color:var(--primary)">
-    ⚠️ No loan set up yet. Tap <strong>Setup Loan</strong> below to get started.
-  </div>
-  <div class="stats-grid">
-    <div class="sc or"><div class="sc-label">Motorcycle Value</div><div class="sc-val" id="stMV">—</div></div>
-    <div class="sc"><div class="sc-label">Total to Repay</div><div class="sc-val" id="stTR">—</div></div>
-    <div class="sc gr"><div class="sc-label">Total Paid</div><div class="sc-val" id="stPd">TZS 0</div></div>
-    <div class="sc rd"><div class="sc-label">Remaining</div><div class="sc-val" id="stRm">—</div></div>
-    <div class="sc"><div class="sc-label">Interest</div><div class="sc-val" id="stIn">—</div></div>
-    <div class="sc"><div class="sc-label">Days Left</div><div class="sc-val" id="stDL">—</div></div>
-  </div>
-  <div class="prog-card">
-    <div class="prog-head">
-      <div style="font-weight:700;font-size:1rem">Loan Repayment Progress</div>
-      <div class="prog-pct" id="progPct">0%</div>
+  <div class="scroll-area">
+    <div id="noLoanBanner" class="hidden" style="margin:.75rem .9rem 0;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);border-radius:var(--rsm);padding:.75rem .9rem;font-size:.84rem;color:var(--primary)" id="no-loan-msg">⚠️ Hakuna mkopo uliosanidiwa. Bonyeza <strong>Sanidi Mkopo</strong> hapa chini.</div>
+    <div class="stats-grid">
+      <div class="sc or"><div class="sc-label" id="lbl-mv">Thamani ya Pikipiki</div><div class="sc-val" id="stMV">—</div></div>
+      <div class="sc"><div class="sc-label" id="lbl-tr">Jumla ya Kulipa</div><div class="sc-val" id="stTR">—</div></div>
+      <div class="sc gr"><div class="sc-label" id="lbl-pd">Kimelipwa</div><div class="sc-val" id="stPd">TZS 0</div></div>
+      <div class="sc rd"><div class="sc-label" id="lbl-rm">Kilichobaki</div><div class="sc-val" id="stRm">—</div></div>
+      <div class="sc"><div class="sc-label" id="lbl-freq-d">Mzunguko</div><div class="sc-val" id="stFreq">—</div></div>
+      <div class="sc"><div class="sc-label" id="lbl-days">Siku Zilizobaki</div><div class="sc-val" id="stDL">—</div></div>
     </div>
-    <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
-    <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--g600)">
-      <span>Start: <strong id="dStart">—</strong></span>
-      <span>End: <strong id="dEnd">—</strong></span>
+    <div class="prog-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700;font-size:.9rem" id="lbl-prog">Maendeleo ya Mkopo</div>
+        <div style="font-family:var(--fd);font-size:1.4rem;color:var(--primary)" id="progPct">0%</div>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--g600)">
+        <span><span id="lbl-start">Anza</span>: <strong id="dStart">—</strong></span>
+        <span><span id="lbl-end">Mwisho</span>: <strong id="dEnd">—</strong></span>
+      </div>
+      <div id="healthBadge"></div>
     </div>
-    <div id="healthBadge"></div>
+    <div class="next-card" id="nextCard" style="display:none">
+      <div style="font-size:.76rem;font-weight:700;margin-bottom:.2rem" id="lbl-next">Malipo Yajayo</div>
+      <div style="font-family:var(--fd);font-size:1.5rem;letter-spacing:1px" id="nextDate">—</div>
+      <div style="font-size:.78rem;margin-top:.2rem" id="nextFreq"></div>
+    </div>
+    <div style="padding:0 .9rem .9rem;display:flex;flex-direction:column;gap:.55rem">
+      <button class="btn btn-p" id="setupLoanBtn" onclick="openLoanModal()"><span id="lbl-setup">⚙️ Sanidi Mkopo</span></button>
+      <button class="btn-outline" style="align-self:center" onclick="logout()" id="lbl-logout-btn">Toka</button>
+    </div>
   </div>
-  <div class="next-card" id="nextCard" style="display:none">
-    <div style="font-size:.8rem;font-weight:700;margin-bottom:.2rem">Next Payment Due</div>
-    <div style="font-family:var(--fd);font-size:1.6rem;letter-spacing:1px" id="nextDate">—</div>
-    <div style="font-size:.82rem;margin-top:.25rem" id="nextFreq"></div>
+  <div class="bnav">
+    <button class="ni active" data-page="dashboard"><div class="ni-icon">🏠</div><div class="ni-label" id="nav-home">Nyumbani</div></button>
+    <button class="ni" data-page="repayments"><div class="ni-icon">💰</div><div class="ni-label" id="nav-pay">Malipo</div></button>
+    <button class="ni" data-page="expenses"><div class="ni-icon">🧾</div><div class="ni-label" id="nav-exp">Gharama</div></button>
+    <button class="ni" data-page="analytics"><div class="ni-icon">📊</div><div class="ni-label" id="nav-ana">Takwimu</div></button>
   </div>
-  <div style="padding:0 1.1rem 1rem;display:flex;flex-direction:column;gap:.65rem">
-    <button class="btn btn-p" id="setupLoanBtn">⚙️ Setup Loan Information</button>
-    <button class="btn btn-outline btn-sm" id="logoutDashBtn" style="width:auto;align-self:center">Logout</button>
-  </div>
-</div>
-<div class="bnav">
-  <button class="ni active" data-page="dashboard"><div class="ni-icon">🏠</div><div class="ni-label">Home</div></button>
-  <button class="ni" data-page="repayments"><div class="ni-icon">💰</div><div class="ni-label">Payments</div></button>
-  <button class="ni" data-page="expenses"><div class="ni-icon">🧾</div><div class="ni-label">Expenses</div></button>
-  <button class="ni" data-page="analytics"><div class="ni-icon">📊</div><div class="ni-label">Analytics</div></button>
-</div>
 </div>
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════
      REPAYMENTS PAGE
-════════════════════════════════════════ -->
-<div id="repaymentsPage" class="page">
-<div class="sp">
-  <div class="ph">
-    <div class="ph-row">
-      <button class="bk" onclick="nav('dashboard')">←</button>
-      <div><div class="ph-title">REPAYMENTS</div><div class="ph-sub" id="repSub"></div></div>
-    </div>
-  </div>
-  <div class="sc-content">
-    <button class="add-btn" id="addRepBtn">+ Add Payment</button>
+══════════════════════════════════ -->
+<div id="repaymentsPage" class="page sp-page">
+  <div class="ph"><div class="ph-row"><button class="bk" onclick="nav('dashboard')">←</button><div><div class="ph-title" id="rep-title">MALIPO</div><div class="ph-sub" id="repSub"></div></div></div></div>
+  <div class="scroll-area"><div class="sc-content">
+    <button class="add-btn" onclick="openRepModal()"><span>+</span><span id="lbl-add-rep">Ongeza Malipo</span></button>
     <div class="item-list" id="repList"></div>
-  </div>
-</div>
+  </div></div>
 </div>
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════
      EXPENSES PAGE
-════════════════════════════════════════ -->
-<div id="expensesPage" class="page">
-<div class="sp">
-  <div class="ph">
-    <div class="ph-row">
-      <button class="bk" onclick="nav('dashboard')">←</button>
-      <div><div class="ph-title">EXPENSES</div><div class="ph-sub" id="expSub"></div></div>
-    </div>
-  </div>
-  <div class="sc-content">
-    <button class="add-btn" id="addExpBtn">+ Add Expense</button>
+══════════════════════════════════ -->
+<div id="expensesPage" class="page sp-page">
+  <div class="ph"><div class="ph-row"><button class="bk" onclick="nav('dashboard')">←</button><div><div class="ph-title" id="exp-title">GHARAMA</div><div class="ph-sub" id="expSub"></div></div></div></div>
+  <div class="scroll-area"><div class="sc-content">
+    <button class="add-btn" onclick="openExpModal()"><span>+</span><span id="lbl-add-exp">Ongeza Gharama</span></button>
     <div class="item-list" id="expList"></div>
-  </div>
-</div>
+  </div></div>
 </div>
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════
      ANALYTICS PAGE
-════════════════════════════════════════ -->
-<div id="analyticsPage" class="page">
-<div class="sp">
-  <div class="ph">
-    <div class="ph-row">
-      <button class="bk" onclick="nav('dashboard')">←</button>
-      <div><div class="ph-title">ANALYTICS</div><div class="ph-sub">Your financial overview</div></div>
-    </div>
+══════════════════════════════════ -->
+<div id="analyticsPage" class="page sp-page">
+  <div class="ph"><div class="ph-row"><button class="bk" onclick="nav('dashboard')">←</button><div><div class="ph-title" id="ana-title">TAKWIMU</div><div class="ph-sub" id="lbl-ana-sub">Muhtasari wa fedha</div></div></div></div>
+  <div class="scroll-area"><div class="sc-content" id="analyticsContent"></div></div>
+  <div class="bnav">
+    <button class="ni" data-page="dashboard"><div class="ni-icon">🏠</div><div class="ni-label" id="nav-home2">Nyumbani</div></button>
+    <button class="ni" data-page="repayments"><div class="ni-icon">💰</div><div class="ni-label" id="nav-pay2">Malipo</div></button>
+    <button class="ni" data-page="expenses"><div class="ni-icon">🧾</div><div class="ni-label" id="nav-exp2">Gharama</div></button>
+    <button class="ni active" data-page="analytics"><div class="ni-icon">📊</div><div class="ni-label" id="nav-ana2">Takwimu</div></button>
   </div>
-  <div class="sc-content" id="analyticsContent"></div>
-</div>
-<div class="bnav">
-  <button class="ni" data-page="dashboard"><div class="ni-icon">🏠</div><div class="ni-label">Home</div></button>
-  <button class="ni" data-page="repayments"><div class="ni-icon">💰</div><div class="ni-label">Payments</div></button>
-  <button class="ni" data-page="expenses"><div class="ni-icon">🧾</div><div class="ni-label">Expenses</div></button>
-  <button class="ni active" data-page="analytics"><div class="ni-icon">📊</div><div class="ni-label">Analytics</div></button>
-</div>
 </div>
 
-<!-- ════════════════════════════════════════
+<!-- ══════════════════════════════════
      MODALS
-════════════════════════════════════════ -->
-
+══════════════════════════════════ -->
 <!-- Loan Setup -->
 <div id="loanModal" class="modal">
 <div class="mc">
-  <div class="mh"><div class="mt">LOAN SETUP</div><button class="xbtn" onclick="closeM('loanModal')">×</button></div>
-  <form id="loanForm">
-    <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi" id="lnName" required></div>
-    <div class="fg"><label class="fl">Email</label><input type="email" class="fi" id="lnEmail"></div>
-    <div class="fg"><label class="fl">Phone</label><input type="tel" class="fi" id="lnPhone" required></div>
-    <div class="fg"><label class="fl">Region</label>
+  <div class="mh"><div class="mt" id="m-loan-title">SANIDI MKOPO</div><button class="xbtn" onclick="closeM('loanModal')">×</button></div>
+  <form id="loanForm" onsubmit="saveLoan(event)">
+    <div class="fg"><label class="fl" id="lbl-name">Jina Kamili</label><input type="text" class="fi" id="lnName" required></div>
+    <div class="fg"><label class="fl" id="lbl-email-f">Barua pepe</label><input type="email" class="fi" id="lnEmail"></div>
+    <div class="fg"><label class="fl" id="lbl-phone-f">Simu</label><input type="tel" class="fi" id="lnPhone" required></div>
+    <div class="fg"><label class="fl" id="lbl-region">Mkoa</label>
       <select class="fi" id="lnRegion" required>
-        <option value="">Select Region</option>
+        <option value="">Chagua Mkoa</option>
         <option>Dar es Salaam</option><option>Dodoma</option><option>Arusha</option><option>Mwanza</option>
         <option>Mbeya</option><option>Morogoro</option><option>Tanga</option><option>Kilimanjaro</option>
         <option>Kagera</option><option>Mara</option>
       </select>
     </div>
-    <div class="fg"><label class="fl">Motorcycle Model</label><input type="text" class="fi" id="lnModel" placeholder="e.g. TVS HLX 150, Bajaj Boxer" required></div>
+    <div class="fg"><label class="fl" id="lbl-model">Mfano wa Pikipiki</label><input type="text" class="fi" id="lnModel" placeholder="TVS HLX 150, Bajaj Boxer" required></div>
     <div class="frow">
-      <div class="fg"><label class="fl">Motorcycle Value (TZS)</label><input type="number" class="fi" id="lnMV" placeholder="3500000" required></div>
-      <div class="fg"><label class="fl">Total Repayment (TZS)</label><input type="number" class="fi" id="lnTR" placeholder="4200000" required></div>
+      <div class="fg"><label class="fl" id="lbl-mv-f">Thamani (TZS)</label><input type="text" inputmode="numeric" class="fi" id="lnMV" placeholder="3,500,000" required></div>
+      <div class="fg"><label class="fl" id="lbl-tr-f">Jumla Kulipa (TZS)</label><input type="text" inputmode="numeric" class="fi" id="lnTR" placeholder="4,200,000" required></div>
     </div>
-    <div class="fg"><label class="fl">Interest Amount (TZS)</label><input type="number" class="fi" id="lnInt" placeholder="700000" required></div>
     <div class="frow">
-      <div class="fg"><label class="fl">Start Date</label><input type="date" class="fi" id="lnSD" required></div>
-      <div class="fg"><label class="fl">End Date</label><input type="date" class="fi" id="lnED" required></div>
+      <div class="fg"><label class="fl" id="lbl-sd">Tarehe ya Kuanza</label><input type="date" class="fi" id="lnSD" required></div>
+      <div class="fg"><label class="fl" id="lbl-ed">Tarehe ya Mwisho</label><input type="date" class="fi" id="lnED" required></div>
     </div>
-    <div class="fg"><label class="fl">Repayment Frequency</label>
+    <div class="fg"><label class="fl" id="lbl-freq">Mzunguko wa Malipo</label>
       <select class="fi" id="lnFreq" required>
-        <option value="">Select</option><option>Daily</option><option>Weekly</option><option>Monthly</option>
+        <option value="">Chagua</option><option value="Daily">Kila Siku</option><option value="Weekly">Kila Wiki</option><option value="Monthly">Kila Mwezi</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-p">💾 Save Loan Information</button>
+    <button type="submit" class="btn btn-p"><span id="lbl-save">💾 Hifadhi Taarifa</span></button>
   </form>
 </div>
 </div>
@@ -440,26 +446,26 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 <!-- Add Repayment -->
 <div id="repModal" class="modal">
 <div class="mc">
-  <div class="mh"><div class="mt">ADD PAYMENT</div><button class="xbtn" onclick="closeM('repModal')">×</button></div>
-  <form id="repForm">
-    <div class="fg"><label class="fl">Amount Paid (TZS)</label><input type="number" class="fi" id="rpAmt" placeholder="150000" required></div>
-    <div class="fg"><label class="fl">Payment Date</label><input type="date" class="fi" id="rpDate" required></div>
-    <div class="fg"><label class="fl">Payment Method</label>
+  <div class="mh"><div class="mt" id="m-rep-title">ONGEZA MALIPO</div><button class="xbtn" onclick="closeM('repModal')">×</button></div>
+  <form id="repForm" onsubmit="saveRep(event)">
+    <div class="fg"><label class="fl" id="lbl-amt-paid">Kiasi Kilicholipwa (TZS)</label><input type="text" inputmode="numeric" class="fi" id="rpAmt" placeholder="150,000" required></div>
+    <div class="fg"><label class="fl" id="lbl-pay-date">Tarehe ya Malipo</label><input type="date" class="fi" id="rpDate" required></div>
+    <div class="fg"><label class="fl" id="lbl-pay-method">Njia ya Malipo</label>
       <select class="fi" id="rpMethod" required>
-        <option value="">Select</option><option>Cash</option><option>M-Pesa</option>
-        <option>Airtel Money</option><option>Tigo Pesa</option><option>Bank Transfer</option>
+        <option value="">Chagua</option><option>Pesa Taslimu</option><option>M-Pesa</option>
+        <option>Airtel Money</option><option>Tigo Pesa</option><option>Benki</option>
       </select>
     </div>
-    <div class="fg"><label class="fl">Notes (optional)</label><textarea class="fi" id="rpNotes" placeholder="e.g. Weekly payment #4"></textarea></div>
-    <div class="fg"><label class="fl">Receipt Photo (optional)</label>
+    <div class="fg"><label class="fl" id="lbl-notes">Maelezo (si lazima)</label><textarea class="fi" id="rpNotes" placeholder="Malipo ya wiki #4"></textarea></div>
+    <div class="fg"><label class="fl" id="lbl-receipt">Picha ya Risiti (si lazima)</label>
       <div class="upload-zone" onclick="document.getElementById('rpRecFile').click()">
         <input type="file" id="rpRecFile" accept="image/*" capture="camera">
-        <div style="font-size:1.8rem">📷</div>
-        <div style="font-size:.85rem;color:var(--g600);margin-top:.4rem">Tap to take photo or upload</div>
+        <div style="font-size:1.6rem">📷</div>
+        <div style="font-size:.82rem;color:var(--g600);margin-top:.3rem" id="lbl-upload">Bonyeza kupiga picha au kupakia</div>
       </div>
       <div id="rpPrev" class="img-prev hidden"></div>
     </div>
-    <button type="submit" class="btn btn-p">✓ Record Payment</button>
+    <button type="submit" class="btn btn-p"><span id="lbl-rec-pay">✓ Rekodi Malipo</span></button>
   </form>
 </div>
 </div>
@@ -467,22 +473,22 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 <!-- Add Expense -->
 <div id="expModal" class="modal">
 <div class="mc">
-  <div class="mh"><div class="mt">ADD EXPENSE</div><button class="xbtn" onclick="closeM('expModal')">×</button></div>
-  <form id="expForm">
-    <div class="fg"><label class="fl">Expense Type</label>
+  <div class="mh"><div class="mt" id="m-exp-title">ONGEZA GHARAMA</div><button class="xbtn" onclick="closeM('expModal')">×</button></div>
+  <form id="expForm" onsubmit="saveExp(event)">
+    <div class="fg"><label class="fl" id="lbl-exp-type">Aina ya Gharama</label>
       <select class="fi" id="exType" required>
-        <option value="">Select Type</option>
-        <option value="Fuel">⛽ Fuel</option><option value="Repair">🔧 Repair / Service</option>
-        <option value="Insurance">🛡️ Insurance</option><option value="License">📄 License</option>
-        <option value="Tyres">🔴 Tyres</option><option value="Wash">🫧 Wash</option><option value="Other">📋 Other</option>
+        <option value="">Chagua Aina</option>
+        <option value="Mafuta">⛽ Mafuta</option><option value="Ukarabati">🔧 Ukarabati / Huduma</option>
+        <option value="Bima">🛡️ Bima</option><option value="Leseni">📄 Leseni</option>
+        <option value="Tairi">🔴 Tairi</option><option value="Kuosha">🫧 Kuosha</option><option value="Nyingine">📋 Nyingine</option>
       </select>
     </div>
     <div class="frow">
-      <div class="fg"><label class="fl">Amount (TZS)</label><input type="number" class="fi" id="exAmt" placeholder="25000" required></div>
-      <div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="exDate" required></div>
+      <div class="fg"><label class="fl" id="lbl-exp-amt">Kiasi (TZS)</label><input type="text" inputmode="numeric" class="fi" id="exAmt" placeholder="25,000" required></div>
+      <div class="fg"><label class="fl" id="lbl-exp-date">Tarehe</label><input type="date" class="fi" id="exDate" required></div>
     </div>
-    <div class="fg"><label class="fl">Notes (optional)</label><textarea class="fi" id="exNotes" placeholder="Details…"></textarea></div>
-    <button type="submit" class="btn btn-p">✓ Add Expense</button>
+    <div class="fg"><label class="fl" id="lbl-exp-notes">Maelezo</label><textarea class="fi" id="exNotes" placeholder="Maelezo zaidi..."></textarea></div>
+    <button type="submit" class="btn btn-p"><span id="lbl-add-exp-btn">✓ Ongeza Gharama</span></button>
   </form>
 </div>
 </div>
@@ -490,602 +496,643 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 <!-- Receipt Viewer -->
 <div id="rvModal" class="modal">
 <div class="rv-wrap">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <div style="color:#fff;font-weight:700">Receipt</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+    <div style="color:#fff;font-weight:700">Risiti</div>
     <button class="xbtn" onclick="closeM('rvModal')" style="background:rgba(255,255,255,.15);color:#fff">×</button>
   </div>
-  <img id="rvImg" src="" alt="Receipt">
+  <img id="rvImg" src="" alt="Risiti">
 </div>
 </div>
 
 <!-- Delete Confirm -->
 <div id="delModal" class="modal">
 <div class="mc" style="max-height:none">
-  <div class="mh"><div class="mt">DELETE RECORD</div><button class="xbtn" onclick="closeM('delModal')">×</button></div>
-  <p style="margin-bottom:1.25rem;color:var(--g600)">Are you sure? This cannot be undone.</p>
-  <div style="display:flex;gap:.75rem">
-    <button class="btn btn-ghost" onclick="closeM('delModal')">Cancel</button>
-    <button class="btn btn-danger" id="confirmDelBtn">Delete</button>
+  <div class="mh"><div class="mt" id="m-del-title">FUTA REKODI</div><button class="xbtn" onclick="closeM('delModal')">×</button></div>
+  <p style="margin-bottom:1rem;color:var(--g600);font-size:.9rem" id="lbl-del-confirm">Una uhakika? Kitendo hiki hakiwezi kubatilishwa.</p>
+  <div style="display:flex;gap:.65rem">
+    <button class="btn btn-ghost" onclick="closeM('delModal')" id="lbl-cancel">Ghairi</button>
+    <button class="btn btn-danger" id="confirmDelBtn" onclick="doDelete()" id="lbl-del-btn">Futa</button>
   </div>
 </div>
 </div>
 
 <script>
-// ════════════════════════════════════
-// 🔧 CONFIGURATION — EDIT THESE TWO VALUES
-// Get them from Supabase > Project Settings > API
-// ════════════════════════════════════
+// ══════════════════════════════════════
+// CONFIG — replace with your values
+// ══════════════════════════════════════
 const SUPABASE_URL = 'https://bcrgwjvankalaibyzddt.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjcmd3anZhbmthbGFpYnl6ZGR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MjMxMzIsImV4cCI6MjA5MjA5OTEzMn0.HHC3MOAJD8Q5s9VPYanB2Enjuy6gVPACncJc-dJJ3hI';
-
-// ════════════════════════════════════
-// INIT
-// ════════════════════════════════════
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ════════════════════════════════════
-// UTILS
-// ════════════════════════════════════
-const fmt = n => isNaN(n)||n===null ? '—' : 'TZS ' + Math.round(n).toLocaleString('en-US');
-const fmtD = d => { if(!d) return '—'; return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); };
-const todayStr = () => new Date().toISOString().split('T')[0];
-const EXP_COLORS = {Fuel:'#FF6B35',Repair:'#EF476F',Insurance:'#06D6A0',License:'#185FA5',Tyres:'#F7B801',Wash:'#7F77DD',Other:'#888780'};
+// ══════════════════════════════════════
+// TRANSLATIONS
+// ══════════════════════════════════════
+const T = {
+  sw:{
+    'lh-sub':'Fuatilia Safari Yako ya Umiliki',
+    'lbl-phone':'Nambari ya Simu','lbl-phone-hint':'Ingiza nambari bila +255, mfano: 765827355',
+    'lbl-otp':'Nambari ya Uthibitisho (OTP)',
+    'lbl-signin':'🔑 Ingia','lbl-signup':'✨ Jisajili','lbl-verify':'✓ Thibitisha','lbl-back':'← Rudi',
+    'sub-title':'CHAGUA MPANGO WAKO','sub-sub':'Fungua upatikanaji kamili wa Boda Tracker',
+    'sub-period':'kwa mwaka · ghairi wakati wowote',
+    'f1':'Ufuatiliaji wa mkopo na malipo','f2':'Makundi ya gharama na uchanganuzi',
+    'f3':'Upakiaji wa picha za risiti','f4':'Vikumbusho vya malipo','f5':'Usafirishaji wa data kwa Excel',
+    'lbl-pm':'Njia ya Malipo','lbl-sub-btn':'Jiandikishe Sasa','sub-note':'Ombi la malipo litatumwa kwa simu yako',
+    'lbl-welcome':'Karibu tena,','lbl-mv':'Thamani ya Pikipiki','lbl-tr':'Jumla ya Kulipa',
+    'lbl-pd':'Kimelipwa','lbl-rm':'Kilichobaki','lbl-freq-d':'Mzunguko','lbl-days':'Siku Zilizobaki',
+    'lbl-prog':'Maendeleo ya Mkopo','lbl-start':'Anza','lbl-end':'Mwisho','lbl-next':'Malipo Yajayo',
+    'lbl-setup':'⚙️ Sanidi Mkopo','lbl-logout-btn':'Toka',
+    'nav-home':'Nyumbani','nav-pay':'Malipo','nav-exp':'Gharama','nav-ana':'Takwimu',
+    'nav-home2':'Nyumbani','nav-pay2':'Malipo','nav-exp2':'Gharama','nav-ana2':'Takwimu',
+    'rep-title':'MALIPO','lbl-add-rep':'Ongeza Malipo',
+    'exp-title':'GHARAMA','lbl-add-exp':'Ongeza Gharama',
+    'ana-title':'TAKWIMU','lbl-ana-sub':'Muhtasari wa fedha',
+    'm-loan-title':'SANIDI MKOPO','lbl-name':'Jina Kamili','lbl-email-f':'Barua pepe',
+    'lbl-phone-f':'Simu','lbl-region':'Mkoa','lbl-model':'Mfano wa Pikipiki',
+    'lbl-mv-f':'Thamani (TZS)','lbl-tr-f':'Jumla Kulipa (TZS)',
+    'lbl-sd':'Tarehe ya Kuanza','lbl-ed':'Tarehe ya Mwisho','lbl-freq':'Mzunguko wa Malipo','lbl-save':'💾 Hifadhi Taarifa',
+    'm-rep-title':'ONGEZA MALIPO','lbl-amt-paid':'Kiasi Kilicholipwa (TZS)','lbl-pay-date':'Tarehe ya Malipo',
+    'lbl-pay-method':'Njia ya Malipo','lbl-notes':'Maelezo (si lazima)','lbl-receipt':'Picha ya Risiti (si lazima)',
+    'lbl-upload':'Bonyeza kupiga picha au kupakia','lbl-rec-pay':'✓ Rekodi Malipo',
+    'm-exp-title':'ONGEZA GHARAMA','lbl-exp-type':'Aina ya Gharama','lbl-exp-amt':'Kiasi (TZS)',
+    'lbl-exp-date':'Tarehe','lbl-exp-notes':'Maelezo','lbl-add-exp-btn':'✓ Ongeza Gharama',
+    'm-del-title':'FUTA REKODI','lbl-del-confirm':'Una uhakika? Kitendo hiki hakiwezi kubatilishwa.',
+    'lbl-cancel':'Ghairi','lbl-del-btn':'Futa',
+    'health-good':'✓ Uko Sawa','health-warn':'⚠ Kidogo Nyuma','health-bad':'✗ Nyuma Sana',
+    'lbl-export':'📥 Hamisha Excel','lbl-share':'📤 Shiriki',
+    'toast-saved':'✓ Taarifa zimehifadhiwa','toast-deleted':'Rekodi imefutwa','toast-pay':'✓ Malipo yamerekodi','toast-exp':'✓ Gharama zimeongezwa',
+  },
+  en:{
+    'lh-sub':'Track Your Journey to Ownership',
+    'lbl-phone':'Phone Number','lbl-phone-hint':'Enter number without +255, e.g. 765827355',
+    'lbl-otp':'OTP Code',
+    'lbl-signin':'🔑 Sign In','lbl-signup':'✨ Sign Up','lbl-verify':'✓ Verify','lbl-back':'← Back',
+    'sub-title':'CHOOSE YOUR PLAN','sub-sub':'Unlock full access to Boda Tracker',
+    'sub-period':'per year · cancel anytime',
+    'f1':'Loan tracking & repayment management','f2':'Expense categories & analytics',
+    'f3':'Receipt photo upload & storage','f4':'Payment reminders & alerts','f5':'Export data to Excel',
+    'lbl-pm':'Payment Method','lbl-sub-btn':'Subscribe Now','sub-note':'Payment prompt sent to your phone',
+    'lbl-welcome':'Welcome back,','lbl-mv':'Motorcycle Value','lbl-tr':'Total to Repay',
+    'lbl-pd':'Total Paid','lbl-rm':'Remaining','lbl-freq-d':'Frequency','lbl-days':'Days Left',
+    'lbl-prog':'Loan Repayment Progress','lbl-start':'Start','lbl-end':'End','lbl-next':'Next Payment Due',
+    'lbl-setup':'⚙️ Setup Loan','lbl-logout-btn':'Logout',
+    'nav-home':'Home','nav-pay':'Payments','nav-exp':'Expenses','nav-ana':'Analytics',
+    'nav-home2':'Home','nav-pay2':'Payments','nav-exp2':'Expenses','nav-ana2':'Analytics',
+    'rep-title':'REPAYMENTS','lbl-add-rep':'Add Payment',
+    'exp-title':'EXPENSES','lbl-add-exp':'Add Expense',
+    'ana-title':'ANALYTICS','lbl-ana-sub':'Your financial overview',
+    'm-loan-title':'LOAN SETUP','lbl-name':'Full Name','lbl-email-f':'Email',
+    'lbl-phone-f':'Phone','lbl-region':'Region','lbl-model':'Motorcycle Model',
+    'lbl-mv-f':'Value (TZS)','lbl-tr-f':'Total Repayment (TZS)',
+    'lbl-sd':'Start Date','lbl-ed':'End Date','lbl-freq':'Repayment Frequency','lbl-save':'💾 Save Information',
+    'm-rep-title':'ADD PAYMENT','lbl-amt-paid':'Amount Paid (TZS)','lbl-pay-date':'Payment Date',
+    'lbl-pay-method':'Payment Method','lbl-notes':'Notes (optional)','lbl-receipt':'Receipt Photo (optional)',
+    'lbl-upload':'Tap to take photo or upload','lbl-rec-pay':'✓ Record Payment',
+    'm-exp-title':'ADD EXPENSE','lbl-exp-type':'Expense Type','lbl-exp-amt':'Amount (TZS)',
+    'lbl-exp-date':'Date','lbl-exp-notes':'Notes','lbl-add-exp-btn':'✓ Add Expense',
+    'm-del-title':'DELETE RECORD','lbl-del-confirm':'Are you sure? This cannot be undone.',
+    'lbl-cancel':'Cancel','lbl-del-btn':'Delete',
+    'health-good':'✓ On Track','health-warn':'⚠ Slightly Behind','health-bad':'✗ Behind Schedule',
+    'lbl-export':'📥 Export Excel','lbl-share':'📤 Share',
+    'toast-saved':'✓ Information saved','toast-deleted':'Record deleted','toast-pay':'✓ Payment recorded','toast-exp':'✓ Expense added',
+  }
+};
 
-function showToast(msg, dur=2400) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), dur);
+let lang = localStorage.getItem('lang') || 'sw';
+function t(k){ return (T[lang]||T.sw)[k] || k; }
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[id]').forEach(el => {
+    if(T[lang][el.id]) el.textContent = T[lang][el.id];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.getElementById('swView').classList.toggle('hidden', lang !== 'sw');
+  document.getElementById('enView').classList.toggle('hidden', lang !== 'en');
+  // reload loader text
+  document.getElementById('loaderText').textContent = lang === 'sw' ? 'Inapakia...' : 'Loading...';
 }
-function setLoading(on) { document.getElementById('loader').classList.toggle('hidden', !on); }
-function openM(id) { document.getElementById(id).classList.add('active'); }
-function closeM(id) { document.getElementById(id).classList.remove('active'); }
 
-function nav(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(page + 'Page').classList.add('active');
-  document.querySelectorAll('.ni').forEach(n => n.classList.toggle('active', n.dataset.page === page));
+function setLang(l){
+  lang = l;
+  localStorage.setItem('lang', l);
+  applyLang();
+}
+
+// ══════════════════════════════════════
+// COMMA FORMATTING
+// ══════════════════════════════════════
+function fmtComma(v){ return v.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function parseAmt(v){ return parseFloat(v.replace(/,/g,'')) || 0; }
+function attachComma(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input', ()=>{
+    const pos = el.selectionStart;
+    const raw = el.value.replace(/,/g,'');
+    if(!isNaN(raw) && raw !== ''){
+      const formatted = fmtComma(raw);
+      el.value = formatted;
+      // restore cursor roughly
+      el.selectionStart = el.selectionEnd = formatted.length;
+    }
+  });
+}
+['lnMV','lnTR','rpAmt','exAmt'].forEach(attachComma);
+
+// ══════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════
+const fmt = n => isNaN(n)||n===null ? '—' : 'TZS ' + fmtComma(Math.round(n));
+const fmtD = d => { if(!d) return '—'; return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); };
+const todayStr = () => new Date().toISOString().split('T')[0];
+const EXP_COLORS = {Mafuta:'#FF6B35',Ukarabati:'#EF476F',Bima:'#06D6A0',Leseni:'#185FA5',Tairi:'#F7B801',Kuosha:'#7F77DD',Nyingine:'#888780',Fuel:'#FF6B35',Repair:'#EF476F',Insurance:'#06D6A0',License:'#185FA5',Tyres:'#F7B801',Wash:'#7F77DD',Other:'#888780'};
+
+function showToast(msg, dur=2400){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), dur);
+}
+function setLoading(on, msg){ document.getElementById('loader').classList.toggle('hidden',!on); if(msg) document.getElementById('loaderText').textContent=msg; }
+function openM(id){ document.getElementById(id).classList.add('active'); }
+function closeM(id){ document.getElementById(id).classList.remove('active'); }
+
+function nav(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page+'Page').classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.toggle('active',n.dataset.page===page));
   if(page==='dashboard') loadDashboard();
   if(page==='repayments') loadRepayments();
   if(page==='expenses') loadExpenses();
   if(page==='analytics') loadAnalytics();
 }
 
-// ════════════════════════════════════
-// AUTH — SESSION STATE
-// ════════════════════════════════════
+// ══════════════════════════════════════
+// AUTH STATE
+// ══════════════════════════════════════
 let currentUser = null;
-
-sb.auth.onAuthStateChange(async (event, session) => {
+sb.auth.onAuthStateChange(async (event, session)=>{
   setLoading(false);
-  if(session?.user) {
+  if(session?.user){
     currentUser = session.user;
-    const profile = await getProfile();
-    if(!profile?.subscribed) {
-      nav('subscription');
-    } else {
-      nav('dashboard');
-    }
+    const prof = await getProfile();
+    nav(prof?.subscribed ? 'dashboard' : 'subscription');
   } else {
     currentUser = null;
     nav('login');
   }
 });
-
-async function getProfile() {
+async function getProfile(){
   if(!currentUser) return null;
-  const { data } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+  const {data} = await sb.from('profiles').select('*').eq('id',currentUser.id).single();
   return data;
 }
 
-// ════════════════════════════════════
-// LOGIN — TAB SWITCHING
-// ════════════════════════════════════
-document.querySelectorAll('.tab[data-tab]').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.tab[data-tab]').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    document.getElementById('phoneTab').classList.toggle('hidden', b.dataset.tab !== 'phone');
-    document.getElementById('emailTab').classList.toggle('hidden', b.dataset.tab !== 'email');
-  });
-});
-
-document.querySelectorAll('.tab[data-etab]').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.tab[data-etab]').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    document.getElementById('emailAuthBtn').textContent = b.dataset.etab === 'signup' ? 'Create Account' : 'Sign In';
-    document.getElementById('emailAuthBtn').dataset.mode = b.dataset.etab;
-  });
-});
-
-// ════════════════════════════════════
-// AUTH — PHONE OTP
-// ════════════════════════════════════
-document.getElementById('sendOTPBtn').addEventListener('click', async () => {
-  const phone = document.getElementById('phoneInput').value.trim();
+// ══════════════════════════════════════
+// SWAHILI LOGIN
+// ══════════════════════════════════════
+let swMode = '';
+async function swAction(mode){
+  const num = document.getElementById('phoneInput').value.trim();
   const errEl = document.getElementById('phoneErr');
   errEl.classList.add('hidden');
-  if(!phone || !phone.startsWith('+')) {
-    errEl.textContent = 'Enter phone with country code, e.g. +255712345678';
-    errEl.classList.remove('hidden');
-    return;
-  }
-  const btn = document.getElementById('sendOTPBtn');
-  btn.innerHTML = '<div class="spinner"></div> Sending…';
-  btn.disabled = true;
-
-  const { error } = await sb.auth.signInWithOtp({ phone });
-  btn.innerHTML = 'Send OTP →';
-  btn.disabled = false;
-  if(error) {
-    errEl.textContent = error.message;
-    errEl.classList.remove('hidden');
-    return;
-  }
-  document.getElementById('otpSentTo').textContent = phone;
-  document.getElementById('stepSendOTP').classList.add('hidden');
-  document.getElementById('stepVerifyOTP').classList.remove('hidden');
-});
-
-document.getElementById('resendOTPBtn').addEventListener('click', () => {
-  document.getElementById('stepVerifyOTP').classList.add('hidden');
-  document.getElementById('stepSendOTP').classList.remove('hidden');
-});
-
-document.getElementById('verifyOTPBtn').addEventListener('click', async () => {
-  const phone = document.getElementById('phoneInput').value.trim();
-  const token = document.getElementById('otpInput').value.trim();
-  const errEl = document.getElementById('otpErr');
-  errEl.classList.add('hidden');
-  if(!token || token.length < 6) {
-    errEl.textContent = 'Enter the 6-digit code from your SMS';
-    errEl.classList.remove('hidden');
-    return;
-  }
-  const btn = document.getElementById('verifyOTPBtn');
-  btn.innerHTML = '<div class="spinner"></div> Verifying…';
-  btn.disabled = true;
-
-  const { error } = await sb.auth.verifyOtp({ phone, token, type: 'sms' });
-  btn.innerHTML = 'Verify & Login';
-  btn.disabled = false;
-  if(error) {
-    errEl.textContent = error.message;
-    errEl.classList.remove('hidden');
-  }
-  // onAuthStateChange handles redirect
-});
-
-// ════════════════════════════════════
-// AUTH — EMAIL
-// ════════════════════════════════════
-document.getElementById('emailAuthBtn').dataset.mode = 'signin';
-document.getElementById('emailAuthBtn').addEventListener('click', async () => {
-  const email = document.getElementById('emailInput').value.trim();
-  const pass = document.getElementById('passInput').value;
-  const errEl = document.getElementById('emailErr');
-  const mode = document.getElementById('emailAuthBtn').dataset.mode;
-  errEl.classList.add('hidden');
-  const btn = document.getElementById('emailAuthBtn');
+  if(!num || num.length < 9){ errEl.textContent = t('lbl-phone-hint'); errEl.classList.remove('hidden'); return; }
+  const phone = '+255' + num.replace(/^0/,'');
+  swMode = mode;
+  const btn = mode==='signin' ? document.getElementById('swSignInBtn') : document.getElementById('swSignUpBtn');
+  const orig = btn.innerHTML;
   btn.innerHTML = '<div class="spinner"></div>';
   btn.disabled = true;
+  const {error} = await sb.auth.signInWithOtp({phone});
+  btn.innerHTML = orig; btn.disabled = false;
+  if(error){ errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
+  document.getElementById('swAuthBtns').classList.add('hidden');
+  document.getElementById('swOTPStep').classList.remove('hidden');
+  document.getElementById('swVerifyBtns').classList.remove('hidden');
+}
+async function verifyOTP(){
+  const num = document.getElementById('phoneInput').value.trim();
+  const token = document.getElementById('otpInput').value.trim();
+  const phone = '+255' + num.replace(/^0/,'');
+  const errEl = document.getElementById('phoneErr');
+  errEl.classList.add('hidden');
+  if(token.length < 6){ errEl.textContent = lang==='sw'?'Ingiza nambari 6 za OTP':'Enter the 6-digit code'; errEl.classList.remove('hidden'); return; }
+  const btn = document.getElementById('swVerifyBtn');
+  btn.innerHTML = '<div class="spinner"></div>'; btn.disabled = true;
+  const {error} = await sb.auth.verifyOtp({phone, token, type:'sms'});
+  btn.innerHTML = `<span>${t('lbl-verify')}</span>`; btn.disabled = false;
+  if(error){ errEl.textContent = error.message; errEl.classList.remove('hidden'); }
+}
+function cancelOTP(){
+  document.getElementById('swAuthBtns').classList.remove('hidden');
+  document.getElementById('swOTPStep').classList.add('hidden');
+  document.getElementById('swVerifyBtns').classList.add('hidden');
+  document.getElementById('otpInput').value = '';
+}
 
+// ══════════════════════════════════════
+// ENGLISH LOGIN
+// ══════════════════════════════════════
+function enTab(tab){
+  document.querySelectorAll('.etab[data-etab]').forEach(b=>b.classList.toggle('active',b.dataset.etab===tab));
+  document.getElementById('enPhoneTab').classList.toggle('hidden', tab!=='phone');
+  document.getElementById('enEmailTab').classList.toggle('hidden', tab!=='email');
+}
+async function enSendOTP(){
+  const num = document.getElementById('enPhoneInput').value.trim();
+  const phone = '+255' + num.replace(/^0/,'');
+  const errEl = document.getElementById('enPhoneErr');
+  errEl.classList.add('hidden');
+  if(!num || num.length < 9){ errEl.textContent='Enter a valid 9-digit number'; errEl.classList.remove('hidden'); return; }
+  const btn = document.getElementById('enSendOTPBtn');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
+  const {error} = await sb.auth.signInWithOtp({phone});
+  btn.innerHTML='Send OTP →'; btn.disabled=false;
+  if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); return; }
+  document.getElementById('enOTPSentTo').textContent = num;
+  document.getElementById('enOTPStep1').classList.add('hidden');
+  document.getElementById('enOTPStep2').classList.remove('hidden');
+}
+async function enVerifyOTP(){
+  const num = document.getElementById('enPhoneInput').value.trim();
+  const token = document.getElementById('enOTPInput').value.trim();
+  const phone = '+255'+num.replace(/^0/,'');
+  const errEl = document.getElementById('enOTPErr');
+  errEl.classList.add('hidden');
+  if(token.length<6){ errEl.textContent='Enter the 6-digit code'; errEl.classList.remove('hidden'); return; }
+  const {error} = await sb.auth.verifyOtp({phone,token,type:'sms'});
+  if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); }
+}
+function enCancelOTP(){
+  document.getElementById('enOTPStep1').classList.remove('hidden');
+  document.getElementById('enOTPStep2').classList.add('hidden');
+  document.getElementById('enOTPInput').value='';
+}
+let emailMode='signin';
+function setEmailMode(m){
+  emailMode=m;
+  document.querySelectorAll('.etab[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));
+  document.getElementById('emailAuthBtn').textContent = m==='signup'?'Create Account':'Sign In';
+}
+async function emailAuth(){
+  const email=document.getElementById('emailIn').value.trim();
+  const pass=document.getElementById('passIn').value;
+  const errEl=document.getElementById('emailErr'); errEl.classList.add('hidden');
+  const btn=document.getElementById('emailAuthBtn');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
   let error;
-  if(mode === 'signup') {
-    ({ error } = await sb.auth.signUp({ email, password: pass }));
-    if(!error) showToast('✓ Account created — check email to confirm');
+  if(emailMode==='signup'){
+    ({error}=await sb.auth.signUp({email,password:pass}));
+    if(!error) showToast('✓ Account created — check email');
   } else {
-    ({ error } = await sb.auth.signInWithPassword({ email, password: pass }));
+    ({error}=await sb.auth.signInWithPassword({email,password:pass}));
   }
-  btn.innerHTML = mode === 'signup' ? 'Create Account' : 'Sign In';
-  btn.disabled = false;
-  if(error) { errEl.textContent = error.message; errEl.classList.remove('hidden'); }
-});
+  btn.innerHTML=emailMode==='signup'?'Create Account':'Sign In'; btn.disabled=false;
+  if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); }
+}
 
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // SUBSCRIPTION
-// ════════════════════════════════════
-document.querySelectorAll('.pm').forEach(m => {
-  m.addEventListener('click', () => {
-    document.querySelectorAll('.pm').forEach(x => x.classList.remove('sel'));
-    m.classList.add('sel');
-  });
+// ══════════════════════════════════════
+document.querySelectorAll('.pm').forEach(m=>{
+  m.addEventListener('click',()=>{ document.querySelectorAll('.pm').forEach(x=>x.classList.remove('sel')); m.classList.add('sel'); });
 });
-
-document.getElementById('subscribeBtn').addEventListener('click', async () => {
-  if(!document.querySelector('.pm.sel')) { showToast('Please select a payment method'); return; }
-  const btn = document.getElementById('subscribeBtn');
-  btn.innerHTML = '<div class="spinner"></div> Processing…';
-  btn.disabled = true;
-
-  // In production: call your payment gateway API here.
-  // After confirmed payment, update profile:
-  const expiry = new Date();
-  expiry.setFullYear(expiry.getFullYear() + 1);
-  await sb.from('profiles').update({
-    subscribed: true,
-    sub_expires: expiry.toISOString()
-  }).eq('id', currentUser.id);
-
-  btn.innerHTML = 'Subscribe Now';
-  btn.disabled = false;
-  showToast('✓ Subscription activated!');
+async function subscribe(){
+  if(!document.querySelector('.pm.sel')){ showToast(lang==='sw'?'Chagua njia ya malipo':'Select a payment method'); return; }
+  const btn=document.getElementById('subscribeBtn');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
+  const expiry=new Date(); expiry.setFullYear(expiry.getFullYear()+1);
+  await sb.from('profiles').update({subscribed:true,sub_expires:expiry.toISOString()}).eq('id',currentUser.id);
+  btn.innerHTML=`<span>${t('lbl-sub-btn')}</span>`; btn.disabled=false;
+  showToast(lang==='sw'?'✓ Umefanikiwa kujiandikisha!':'✓ Subscription activated!');
   nav('dashboard');
-  setTimeout(() => openM('loanModal'), 400);
-});
+  setTimeout(()=>openM('loanModal'),400);
+}
 
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // LOGOUT
-// ════════════════════════════════════
-document.getElementById('logoutDashBtn').addEventListener('click', async () => {
-  await sb.auth.signOut();
-  showToast('Logged out');
-});
+// ══════════════════════════════════════
+async function logout(){ await sb.auth.signOut(); }
 
-// ════════════════════════════════════
-// LOAN SETUP
-// ════════════════════════════════════
-document.getElementById('setupLoanBtn').addEventListener('click', async () => {
-  const { data } = await sb.from('loans').select('*').eq('user_id', currentUser.id).order('created_at', {ascending:false}).limit(1).single();
-  if(data) {
-    document.getElementById('lnName').value = '';
-    document.getElementById('lnModel').value = data.model || '';
-    document.getElementById('lnMV').value = data.moto_value || '';
-    document.getElementById('lnTR').value = data.repay_amount || '';
-    document.getElementById('lnInt').value = data.interest_amount || '';
-    document.getElementById('lnSD').value = data.start_date || '';
-    document.getElementById('lnED').value = data.end_date || '';
-    document.getElementById('lnFreq').value = data.frequency || '';
-  }
-  const prof = await getProfile();
-  if(prof) {
-    document.getElementById('lnName').value = prof.full_name || '';
-    document.getElementById('lnEmail').value = prof.email || '';
-    document.getElementById('lnPhone').value = prof.phone || '';
-    document.getElementById('lnRegion').value = prof.region || '';
-  }
-  openM('loanModal');
-});
-
-document.getElementById('loanForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.innerHTML = '<div class="spinner"></div> Saving…';
-  btn.disabled = true;
-
-  // Update profile
-  await sb.from('profiles').update({
-    full_name: document.getElementById('lnName').value,
-    email: document.getElementById('lnEmail').value,
-    phone: document.getElementById('lnPhone').value,
-    region: document.getElementById('lnRegion').value
-  }).eq('id', currentUser.id);
-
-  // Upsert loan (delete old, insert new)
-  await sb.from('loans').delete().eq('user_id', currentUser.id);
-  const { error } = await sb.from('loans').insert({
-    user_id: currentUser.id,
-    model: document.getElementById('lnModel').value,
-    moto_value: parseFloat(document.getElementById('lnMV').value),
-    repay_amount: parseFloat(document.getElementById('lnTR').value),
-    interest_amount: parseFloat(document.getElementById('lnInt').value),
-    start_date: document.getElementById('lnSD').value,
-    end_date: document.getElementById('lnED').value,
-    frequency: document.getElementById('lnFreq').value
-  });
-  btn.innerHTML = '💾 Save Loan Information';
-  btn.disabled = false;
-  if(error) { showToast('Error: ' + error.message); return; }
-  closeM('loanModal');
-  showToast('✓ Loan information saved');
-  loadDashboard();
-});
-
-// ════════════════════════════════════
-// DASHBOARD
-// ════════════════════════════════════
-async function loadDashboard() {
-  const [profRes, loanRes, repRes] = await Promise.all([
-    sb.from('profiles').select('*').eq('id', currentUser.id).single(),
-    sb.from('loans').select('*').eq('user_id', currentUser.id).order('created_at',{ascending:false}).limit(1).single(),
-    sb.from('repayments').select('amount').eq('user_id', currentUser.id)
+// ══════════════════════════════════════
+// LOAN MODAL
+// ══════════════════════════════════════
+async function openLoanModal(){
+  const [{data:prof},{data:loan}] = await Promise.all([
+    sb.from('profiles').select('*').eq('id',currentUser.id).single(),
+    sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single()
   ]);
+  if(prof){ document.getElementById('lnName').value=prof.full_name||''; document.getElementById('lnEmail').value=prof.email||''; document.getElementById('lnPhone').value=prof.phone||''; document.getElementById('lnRegion').value=prof.region||''; }
+  if(loan){ document.getElementById('lnModel').value=loan.model||''; document.getElementById('lnMV').value=loan.moto_value?fmtComma(loan.moto_value):''; document.getElementById('lnTR').value=loan.repay_amount?fmtComma(loan.repay_amount):''; document.getElementById('lnSD').value=loan.start_date||''; document.getElementById('lnED').value=loan.end_date||''; document.getElementById('lnFreq').value=loan.frequency||''; }
+  openM('loanModal');
+}
+async function saveLoan(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
+  await sb.from('profiles').update({full_name:document.getElementById('lnName').value,email:document.getElementById('lnEmail').value,phone:document.getElementById('lnPhone').value,region:document.getElementById('lnRegion').value}).eq('id',currentUser.id);
+  await sb.from('loans').delete().eq('user_id',currentUser.id);
+  const {error}=await sb.from('loans').insert({user_id:currentUser.id,model:document.getElementById('lnModel').value,moto_value:parseAmt(document.getElementById('lnMV').value),repay_amount:parseAmt(document.getElementById('lnTR').value),interest_amount:0,start_date:document.getElementById('lnSD').value,end_date:document.getElementById('lnED').value,frequency:document.getElementById('lnFreq').value});
+  btn.innerHTML=`<span>${t('lbl-save')}</span>`; btn.disabled=false;
+  if(error){ showToast('Error: '+error.message); return; }
+  closeM('loanModal'); showToast(t('toast-saved')); loadDashboard();
+}
 
-  const prof = profRes.data;
-  const loan = loanRes.data;
-  const reps = repRes.data || [];
-
-  document.getElementById('dashName').textContent = prof?.full_name || 'Rider';
-  document.getElementById('dashMoto').textContent = loan ? '🏍️ ' + loan.model : '';
-  document.getElementById('noLoanBanner').classList.toggle('hidden', !!loan);
-
+// ══════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════
+async function loadDashboard(){
+  const [pr,lr,rr]=await Promise.all([
+    sb.from('profiles').select('*').eq('id',currentUser.id).single(),
+    sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single(),
+    sb.from('repayments').select('amount').eq('user_id',currentUser.id)
+  ]);
+  const prof=pr.data, loan=lr.data, reps=rr.data||[];
+  document.getElementById('dashName').textContent=prof?.full_name||(lang==='sw'?'Dereva':'Rider');
+  document.getElementById('dashMoto').textContent=loan?'🏍️ '+loan.model:'';
+  document.getElementById('noLoanBanner').classList.toggle('hidden',!!loan);
   if(!loan) return;
-
-  const totalPaid = reps.reduce((s,r) => s + parseFloat(r.amount), 0);
-  const remaining = Math.max(loan.repay_amount - totalPaid, 0);
-  const pct = Math.min((totalPaid / loan.repay_amount) * 100, 100);
-  const endDate = new Date(loan.end_date);
-  const startDate = new Date(loan.start_date);
-  const today = new Date();
-  const daysLeft = Math.max(Math.ceil((endDate - today) / 86400000), 0);
-  const daysTotal = Math.ceil((endDate - startDate) / 86400000);
-  const daysPassed = daysTotal - daysLeft;
-
-  document.getElementById('stMV').textContent = fmt(loan.moto_value);
-  document.getElementById('stTR').textContent = fmt(loan.repay_amount);
-  document.getElementById('stPd').textContent = fmt(totalPaid);
-  document.getElementById('stRm').textContent = fmt(remaining);
-  document.getElementById('stIn').textContent = fmt(loan.interest_amount);
-  document.getElementById('stDL').textContent = daysLeft;
-  document.getElementById('progPct').textContent = Math.round(pct) + '%';
-  document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('dStart').textContent = fmtD(loan.start_date);
-  document.getElementById('dEnd').textContent = fmtD(loan.end_date);
-
-  const timePct = daysTotal > 0 ? (daysPassed / daysTotal) * 100 : 0;
-  const diff = pct - timePct;
-  let hC, hT;
-  if(diff >= -5) { hC='hg'; hT='✓ On Track'; }
-  else if(diff >= -15) { hC='hw'; hT='⚠ Slightly Behind'; }
-  else { hC='hb'; hT='✗ Behind Schedule'; }
-  document.getElementById('healthBadge').innerHTML = `<span class="hbadge ${hC}">${hT}</span>`;
-
-  document.getElementById('nextCard').style.display = 'block';
-  document.getElementById('nextDate').textContent = fmtD(nextPayDate(loan.frequency));
-  document.getElementById('nextFreq').textContent = loan.frequency + ' repayment';
+  const totalPaid=reps.reduce((s,r)=>s+parseFloat(r.amount),0);
+  const remaining=Math.max(loan.repay_amount-totalPaid,0);
+  const pct=Math.min((totalPaid/loan.repay_amount)*100,100);
+  const endDate=new Date(loan.end_date), startDate=new Date(loan.start_date), today=new Date();
+  const daysLeft=Math.max(Math.ceil((endDate-today)/86400000),0);
+  const daysTotal=Math.ceil((endDate-startDate)/86400000);
+  const daysPassed=daysTotal-daysLeft;
+  document.getElementById('stMV').textContent=fmt(loan.moto_value);
+  document.getElementById('stTR').textContent=fmt(loan.repay_amount);
+  document.getElementById('stPd').textContent=fmt(totalPaid);
+  document.getElementById('stRm').textContent=fmt(remaining);
+  document.getElementById('stFreq').textContent=loan.frequency||'—';
+  document.getElementById('stDL').textContent=daysLeft;
+  document.getElementById('progPct').textContent=Math.round(pct)+'%';
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('dStart').textContent=fmtD(loan.start_date);
+  document.getElementById('dEnd').textContent=fmtD(loan.end_date);
+  const timePct=daysTotal>0?(daysPassed/daysTotal)*100:0;
+  const diff=pct-timePct;
+  let hC,hT;
+  if(diff>=-5){hC='hg';hT=t('health-good');}else if(diff>=-15){hC='hw';hT=t('health-warn');}else{hC='hb';hT=t('health-bad');}
+  document.getElementById('healthBadge').innerHTML=`<span class="hbadge ${hC}">${hT}</span>`;
+  document.getElementById('nextCard').style.display='block';
+  document.getElementById('nextDate').textContent=fmtD(nextPayDate(loan.frequency));
+  document.getElementById('nextFreq').textContent=loan.frequency;
 }
+function nextPayDate(freq){ const d=new Date(); if(freq==='Daily')d.setDate(d.getDate()+1); else if(freq==='Weekly')d.setDate(d.getDate()+7); else d.setMonth(d.getMonth()+1); return d.toISOString().split('T')[0]; }
 
-function nextPayDate(freq) {
-  const d = new Date();
-  if(freq==='Daily') d.setDate(d.getDate()+1);
-  else if(freq==='Weekly') d.setDate(d.getDate()+7);
-  else d.setMonth(d.getMonth()+1);
-  return d.toISOString().split('T')[0];
-}
-
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // REPAYMENTS
-// ════════════════════════════════════
-document.getElementById('addRepBtn').addEventListener('click', () => {
+// ══════════════════════════════════════
+function openRepModal(){
   document.getElementById('repForm').reset();
-  document.getElementById('rpDate').value = todayStr();
-  document.getElementById('rpPrev').innerHTML = '';
+  document.getElementById('rpDate').value=todayStr();
+  document.getElementById('rpPrev').innerHTML='';
   document.getElementById('rpPrev').classList.add('hidden');
   openM('repModal');
-});
-
-document.getElementById('rpRecFile').addEventListener('change', e => {
-  const f = e.target.files[0];
-  if(!f) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const p = document.getElementById('rpPrev');
-    p.innerHTML = `<img src="${ev.target.result}">`;
-    p.classList.remove('hidden');
-  };
+}
+document.getElementById('rpRecFile').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{ const p=document.getElementById('rpPrev'); p.innerHTML=`<img src="${ev.target.result}">`; p.classList.remove('hidden'); };
   reader.readAsDataURL(f);
 });
-
-document.getElementById('repForm').addEventListener('submit', async e => {
+async function saveRep(e){
   e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.innerHTML = '<div class="spinner"></div> Saving…';
-  btn.disabled = true;
-
-  let receipt_url = null;
-  const file = document.getElementById('rpRecFile').files[0];
-  if(file) {
-    const path = `${currentUser.id}/${Date.now()}_${file.name}`;
-    const { data: upData, error: upErr } = await sb.storage.from('receipts').upload(path, file);
-    if(!upErr) {
-      const { data: urlData } = sb.storage.from('receipts').getPublicUrl(path);
-      receipt_url = urlData?.publicUrl || null;
-    }
-  }
-
-  const loanRes = await sb.from('loans').select('id').eq('user_id', currentUser.id).limit(1).single();
-
-  const { error } = await sb.from('repayments').insert({
-    user_id: currentUser.id,
-    loan_id: loanRes.data?.id || null,
-    amount: parseFloat(document.getElementById('rpAmt').value),
-    paid_on: document.getElementById('rpDate').value,
-    method: document.getElementById('rpMethod').value,
-    notes: document.getElementById('rpNotes').value,
-    receipt_url
-  });
-
-  btn.innerHTML = '✓ Record Payment';
-  btn.disabled = false;
-  if(error) { showToast('Error: ' + error.message); return; }
-  closeM('repModal');
-  showToast('✓ Payment recorded');
-  loadRepayments();
-  loadDashboard();
-});
-
-async function loadRepayments() {
-  const { data: reps } = await sb.from('repayments').select('*').eq('user_id', currentUser.id).order('paid_on', {ascending:false});
-  const items = reps || [];
-  const total = items.reduce((s,r) => s + parseFloat(r.amount), 0);
-  document.getElementById('repSub').textContent = `${items.length} payments · ${fmt(total)} total`;
-  const el = document.getElementById('repList');
-  if(!items.length) { el.innerHTML = `<div class="empty"><div class="empty-ico">💰</div><p>No payments recorded yet</p></div>`; return; }
-  el.innerHTML = items.map(r => `
-    <div class="ic">
-      <div class="ic-head">
-        <div class="ic-amt">${fmt(r.amount)}</div>
-        <div class="ic-date">${fmtD(r.paid_on)}</div>
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
+  let receipt_url=null;
+  const file=document.getElementById('rpRecFile').files[0];
+  if(file){ const path=`${currentUser.id}/${Date.now()}_${file.name}`; const {data:ud,error:ue}=await sb.storage.from('receipts').upload(path,file); if(!ue){ const {data:url}=sb.storage.from('receipts').getPublicUrl(path); receipt_url=url?.publicUrl||null; } }
+  const {data:lr}=await sb.from('loans').select('id').eq('user_id',currentUser.id).limit(1).single();
+  const {error}=await sb.from('repayments').insert({user_id:currentUser.id,loan_id:lr?.data?.id||null,amount:parseAmt(document.getElementById('rpAmt').value),paid_on:document.getElementById('rpDate').value,method:document.getElementById('rpMethod').value,notes:document.getElementById('rpNotes').value,receipt_url});
+  btn.innerHTML=`<span>${t('lbl-rec-pay')}</span>`; btn.disabled=false;
+  if(error){ showToast('Error: '+error.message); return; }
+  closeM('repModal'); showToast(t('toast-pay')); loadRepayments(); loadDashboard();
+}
+async function loadRepayments(){
+  const {data:reps}=await sb.from('repayments').select('*').eq('user_id',currentUser.id).order('paid_on',{ascending:false});
+  const items=reps||[];
+  const total=items.reduce((s,r)=>s+parseFloat(r.amount),0);
+  document.getElementById('repSub').textContent=`${items.length} · ${fmt(total)}`;
+  const el=document.getElementById('repList');
+  if(!items.length){ el.innerHTML=`<div class="empty"><div class="empty-ico">💰</div><p>${lang==='sw'?'Hakuna malipo yaliyorekodiwa':'No payments recorded yet'}</p></div>`; return; }
+  el.innerHTML=items.map(r=>`
+    <div class="swipe-wrap" id="wrap-${r.id}">
+      <div class="del-bg" onclick="confirmDel('repayments','${r.id}')">
+        <span class="del-bg-icon">🗑️</span><span>${lang==='sw'?'Futa':'Delete'}</span>
       </div>
-      <div class="ic-detail">💳 ${r.method}</div>
-      ${r.notes ? `<div class="ic-detail">📝 ${r.notes}</div>` : ''}
-      <div class="ic-actions">
-        ${r.receipt_url ? `<button class="abtn abtn-v" onclick="viewReceipt('${r.receipt_url}')">📷 Receipt</button>` : ''}
-        <button class="abtn abtn-d" style="margin-left:auto" onclick="confirmDel('repayments','${r.id}')">🗑 Delete</button>
+      <div class="ic" id="ic-${r.id}" data-id="${r.id}" data-table="repayments">
+        <div class="ic-head"><div class="ic-amt">${fmt(r.amount)}</div><div class="ic-date">${fmtD(r.paid_on)}</div></div>
+        <div class="ic-detail">💳 ${r.method}</div>
+        ${r.notes?`<div class="ic-detail">📝 ${r.notes}</div>`:''}
+        ${r.receipt_url?`<div class="ic-actions"><button class="abtn abtn-v" onclick="viewReceipt('${r.receipt_url}')">📷 ${lang==='sw'?'Risiti':'Receipt'}</button></div>`:''}
       </div>
     </div>`).join('');
+  attachSwipe();
 }
 
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // EXPENSES
-// ════════════════════════════════════
-document.getElementById('addExpBtn').addEventListener('click', () => {
+// ══════════════════════════════════════
+function openExpModal(){
   document.getElementById('expForm').reset();
-  document.getElementById('exDate').value = todayStr();
+  document.getElementById('exDate').value=todayStr();
   openM('expModal');
-});
-
-document.getElementById('expForm').addEventListener('submit', async e => {
+}
+async function saveExp(e){
   e.preventDefault();
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.innerHTML = '<div class="spinner"></div> Saving…';
-  btn.disabled = true;
-  const { error } = await sb.from('expenses').insert({
-    user_id: currentUser.id,
-    type: document.getElementById('exType').value,
-    amount: parseFloat(document.getElementById('exAmt').value),
-    expense_on: document.getElementById('exDate').value,
-    notes: document.getElementById('exNotes').value
-  });
-  btn.innerHTML = '✓ Add Expense';
-  btn.disabled = false;
-  if(error) { showToast('Error: ' + error.message); return; }
-  closeM('expModal');
-  showToast('✓ Expense added');
-  loadExpenses();
-});
-
-async function loadExpenses() {
-  const { data: exps } = await sb.from('expenses').select('*').eq('user_id', currentUser.id).order('expense_on', {ascending:false});
-  const items = exps || [];
-  const total = items.reduce((s,e) => s + parseFloat(e.amount), 0);
-  document.getElementById('expSub').textContent = `${items.length} expenses · ${fmt(total)} total`;
-  const el = document.getElementById('expList');
-  if(!items.length) { el.innerHTML = `<div class="empty"><div class="empty-ico">🧾</div><p>No expenses recorded yet</p></div>`; return; }
-  el.innerHTML = items.map(ex => `
-    <div class="ic exp">
-      <div class="ic-head">
-        <div class="ic-amt">${fmt(ex.amount)}</div>
-        <div class="ic-date">${fmtD(ex.expense_on)}</div>
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
+  const {error}=await sb.from('expenses').insert({user_id:currentUser.id,type:document.getElementById('exType').value,amount:parseAmt(document.getElementById('exAmt').value),expense_on:document.getElementById('exDate').value,notes:document.getElementById('exNotes').value});
+  btn.innerHTML=`<span>${t('lbl-add-exp-btn')}</span>`; btn.disabled=false;
+  if(error){ showToast('Error: '+error.message); return; }
+  closeM('expModal'); showToast(t('toast-exp')); loadExpenses();
+}
+async function loadExpenses(){
+  const {data:exps}=await sb.from('expenses').select('*').eq('user_id',currentUser.id).order('expense_on',{ascending:false});
+  const items=exps||[];
+  const total=items.reduce((s,e)=>s+parseFloat(e.amount),0);
+  document.getElementById('expSub').textContent=`${items.length} · ${fmt(total)}`;
+  const el=document.getElementById('expList');
+  if(!items.length){ el.innerHTML=`<div class="empty"><div class="empty-ico">🧾</div><p>${lang==='sw'?'Hakuna gharama zilizoongezwa':'No expenses recorded yet'}</p></div>`; return; }
+  el.innerHTML=items.map(ex=>`
+    <div class="swipe-wrap" id="wrap-${ex.id}">
+      <div class="del-bg" onclick="confirmDel('expenses','${ex.id}')">
+        <span class="del-bg-icon">🗑️</span><span>${lang==='sw'?'Futa':'Delete'}</span>
       </div>
-      <div style="display:flex;align-items:center;gap:.5rem;margin-top:.2rem">
-        <span style="width:10px;height:10px;border-radius:50%;background:${EXP_COLORS[ex.type]||'#888'};display:inline-block"></span>
-        <span class="ic-detail" style="margin:0">${ex.type}</span>
-      </div>
-      ${ex.notes ? `<div class="ic-detail">📝 ${ex.notes}</div>` : ''}
-      <div class="ic-actions">
-        <button class="abtn abtn-d" style="margin-left:auto" onclick="confirmDel('expenses','${ex.id}')">🗑 Delete</button>
+      <div class="ic exp" id="ic-${ex.id}" data-id="${ex.id}" data-table="expenses">
+        <div class="ic-head"><div class="ic-amt">${fmt(ex.amount)}</div><div class="ic-date">${fmtD(ex.expense_on)}</div></div>
+        <div style="display:flex;align-items:center;gap:.45rem;margin-top:.15rem">
+          <span style="width:9px;height:9px;border-radius:50%;background:${EXP_COLORS[ex.type]||'#888'};display:inline-block"></span>
+          <span class="ic-detail" style="margin:0">${ex.type}</span>
+        </div>
+        ${ex.notes?`<div class="ic-detail">📝 ${ex.notes}</div>`:''}
       </div>
     </div>`).join('');
+  attachSwipe();
 }
 
-// ════════════════════════════════════
-// ANALYTICS
-// ════════════════════════════════════
-async function loadAnalytics() {
-  const [loanRes, repRes, expRes] = await Promise.all([
-    sb.from('loans').select('*').eq('user_id', currentUser.id).limit(1).single(),
-    sb.from('repayments').select('*').eq('user_id', currentUser.id),
-    sb.from('expenses').select('*').eq('user_id', currentUser.id)
+// ══════════════════════════════════════
+// SWIPE TO DELETE
+// ══════════════════════════════════════
+function attachSwipe(){
+  document.querySelectorAll('.ic').forEach(card=>{
+    let startX=0, curX=0, swiped=false;
+    const threshold=60;
+    function onStart(e){ startX=e.touches?e.touches[0].clientX:e.clientX; curX=0; }
+    function onMove(e){
+      const x=(e.touches?e.touches[0].clientX:e.clientX)-startX;
+      if(x<0){ curX=Math.max(x,-80); card.style.transform=`translateX(${curX}px)`; swiped=curX<-threshold; if(e.cancelable)e.preventDefault(); }
+    }
+    function onEnd(){
+      if(swiped){ card.style.transform='translateX(-80px)'; }
+      else{ card.style.transform='translateX(0)'; }
+    }
+    card.addEventListener('touchstart',onStart,{passive:true});
+    card.addEventListener('touchmove',onMove,{passive:false});
+    card.addEventListener('touchend',onEnd);
+    // Click anywhere on card resets
+    card.addEventListener('click',()=>{ if(card.style.transform!=='translateX(0px)'&&card.style.transform!==''&&card.style.transform!=='translateX(0)'){ card.style.transform='translateX(0)'; } });
+  });
+  // tap outside swipe reset
+  document.addEventListener('touchstart',e=>{
+    if(!e.target.closest('.swipe-wrap')){ document.querySelectorAll('.ic').forEach(c=>c.style.transform='translateX(0)'); }
+  },{passive:true});
+}
+
+// ══════════════════════════════════════
+// RECEIPT VIEWER
+// ══════════════════════════════════════
+function viewReceipt(url){ document.getElementById('rvImg').src=url; openM('rvModal'); }
+
+// ══════════════════════════════════════
+// DELETE
+// ══════════════════════════════════════
+let _del=null;
+function confirmDel(table,id){ _del={table,id}; openM('delModal'); }
+async function doDelete(){
+  if(!_del) return;
+  const {error}=await sb.from(_del.table).delete().eq('id',_del.id);
+  closeM('delModal');
+  if(error){ showToast('Error: '+error.message); return; }
+  showToast(t('toast-deleted'));
+  if(_del.table==='repayments'){ loadRepayments(); loadDashboard(); }
+  if(_del.table==='expenses') loadExpenses();
+  _del=null;
+}
+
+// ══════════════════════════════════════
+// ANALYTICS + EXPORT
+// ══════════════════════════════════════
+async function loadAnalytics(){
+  const [lr,rr,er]=await Promise.all([
+    sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single(),
+    sb.from('repayments').select('*').eq('user_id',currentUser.id),
+    sb.from('expenses').select('*').eq('user_id',currentUser.id)
   ]);
-  const loan = loanRes.data;
-  const reps = repRes.data || [];
-  const exps = expRes.data || [];
-  const el = document.getElementById('analyticsContent');
-
-  if(!loan && !reps.length && !exps.length) {
-    el.innerHTML = `<div class="empty"><div class="empty-ico">📊</div><p>Set up your loan and record some transactions to see analytics.</p></div>`;
-    return;
-  }
-
-  const totalPaid = reps.reduce((s,r) => s + parseFloat(r.amount), 0);
-  const totalExp = exps.reduce((s,e) => s + parseFloat(e.amount), 0);
-
-  // Monthly repayments (last 6)
-  const byMonth = {};
-  reps.forEach(r => { const m = r.paid_on.slice(0,7); byMonth[m]=(byMonth[m]||0)+parseFloat(r.amount); });
-  const months = Object.keys(byMonth).sort().slice(-6);
-  const maxPay = Math.max(...months.map(m => byMonth[m]), 1);
-
-  // Expense by category
-  const byCat = {};
-  exps.forEach(e => { byCat[e.type]=(byCat[e.type]||0)+parseFloat(e.amount); });
-  const cats = Object.keys(byCat).sort((a,b) => byCat[b]-byCat[a]);
-  const maxExp = Math.max(...cats.map(c => byCat[c]), 1);
-
-  let html = '';
-  if(loan) {
-    const pct = loan.repay_amount > 0 ? Math.round((totalPaid/loan.repay_amount)*100) : 0;
-    html += `<div class="chart-card"><div class="ct">Loan Summary</div>
-      <div class="sum-row"><span style="color:var(--g600)">Motorcycle</span><strong>${loan.model}</strong></div>
-      <div class="sum-row"><span style="color:var(--g600)">Total Repayment</span><strong>${fmt(loan.repay_amount)}</strong></div>
-      <div class="sum-row"><span style="color:var(--g600)">Amount Paid</span><strong style="color:var(--success)">${fmt(totalPaid)}</strong></div>
-      <div class="sum-row"><span style="color:var(--g600)">Remaining</span><strong style="color:var(--danger)">${fmt(loan.repay_amount-totalPaid)}</strong></div>
-      <div class="sum-row"><span style="color:var(--g600)">Completion</span><strong>${pct}%</strong></div>
+  const loan=lr.data, reps=rr.data||[], exps=er.data||[];
+  const el=document.getElementById('analyticsContent');
+  const totalPaid=reps.reduce((s,r)=>s+parseFloat(r.amount),0);
+  const totalExp=exps.reduce((s,e)=>s+parseFloat(e.amount),0);
+  const byMonth={};
+  reps.forEach(r=>{ const m=r.paid_on.slice(0,7); byMonth[m]=(byMonth[m]||0)+parseFloat(r.amount); });
+  const months=Object.keys(byMonth).sort().slice(-6);
+  const maxPay=Math.max(...months.map(m=>byMonth[m]),1);
+  const byCat={};
+  exps.forEach(e=>{ byCat[e.type]=(byCat[e.type]||0)+parseFloat(e.amount); });
+  const cats=Object.keys(byCat).sort((a,b)=>byCat[b]-byCat[a]);
+  const maxExp=Math.max(...cats.map(c=>byCat[c]),1);
+  let html=`<button class="export-btn" onclick="exportExcel()">
+    ${t('lbl-export')} &nbsp; ${t('lbl-share')}
+  </button>`;
+  if(loan){
+    const pct=loan.repay_amount>0?Math.round((totalPaid/loan.repay_amount)*100):0;
+    html+=`<div class="chart-card"><div class="ct">${lang==='sw'?'Muhtasari wa Mkopo':'Loan Summary'}</div>
+      <div class="sum-row"><span style="color:var(--g600)">${lang==='sw'?'Pikipiki':'Motorcycle'}</span><strong>${loan.model}</strong></div>
+      <div class="sum-row"><span style="color:var(--g600)">${lang==='sw'?'Jumla Kulipa':'Total Repayment'}</span><strong>${fmt(loan.repay_amount)}</strong></div>
+      <div class="sum-row"><span style="color:var(--g600)">${lang==='sw'?'Kimelipwa':'Paid'}</span><strong style="color:var(--success)">${fmt(totalPaid)}</strong></div>
+      <div class="sum-row"><span style="color:var(--g600)">${lang==='sw'?'Kilichobaki':'Remaining'}</span><strong style="color:var(--danger)">${fmt(loan.repay_amount-totalPaid)}</strong></div>
+      <div class="sum-row"><span style="color:var(--g600)">${lang==='sw'?'Asilimia':'Completion'}</span><strong>${pct}%</strong></div>
     </div>`;
   }
-  if(months.length) {
-    html += `<div class="chart-card"><div class="ct">Repayments — Last 6 Months</div>`;
-    months.forEach(m => {
-      const w = Math.round((byMonth[m]/maxPay)*100);
-      const label = new Date(m+'-01').toLocaleDateString('en-US',{month:'short',year:'2-digit'});
-      html += `<div class="bar-row"><div class="bar-label">${label}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:var(--primary)"></div></div><div class="bar-val">${(byMonth[m]/1000).toFixed(0)}k</div></div>`;
-    });
-    html += `</div>`;
+  if(months.length){
+    html+=`<div class="chart-card"><div class="ct">${lang==='sw'?'Malipo - Miezi 6 Iliyopita':'Repayments - Last 6 Months'}</div>`;
+    months.forEach(m=>{ const w=Math.round((byMonth[m]/maxPay)*100); const label=new Date(m+'-01').toLocaleDateString('en-GB',{month:'short',year:'2-digit'}); html+=`<div class="bar-row"><div class="bar-label">${label}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:var(--primary)"></div></div><div class="bar-val">${(byMonth[m]/1000).toFixed(0)}k</div></div>`; });
+    html+=`</div>`;
   }
-  if(cats.length) {
-    html += `<div class="chart-card"><div class="ct">Expense Breakdown</div>`;
-    cats.forEach(c => {
-      const w = Math.round((byCat[c]/maxExp)*100);
-      const col = EXP_COLORS[c]||'#888';
-      html += `<div class="bar-row"><div class="bar-label" style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:${col};flex-shrink:0;display:inline-block"></span>${c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${col}"></div></div><div class="bar-val">${(byCat[c]/1000).toFixed(0)}k</div></div>`;
-    });
-    html += `<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--g100);display:flex;justify-content:space-between;font-size:.9rem"><span style="color:var(--g600)">Total</span><strong>${fmt(totalExp)}</strong></div></div>`;
+  if(cats.length){
+    html+=`<div class="chart-card"><div class="ct">${lang==='sw'?'Mgawanyo wa Gharama':'Expense Breakdown'}</div>`;
+    cats.forEach(c=>{ const w=Math.round((byCat[c]/maxExp)*100); const col=EXP_COLORS[c]||'#888'; html+=`<div class="bar-row"><div class="bar-label" style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:${col};flex-shrink:0;display:inline-block"></span>${c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${col}"></div></div><div class="bar-val">${(byCat[c]/1000).toFixed(0)}k</div></div>`; });
+    html+=`<div style="margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--g100);display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--g600)">${lang==='sw'?'Jumla':'Total'}</span><strong>${fmt(totalExp)}</strong></div></div>`;
   }
-  el.innerHTML = html;
+  el.innerHTML = html || `<div class="empty"><div class="empty-ico">📊</div><p>${lang==='sw'?'Haina data bado. Endelea kurekodi!':'Not enough data yet.'}</p></div>`;
 }
 
-// ════════════════════════════════════
-// RECEIPT VIEWER
-// ════════════════════════════════════
-function viewReceipt(url) {
-  document.getElementById('rvImg').src = url;
-  openM('rvModal');
+// ══════════════════════════════════════
+// EXCEL EXPORT + SHARE
+// ══════════════════════════════════════
+async function exportExcel(){
+  const [lr,rr,er]=await Promise.all([
+    sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single(),
+    sb.from('repayments').select('*').eq('user_id',currentUser.id).order('paid_on',{ascending:false}),
+    sb.from('expenses').select('*').eq('user_id',currentUser.id).order('expense_on',{ascending:false})
+  ]);
+  const loan=lr.data, reps=rr.data||[], exps=er.data||[];
+
+  // Build CSV content for each sheet
+  let csvContent = '';
+
+  // Loan sheet
+  csvContent += lang==='sw'?'TAARIFA ZA MKOPO\n':'LOAN INFORMATION\n';
+  csvContent += lang==='sw'?`Pikipiki,${loan?.model||''}\nThamani,${loan?.moto_value||''}\nJumla Kulipa,${loan?.repay_amount||''}\nTarehe Kuanza,${loan?.start_date||''}\nTarehe Mwisho,${loan?.end_date||''}\nMzunguko,${loan?.frequency||''}\n\n`
+    :`Motorcycle,${loan?.model||''}\nValue,${loan?.moto_value||''}\nTotal Repayment,${loan?.repay_amount||''}\nStart Date,${loan?.start_date||''}\nEnd Date,${loan?.end_date||''}\nFrequency,${loan?.frequency||''}\n\n`;
+
+  // Repayments sheet
+  csvContent += lang==='sw'?'MALIPO\nTarehe,Kiasi,Njia,Maelezo\n':'REPAYMENTS\nDate,Amount,Method,Notes\n';
+  reps.forEach(r=>{ csvContent+=`${r.paid_on},${r.amount},${r.method},"${r.notes||''}"\n`; });
+
+  csvContent+='\n';
+
+  // Expenses sheet
+  csvContent+=lang==='sw'?'GHARAMA\nTarehe,Aina,Kiasi,Maelezo\n':'EXPENSES\nDate,Type,Amount,Notes\n';
+  exps.forEach(e=>{ csvContent+=`${e.expense_on},${e.type},${e.amount},"${e.notes||''}"\n`; });
+
+  const blob = new Blob(['\uFEFF'+csvContent],{type:'text/csv;charset=utf-8;'});
+  const filename=`BodaTracker_${new Date().toISOString().slice(0,10)}.csv`;
+
+  // Try native share first (mobile)
+  if(navigator.share && navigator.canShare){
+    try{
+      const file=new File([blob],filename,{type:'text/csv'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:'Boda Tracker Data',text:lang==='sw'?'Taarifa za Boda Tracker':'Boda Tracker Records'});
+        return;
+      }
+    }catch(e){ if(e.name!=='AbortError') console.log(e); }
+  }
+  // Fallback: download
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=filename; a.click();
+  URL.revokeObjectURL(url);
+  showToast(lang==='sw'?'✓ Faili limepakuliwa':'✓ File downloaded');
 }
 
-// ════════════════════════════════════
-// DELETE
-// ════════════════════════════════════
-let _del = null;
-function confirmDel(table, id) { _del = {table, id}; openM('delModal'); }
-document.getElementById('confirmDelBtn').addEventListener('click', async () => {
-  if(!_del) return;
-  const { error } = await sb.from(_del.table).delete().eq('id', _del.id);
-  closeM('delModal');
-  if(error) { showToast('Error: ' + error.message); return; }
-  showToast('Record deleted');
-  if(_del.table==='repayments') { loadRepayments(); loadDashboard(); }
-  if(_del.table==='expenses') loadExpenses();
-  _del = null;
-});
-
-// ════════════════════════════════════
+// ══════════════════════════════════════
 // BOTTOM NAV
-// ════════════════════════════════════
-document.querySelectorAll('.ni').forEach(n => {
-  n.addEventListener('click', () => nav(n.dataset.page));
-});
+// ══════════════════════════════════════
+document.querySelectorAll('.ni').forEach(n=>{ n.addEventListener('click',()=>nav(n.dataset.page)); });
 
-// ════════════════════════════════════
-// SERVICE WORKER REGISTRATION
-// ════════════════════════════════════
-if('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
-  });
-}
+// ══════════════════════════════════════
+// SERVICE WORKER
+// ══════════════════════════════════════
+if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }); }
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+setLoading(true);
+applyLang();
 </script>
 </body>
 </html>
