@@ -23,17 +23,13 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden}
 body{font-family:var(--fb);background:var(--g100);color:var(--dark)}
-
-/* ── PAGES: fixed full-screen, no scroll ── */
 .page{display:none;position:fixed;inset:0;overflow:hidden;animation:fi .25s ease}
 .page.active{display:flex;flex-direction:column}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
-/* scrollable inner content */
 .scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .scroll-area::-webkit-scrollbar{display:none}
 
-/* ── LOGIN PAGE ── */
+/* LOGIN */
 .lp{background:linear-gradient(160deg,var(--primary),var(--pd));justify-content:center;align-items:center;padding:1.5rem}
 .app-icon{width:80px;height:80px;background:var(--white);border-radius:var(--rxl);display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;font-size:2.2rem;box-shadow:var(--shmd)}
 .lh h1{font-family:var(--fd);font-size:2.6rem;color:var(--white);letter-spacing:2px;text-align:center}
@@ -42,25 +38,19 @@ body{font-family:var(--fb);background:var(--g100);color:var(--dark)}
 .lang-toggle{display:flex;gap:6px;margin-bottom:1.25rem;background:var(--g100);padding:4px;border-radius:var(--rsm)}
 .lang-btn{flex:1;padding:.55rem;border:none;background:transparent;border-radius:6px;font-family:var(--fb);font-weight:600;font-size:.85rem;cursor:pointer;transition:all .25s;color:var(--g600)}
 .lang-btn.active{background:var(--primary);color:var(--white)}
-
-/* phone input row */
-.phone-row{display:flex;gap:0;border:1.5px solid var(--g200);border-radius:var(--rsm);overflow:hidden;transition:all .25s}
+.phone-row{display:flex;border:1.5px solid var(--g200);border-radius:var(--rsm);overflow:hidden;transition:all .25s}
 .phone-row:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,107,53,.12)}
 .phone-prefix{padding:.75rem .9rem;background:var(--g100);font-weight:700;font-size:.95rem;color:var(--dark);border-right:1.5px solid var(--g200);white-space:nowrap}
-.phone-input{flex:1;padding:.75rem .75rem;border:none;font-family:var(--fb);font-size:.95rem;background:transparent;color:var(--dark);outline:none}
-
-/* swahili big buttons */
+.phone-input{flex:1;padding:.75rem;border:none;font-family:var(--fb);font-size:.95rem;background:transparent;color:var(--dark);outline:none}
 .sw-btns{display:flex;flex-direction:column;gap:.75rem}
 .sw-btn{padding:1rem;border:none;border-radius:var(--rmd);font-family:var(--fb);font-weight:700;font-size:1.1rem;cursor:pointer;transition:all .25s;text-align:center}
 .sw-btn-in{background:var(--primary);color:var(--white)}
 .sw-btn-up{background:var(--g100);color:var(--dark);border:1.5px solid var(--g200)}
-
-/* email tab */
 .etabs{display:flex;gap:6px;margin-bottom:1rem;background:var(--g100);padding:4px;border-radius:var(--rsm)}
 .etab{flex:1;padding:.55rem;border:none;background:transparent;border-radius:6px;font-family:var(--fb);font-weight:600;font-size:.85rem;cursor:pointer;color:var(--g600);transition:all .25s}
 .etab.active{background:var(--primary);color:var(--white)}
 
-/* ── FORMS ── */
+/* FORMS */
 .fg{margin-bottom:.9rem}
 .fl{display:block;margin-bottom:.35rem;font-weight:600;color:var(--dark);font-size:.82rem}
 .fi{width:100%;padding:.7rem .9rem;border:1.5px solid var(--g200);border-radius:var(--rsm);font-family:var(--fb);font-size:.92rem;transition:all .25s;background:var(--white);color:var(--dark)}
@@ -69,7 +59,7 @@ textarea.fi{resize:none;height:72px}
 select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236C757D' d='M6 9L1 4h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.25rem}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
 
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.1rem;border:none;border-radius:var(--rsm);font-family:var(--fb);font-weight:700;font-size:.95rem;cursor:pointer;transition:all .25s;width:100%}
 .btn-p{background:var(--primary);color:var(--white)}
 .btn-p:hover{background:var(--pd)}
@@ -78,7 +68,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .btn-ghost{background:var(--g100);color:var(--dark)}
 .btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary);width:auto;padding:.45rem 1rem;font-size:.85rem}
 
-/* ── SUBSCRIPTION ── */
+/* SUBSCRIPTION */
 .sub-page{background:var(--g50)}
 .sub-scroll{padding:1.25rem}
 .sub-card{background:var(--white);border-radius:var(--rxl);padding:1.5rem;box-shadow:var(--shsm)}
@@ -94,14 +84,14 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .pm-icon{font-size:1.6rem;margin-bottom:.25rem}
 .pm-name{font-size:.78rem;font-weight:600}
 
-/* ── PAGE HEADER ── */
+/* PAGE HEADER */
 .ph{background:linear-gradient(135deg,var(--primary),var(--pd));padding:1rem 1.1rem;color:var(--white);border-radius:0 0 var(--rxl) var(--rxl);flex-shrink:0}
 .ph-row{display:flex;align-items:center;gap:.75rem}
 .bk{background:rgba(255,255,255,.22);border:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--white);font-size:1rem;flex-shrink:0}
 .ph-title{font-family:var(--fd);font-size:1.7rem;letter-spacing:1px}
 .ph-sub{font-size:.82rem;opacity:.85;margin-top:1px}
 
-/* ── DASHBOARD ── */
+/* DASHBOARD */
 .dash-page{background:var(--g100)}
 .stats-grid{padding:.9rem .9rem .5rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem}
 .sc{background:var(--white);padding:.9rem;border-radius:var(--rlg);box-shadow:var(--shsm)}
@@ -119,20 +109,20 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .hb{background:rgba(239,71,111,.12);color:var(--danger)}
 .next-card{background:linear-gradient(135deg,var(--sec),var(--warn));padding:.9rem 1.1rem;border-radius:var(--rlg);margin:.5rem .9rem;box-shadow:var(--shsm)}
 
-/* ── BOTTOM NAV ── */
+/* BOTTOM NAV — 4 items */
 .bnav{background:var(--white);padding:.4rem .75rem calc(.4rem + env(safe-area-inset-bottom));box-shadow:0 -2px 12px rgba(0,0,0,.08);display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;flex-shrink:0}
 .ni{display:flex;flex-direction:column;align-items:center;gap:2px;padding:.45rem;background:none;border:none;color:var(--g600);cursor:pointer;border-radius:var(--rsm);transition:all .25s}
 .ni.active{color:var(--primary);background:rgba(255,107,53,.08)}
 .ni-icon{font-size:1.2rem}
 .ni-label{font-size:.65rem;font-weight:600}
 
-/* ── SECTION PAGES ── */
+/* SECTION PAGES */
 .sp-page{background:var(--g100)}
 .sc-content{padding:.9rem}
 .add-btn{background:var(--primary);color:var(--white);border:none;padding:.65rem 1.1rem;border-radius:var(--rsm);font-weight:700;font-size:.9rem;cursor:pointer;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;box-shadow:var(--shsm);transition:all .25s}
 .add-btn:hover{background:var(--pd)}
 
-/* ── SWIPE-TO-DELETE LIST ── */
+/* SWIPE DELETE */
 .item-list{display:flex;flex-direction:column;gap:.65rem}
 .swipe-wrap{position:relative;overflow:hidden;border-radius:var(--rlg)}
 .del-bg{position:absolute;right:0;top:0;bottom:0;width:80px;background:var(--danger);display:flex;align-items:center;justify-content:center;border-radius:0 var(--rlg) var(--rlg) 0;flex-direction:column;gap:3px;cursor:pointer}
@@ -150,7 +140,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--g500)}
 .empty-ico{font-size:3rem;margin-bottom:.75rem;opacity:.3}
 
-/* ── ANALYTICS ── */
+/* ANALYTICS */
 .chart-card{background:var(--white);border-radius:var(--rlg);padding:1rem 1.1rem;box-shadow:var(--shsm);margin-bottom:.65rem}
 .ct{font-weight:700;font-size:.92rem;margin-bottom:.85rem}
 .bar-row{display:flex;align-items:center;gap:.65rem;margin-bottom:.55rem}
@@ -162,7 +152,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .sum-row:last-child{border-bottom:none}
 .export-btn{background:var(--success);color:var(--white);border:none;padding:.75rem 1.1rem;border-radius:var(--rsm);font-weight:700;font-size:.9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:var(--shsm);transition:all .25s;width:100%;justify-content:center;margin-bottom:.65rem}
 
-/* ── MODALS ── */
+/* MODALS */
 .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:1000;align-items:flex-end;justify-content:center}
 .modal.active{display:flex}
 .mc{background:var(--white);border-radius:var(--rxl) var(--rxl) 0 0;padding:1.25rem;width:100%;max-height:88vh;overflow-y:auto;animation:su .3s ease}
@@ -178,18 +168,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .rv-wrap{background:#111;border-radius:var(--rxl) var(--rxl) 0 0;padding:1rem;width:100%;max-height:92vh;overflow-y:auto}
 .rv-wrap img{width:100%;border-radius:var(--rsm)}
 
-/* ── TOAST ── */
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:var(--white);padding:.6rem 1.1rem;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── LOADER ── */
-.loader{position:fixed;inset:0;background:rgba(255,255,255,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;gap:1rem}
-.loader.hidden{display:none}
-.spin{border:3px solid var(--g200);border-top:3px solid var(--primary);border-radius:50%;width:34px;height:34px;animation:spin 1s linear infinite}
-.spinner{border:2.5px solid rgba(255,255,255,.3);border-top:2.5px solid var(--white);border-radius:50%;width:16px;height:16px;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.alert-e{background:rgba(239,71,111,.1);color:var(--danger);border:1px solid rgba(239,71,111,.3);padding:.75rem .9rem;border-radius:var(--rsm);margin-bottom:.85rem;font-size:.85rem}
-/* ── CALCULATOR RESULT BOXES ── */
+/* CALCULATOR */
 .cal-rbox{background:var(--g50);border-radius:var(--rsm);padding:.7rem .8rem;border:1px solid var(--g100)}
 .cal-rlbl{font-size:.63rem;font-weight:600;color:var(--g600);letter-spacing:.4px;margin-bottom:.25rem}
 .cal-rval{font-family:var(--fd);font-size:1.25rem;letter-spacing:.5px}
@@ -199,6 +178,18 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .cal-q{background:var(--g100);border:1px solid var(--g200);border-radius:6px;color:var(--g600);font-family:var(--fb);font-size:.74rem;font-weight:600;padding:.28rem .55rem;cursor:pointer;transition:all .18s;line-height:1}
 .cal-q:hover{border-color:var(--primary);color:var(--primary)}
 .cal-q.cal-q-on{background:rgba(255,107,53,.12);border-color:var(--primary);color:var(--primary)}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:var(--white);padding:.6rem 1.1rem;border-radius:100px;font-size:.85rem;font-weight:600;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* LOADER */
+.loader{position:fixed;inset:0;background:rgba(255,255,255,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;gap:1rem}
+.loader.hidden{display:none}
+.spin{border:3px solid var(--g200);border-top:3px solid var(--primary);border-radius:50%;width:34px;height:34px;animation:spin 1s linear infinite}
+.spinner{border:2.5px solid rgba(255,255,255,.3);border-top:2.5px solid var(--white);border-radius:50%;width:16px;height:16px;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.alert-e{background:rgba(239,71,111,.1);color:var(--danger);border:1px solid rgba(239,71,111,.3);padding:.75rem .9rem;border-radius:var(--rsm);margin-bottom:.85rem;font-size:.85rem}
 .hidden{display:none!important}
 </style>
 </head>
@@ -207,9 +198,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 <div class="loader" id="loader"><div class="spin"></div><div style="font-size:.85rem;color:var(--g600)" id="loaderText">Inapakia...</div></div>
 <div class="toast" id="toast"></div>
 
-<!-- ══════════════════════════════════
-     LOGIN PAGE
-══════════════════════════════════ -->
+<!-- LOGIN -->
 <div id="loginPage" class="page lp">
   <div class="lh">
     <div class="app-icon">🏍️</div>
@@ -217,13 +206,10 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
     <p id="lh-sub">Fuatilia Safari Yako ya Umiliki</p>
   </div>
   <div class="lcard">
-    <!-- Language toggle -->
     <div class="lang-toggle">
       <button class="lang-btn active" data-lang="sw" onclick="setLang('sw')">🇹🇿 Kiswahili</button>
       <button class="lang-btn" data-lang="en" onclick="setLang('en')">🇬🇧 English</button>
     </div>
-
-    <!-- Swahili view: Phone only, two big buttons -->
     <div id="swView">
       <div class="fg">
         <label class="fl" id="lbl-phone">Nambari ya Simu</label>
@@ -231,7 +217,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
           <span class="phone-prefix">🇹🇿 +255</span>
           <input type="tel" class="phone-input" id="phoneInput" placeholder="765827355" maxlength="9" inputmode="numeric">
         </div>
-        <div style="font-size:.75rem;color:var(--g600);margin-top:.3rem" id="lbl-phone-hint">Ingiza nambari bila +255, mfano: 765827355</div>
+        <div style="font-size:.75rem;color:var(--g600);margin-top:.3rem" id="lbl-phone-hint">Ingiza nambari bila +255</div>
       </div>
       <div id="swOTPStep" class="hidden">
         <div class="fg">
@@ -241,24 +227,14 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       </div>
       <div id="phoneErr" class="alert-e hidden"></div>
       <div class="sw-btns" id="swAuthBtns">
-        <button class="sw-btn sw-btn-in" id="swSignInBtn" onclick="swAction('signin')">
-          <span id="lbl-signin">🔑 Ingia</span>
-        </button>
-        <button class="sw-btn sw-btn-up" id="swSignUpBtn" onclick="swAction('signup')">
-          <span id="lbl-signup">✨ Jisajili</span>
-        </button>
+        <button class="sw-btn sw-btn-in" id="swSignInBtn" onclick="swAction('signin')"><span id="lbl-signin">🔑 Ingia</span></button>
+        <button class="sw-btn sw-btn-up" id="swSignUpBtn" onclick="swAction('signup')"><span id="lbl-signup">✨ Jisajili</span></button>
       </div>
       <div id="swVerifyBtns" class="hidden sw-btns">
-        <button class="sw-btn sw-btn-in" id="swVerifyBtn" onclick="verifyOTP()">
-          <span id="lbl-verify">✓ Thibitisha</span>
-        </button>
-        <button class="sw-btn sw-btn-up" onclick="cancelOTP()">
-          <span id="lbl-back">← Rudi Nyuma</span>
-        </button>
+        <button class="sw-btn sw-btn-in" id="swVerifyBtn" onclick="verifyOTP()"><span id="lbl-verify">✓ Thibitisha</span></button>
+        <button class="sw-btn sw-btn-up" onclick="cancelOTP()"><span id="lbl-back">← Rudi Nyuma</span></button>
       </div>
     </div>
-
-    <!-- English view: tabs with email option -->
     <div id="enView" class="hidden">
       <div class="etabs">
         <button class="etab active" data-etab="phone" onclick="enTab('phone')">📱 Phone</button>
@@ -302,22 +278,24 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
   </div>
 </div>
 
-<!-- ══════════════════════════════════
-     SUBSCRIPTION PAGE
-══════════════════════════════════ -->
+<!-- SUBSCRIPTION -->
 <div id="subscriptionPage" class="page sub-page">
-  <div class="ph" style="border-radius:0"><div style="font-family:var(--fd);font-size:1.7rem;letter-spacing:1px" id="sub-title">CHAGUA MPANGO WAKO</div><div style="font-size:.82rem;opacity:.85" id="sub-sub">Fungua upatikanaji kamili wa Boda Tracker</div></div>
+  <div class="ph" style="border-radius:0">
+    <div style="font-family:var(--fd);font-size:1.7rem;letter-spacing:1px" id="sub-title">CHAGUA MPANGO WAKO</div>
+    <div style="font-size:.82rem;opacity:.85" id="sub-sub">Fungua upatikanaji kamili wa Boda Tracker</div>
+  </div>
   <div class="scroll-area"><div class="sub-scroll">
     <div class="sub-card">
       <div class="price-box"><div class="price-num">TZS 30,000</div><div style="opacity:.9;font-size:.95rem" id="sub-period">kwa mwaka · ghairi wakati wowote</div></div>
       <ul class="feat-list">
-        <li><span class="fcheck">✓</span> <span id="f1">Ufuatiliaji wa mkopo na malipo</span></li>
-        <li><span class="fcheck">✓</span> <span id="f2">Makundi ya gharama na uchanganuzi</span></li>
-        <li><span class="fcheck">✓</span> <span id="f3">Upakiaji wa picha za risiti</span></li>
-        <li><span class="fcheck">✓</span> <span id="f4">Vikumbusho vya malipo</span></li>
-        <li><span class="fcheck">✓</span> <span id="f5">Usafirishaji wa data kwa Excel</span></li>
+        <li><span class="fcheck">✓</span><span id="f1">Ufuatiliaji wa mkopo na malipo</span></li>
+        <li><span class="fcheck">✓</span><span id="f2">Makundi ya gharama na uchanganuzi</span></li>
+        <li><span class="fcheck">✓</span><span id="f3">Upakiaji wa picha za risiti</span></li>
+        <li><span class="fcheck">✓</span><span id="f4">Vikumbusho vya malipo</span></li>
+        <li><span class="fcheck">✓</span><span id="f5">Usafirishaji wa data kwa Excel</span></li>
       </ul>
-      <div class="fg"><label class="fl" id="lbl-pm">Njia ya Malipo</label>
+      <div class="fg">
+        <label class="fl" id="lbl-pm">Njia ya Malipo</label>
         <div class="pm-grid">
           <div class="pm" data-method="mpesa"><div class="pm-icon">📱</div><div class="pm-name">M-Pesa</div></div>
           <div class="pm" data-method="airtel"><div class="pm-icon">💳</div><div class="pm-name">Airtel Money</div></div>
@@ -330,9 +308,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
   </div></div>
 </div>
 
-<!-- ══════════════════════════════════
-     DASHBOARD PAGE
-══════════════════════════════════ -->
+<!-- DASHBOARD -->
 <div id="dashboardPage" class="page dash-page">
   <div class="ph">
     <div style="font-size:.82rem;opacity:.85" id="lbl-welcome">Karibu tena,</div>
@@ -340,7 +316,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
     <div id="dashMoto" style="font-size:.78rem;opacity:.75;margin-top:1px"></div>
   </div>
   <div class="scroll-area">
-    <div id="noLoanBanner" class="hidden" style="margin:.75rem .9rem 0;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);border-radius:var(--rsm);padding:.75rem .9rem;font-size:.84rem;color:var(--primary)" id="no-loan-msg">⚠️ Hakuna mkopo uliosanidiwa. Bonyeza <strong>Sanidi Mkopo</strong> hapa chini.</div>
+    <div id="noLoanBanner" class="hidden" style="margin:.75rem .9rem 0;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.3);border-radius:var(--rsm);padding:.75rem .9rem;font-size:.84rem;color:var(--primary)">⚠️ Hakuna mkopo uliosanidiwa. Bonyeza <strong>Sanidi Mkopo</strong> hapa chini.</div>
     <div class="stats-grid">
       <div class="sc or"><div class="sc-label" id="lbl-mv">Thamani ya Pikipiki</div><div class="sc-val" id="stMV">—</div></div>
       <div class="sc"><div class="sc-label" id="lbl-tr">Jumla ya Kulipa</div><div class="sc-val" id="stTR">—</div></div>
@@ -367,21 +343,19 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
       <div style="font-size:.78rem;margin-top:.2rem" id="nextFreq"></div>
     </div>
     <div style="padding:0 .9rem .9rem;display:flex;flex-direction:column;gap:.55rem">
-      <button class="btn btn-p" id="setupLoanBtn" onclick="openLoanModal()"><span id="lbl-setup">⚙️ Sanidi Mkopo</span></button>
-      <button class="btn-outline" style="align-self:center" onclick="logout()" id="lbl-logout-btn">Toka</button>
+      <button class="btn btn-p" onclick="openLoanModal()"><span id="lbl-setup">⚙️ Sanidi Mkopo</span></button>
+      <button class="btn-outline" style="align-self:center" onclick="logout()"><span id="lbl-logout-btn">Toka</span></button>
     </div>
   </div>
   <div class="bnav">
     <button class="ni active" data-page="dashboard"><div class="ni-icon">🏠</div><div class="ni-label" id="nav-home">Nyumbani</div></button>
     <button class="ni" data-page="repayments"><div class="ni-icon">💰</div><div class="ni-label" id="nav-pay">Malipo</div></button>
     <button class="ni" data-page="expenses"><div class="ni-icon">🧾</div><div class="ni-label" id="nav-exp">Gharama</div></button>
-    <button class="ni" data-page="analytics"><div class="ni-icon">📊</div><div class="ni-label" id="nav-ana">Takwimu</div></button>
+    <button class="ni" data-page="calculator"><div class="ni-icon">🧮</div><div class="ni-label" id="nav-cal">Hesabu</div></button>
   </div>
 </div>
 
-<!-- ══════════════════════════════════
-     REPAYMENTS PAGE
-══════════════════════════════════ -->
+<!-- REPAYMENTS -->
 <div id="repaymentsPage" class="page sp-page">
   <div class="ph"><div class="ph-row"><button class="bk" onclick="nav('dashboard')">←</button><div><div class="ph-title" id="rep-title">MALIPO</div><div class="ph-sub" id="repSub"></div></div></div></div>
   <div class="scroll-area"><div class="sc-content">
@@ -390,9 +364,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
   </div></div>
 </div>
 
-<!-- ══════════════════════════════════
-     EXPENSES PAGE
-══════════════════════════════════ -->
+<!-- EXPENSES -->
 <div id="expensesPage" class="page sp-page">
   <div class="ph"><div class="ph-row"><button class="bk" onclick="nav('dashboard')">←</button><div><div class="ph-title" id="exp-title">GHARAMA</div><div class="ph-sub" id="expSub"></div></div></div></div>
   <div class="scroll-area"><div class="sc-content">
@@ -401,9 +373,96 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
   </div></div>
 </div>
 
-<!-- ══════════════════════════════════
-     ANALYTICS PAGE
-══════════════════════════════════ -->
+<!-- CALCULATOR PAGE -->
+<div id="calculatorPage" class="page sp-page">
+  <div class="ph"><div class="ph-row"><button class="bk" onclick="nav('dashboard')">←</button><div><div class="ph-title" id="cal-title">HESABU MKOPO</div><div class="ph-sub" id="cal-sub">Panga malipo yako</div></div></div></div>
+  <div class="scroll-area"><div class="sc-content">
+    <div style="background:var(--white);border-radius:var(--rlg);padding:1.1rem;box-shadow:var(--shsm);margin-bottom:.75rem">
+      <div class="fg">
+        <label class="fl" id="lbl-cal-repay">JUMLA YA KULIPA (TZS)</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:var(--g500);pointer-events:none">TZS</span>
+          <input type="text" class="fi" id="calRepay" placeholder="4,200,000" inputmode="numeric" style="padding-left:3rem">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl" id="lbl-cal-deposit">MALIPO YA AWALI — Si Lazima</label>
+        <div style="position:relative">
+          <span style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:var(--g500);pointer-events:none">TZS</span>
+          <input type="text" class="fi" id="calDeposit" placeholder="0" inputmode="numeric" style="padding-left:3rem">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl" id="lbl-cal-freq">MZUNGUKO WA MALIPO</label>
+        <select class="fi" id="calFreq" onchange="calUpdate()">
+          <option value="daily" id="co-daily">Kila Siku</option>
+          <option value="weekly" selected id="co-weekly">Kila Wiki</option>
+          <option value="monthly" id="co-monthly">Kila Mwezi</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl" id="lbl-cal-months">MUDA (MIEZI)</label>
+        <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.45rem">
+          <input type="number" class="fi" id="calMonths" value="12" min="1" max="120" inputmode="numeric" style="flex:1;min-width:0" oninput="calUpdate()">
+          <span style="font-size:.75rem;font-weight:600;color:var(--primary);white-space:nowrap;min-width:60px;text-align:right" id="calMonthsHint">Mwaka 1</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:.3rem">
+          <button type="button" class="cal-q" onclick="calSetM(3)">3</button>
+          <button type="button" class="cal-q" onclick="calSetM(6)">6</button>
+          <button type="button" class="cal-q" onclick="calSetM(9)">9</button>
+          <button type="button" class="cal-q cal-q-on" onclick="calSetM(12)">12</button>
+          <button type="button" class="cal-q" onclick="calSetM(18)">18</button>
+          <button type="button" class="cal-q" onclick="calSetM(24)">24</button>
+          <button type="button" class="cal-q" onclick="calSetM(36)">36</button>
+          <button type="button" class="cal-q" onclick="calSetM(48)">48</button>
+          <button type="button" class="cal-q" onclick="calSetM(60)">60</button>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="fl" id="lbl-cal-start">TAREHE YA KUANZA</label><input type="date" class="fi" id="calStart" onchange="calUpdate()"></div>
+        <div class="fg"><label class="fl" id="lbl-cal-end">TAREHE YA MWISHO</label><input type="text" class="fi" id="calEnd" placeholder="—" readonly style="opacity:.6;cursor:not-allowed"></div>
+      </div>
+      <button class="btn btn-p" onclick="calCalculate()">🧮 <span id="lbl-cal-btn">Hesabu Malipo</span></button>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="calResults" style="display:none;background:var(--white);border-radius:var(--rlg);padding:1.1rem;box-shadow:var(--shsm);margin-bottom:.75rem">
+      <div style="font-family:var(--fd);font-size:1.4rem;letter-spacing:1px;color:var(--primary);margin-bottom:.85rem" id="lbl-cal-results">📊 MATOKEO</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.75rem">
+        <div class="cal-rbox hi"><div class="cal-rlbl" id="lbl-r-per">KWA KILA MZUNGUKO</div><div class="cal-rval" id="rPerPay">—</div></div>
+        <div class="cal-rbox"><div class="cal-rlbl" id="lbl-r-total">JUMLA YA KULIPA</div><div class="cal-rval" id="rTotalPay">—</div></div>
+        <div class="cal-rbox wa"><div class="cal-rlbl" id="lbl-r-dep">MALIPO YA AWALI</div><div class="cal-rval" id="rDepPay">—</div></div>
+        <div class="cal-rbox su"><div class="cal-rlbl" id="lbl-r-bal">KILICHOBAKI</div><div class="cal-rval" id="rBalPay">—</div></div>
+        <div class="cal-rbox"><div class="cal-rlbl" id="lbl-r-count">IDADI YA MALIPO</div><div class="cal-rval" id="rCountPay">—</div></div>
+        <div class="cal-rbox"><div class="cal-rlbl" id="lbl-r-days">JUMLA YA SIKU</div><div class="cal-rval" id="rDaysPay">—</div></div>
+      </div>
+      <button onclick="calToggleSch()" style="width:100%;padding:.65rem;background:var(--g100);border:1px solid var(--g200);border-radius:var(--rsm);color:var(--dark);font-family:var(--fb);font-weight:600;font-size:.82rem;cursor:pointer;margin-bottom:.6rem">
+        📅 <span id="calSchTxt">Ona Ratiba Kamili</span>
+      </button>
+      <div id="calSchWrap" style="display:none;overflow-x:auto;border-radius:var(--rsm);border:1px solid var(--g200)">
+        <table style="width:100%;border-collapse:collapse;font-size:.78rem;min-width:280px">
+          <thead><tr style="background:var(--g100)">
+            <th style="padding:.5rem .6rem;text-align:left;font-size:.68rem;color:var(--g600)">#</th>
+            <th style="padding:.5rem .6rem;text-align:left;font-size:.68rem;color:var(--g600)" id="th-date">Tarehe</th>
+            <th style="padding:.5rem .6rem;text-align:left;font-size:.68rem;color:var(--g600)" id="th-amt">Kiasi</th>
+            <th style="padding:.5rem .6rem;text-align:left;font-size:.68rem;color:var(--g600)" id="th-rem">Kilichobaki</th>
+          </tr></thead>
+          <tbody id="calSchBody"></tbody>
+        </table>
+      </div>
+      <div style="background:rgba(255,107,53,.06);border:1px solid rgba(255,107,53,.2);border-radius:var(--rsm);padding:.85rem;margin-top:.75rem;display:flex;align-items:center;gap:.75rem">
+        <span style="font-size:1.6rem">🏍️</span>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:.82rem;color:var(--primary);margin-bottom:.15rem" id="lbl-cal-cta-h">Tumia hesabu hii kwenye mkopo wako!</div>
+          <div style="font-size:.75rem;color:var(--g600)" id="lbl-cal-cta-s">Nenda kwenye Sanidi Mkopo ubandike taarifa hizi.</div>
+        </div>
+        <button onclick="nav('dashboard')" style="background:var(--primary);color:var(--white);border:none;padding:.45rem .85rem;border-radius:var(--rsm);font-weight:700;font-size:.75rem;cursor:pointer;white-space:nowrap"><span id="lbl-cal-goto">Nenda →</span></button>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ANALYTICS -->
 <div id="analyticsPage" class="page sp-page">
   <div class="ph"><div class="ph-row"><button class="bk" onclick="nav('dashboard')">←</button><div><div class="ph-title" id="ana-title">TAKWIMU</div><div class="ph-sub" id="lbl-ana-sub">Muhtasari wa fedha</div></div></div></div>
   <div class="scroll-area"><div class="sc-content" id="analyticsContent"></div></div>
@@ -415,17 +474,12 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
   </div>
 </div>
 
-<!-- ══════════════════════════════════
-     MODALS
-══════════════════════════════════ -->
-<!-- Loan Setup -->
+<!-- LOAN MODAL -->
 <div id="loanModal" class="modal">
 <div class="mc">
   <div class="mh"><div class="mt" id="m-loan-title">SANIDI MKOPO</div><button class="xbtn" onclick="closeM('loanModal')">×</button></div>
   <form id="loanForm" onsubmit="saveLoan(event)">
-
     <div style="font-size:.72rem;font-weight:700;color:var(--primary);letter-spacing:.5px;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--g100)">TAARIFA ZA KIBINAFSI</div>
-
     <div class="fg"><label class="fl" id="lbl-name">Jina Kamili</label><input type="text" class="fi" id="lnName" required></div>
     <div class="fg"><label class="fl" id="lbl-email-f">Barua pepe</label><input type="email" class="fi" id="lnEmail"></div>
     <div class="fg"><label class="fl" id="lbl-phone-f">Simu</label><input type="tel" class="fi" id="lnPhone" required></div>
@@ -437,37 +491,29 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
         <option>Kagera</option><option>Mara</option>
       </select>
     </div>
-
     <div style="font-size:.72rem;font-weight:700;color:var(--primary);letter-spacing:.5px;margin:.85rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--g100)">TAARIFA ZA PIKIPIKI NA MKOPO</div>
-
     <div class="fg"><label class="fl" id="lbl-model">Mfano wa Pikipiki</label><input type="text" class="fi" id="lnModel" placeholder="TVS HLX 150, Bajaj Boxer" required></div>
-
     <div class="fg">
       <label class="fl" id="lbl-mv-f">Thamani ya Pikipiki (TZS)</label>
       <div style="position:relative">
         <span style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:var(--g500);pointer-events:none">TZS</span>
-        <input type="text" inputmode="numeric" class="fi" id="lnMV" placeholder="3,500,000" style="padding-left:3rem" required oninput="lnCalc()">
+        <input type="text" inputmode="numeric" class="fi" id="lnMV" placeholder="3,500,000" style="padding-left:3rem" required oninput="lnComma('lnMV');lnCalc()">
       </div>
-      <div style="font-size:.72rem;color:var(--g500);margin-top:.3rem" id="lbl-mv-hint">Inatumika kuhesabu faida ya mmiliki tu</div>
+      <div style="font-size:.72rem;color:var(--g500);margin-top:.3rem">Inatumika kuhesabu faida ya mmiliki tu</div>
     </div>
-
     <div class="fg"><label class="fl" id="lbl-freq">Mzunguko wa Malipo</label>
       <select class="fi" id="lnFreq" required onchange="lnCalc()">
         <option value="">Chagua</option>
-        <option value="Daily">Kila Siku</option>
-        <option value="Weekly">Kila Wiki</option>
-        <option value="Monthly">Kila Mwezi</option>
+        <option value="Daily">Kila Siku</option><option value="Weekly">Kila Wiki</option><option value="Monthly">Kila Mwezi</option>
       </select>
     </div>
-
     <div class="fg">
       <label class="fl" id="lbl-repay-amt">Kiasi cha Malipo kwa Kila Mzunguko (TZS)</label>
       <div style="position:relative">
         <span style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:var(--g500);pointer-events:none">TZS</span>
-        <input type="text" inputmode="numeric" class="fi" id="lnRepayAmt" placeholder="150,000" style="padding-left:3rem" required oninput="lnCalc()">
+        <input type="text" inputmode="numeric" class="fi" id="lnRepayAmt" placeholder="150,000" style="padding-left:3rem" required oninput="lnComma('lnRepayAmt');lnCalc()">
       </div>
     </div>
-
     <div class="fg">
       <label class="fl" id="lbl-months">Idadi ya Miezi</label>
       <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.4rem">
@@ -485,13 +531,10 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
         <button type="button" class="cal-q" onclick="lnSetM(48)">48</button>
       </div>
     </div>
-
     <div class="frow">
       <div class="fg"><label class="fl" id="lbl-sd">Tarehe ya Kuanza</label><input type="date" class="fi" id="lnSD" required onchange="lnCalc()"></div>
-      <div class="fg"><label class="fl" id="lbl-ed">Tarehe ya Mwisho (Otomatiki)</label><input type="text" class="fi" id="lnED" readonly placeholder="—" style="opacity:.6;cursor:not-allowed"></div>
+      <div class="fg"><label class="fl" id="lbl-ed">Tarehe ya Mwisho</label><input type="text" class="fi" id="lnED" readonly placeholder="—" style="opacity:.6;cursor:not-allowed"></div>
     </div>
-
-    <!-- Auto-calculated summary -->
     <div id="lnSummary" style="display:none;background:var(--g50);border:1px solid var(--g200);border-radius:var(--rsm);padding:.9rem;margin-bottom:1rem">
       <div style="font-size:.72rem;font-weight:700;color:var(--g600);letter-spacing:.5px;margin-bottom:.65rem">MUHTASARI WA MKOPO</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
@@ -513,13 +556,12 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
         </div>
       </div>
     </div>
-
     <button type="submit" class="btn btn-p"><span id="lbl-save">💾 Hifadhi Taarifa</span></button>
   </form>
 </div>
 </div>
 
-<!-- Add Repayment -->
+<!-- ADD REPAYMENT -->
 <div id="repModal" class="modal">
 <div class="mc">
   <div class="mh"><div class="mt" id="m-rep-title">ONGEZA MALIPO</div><button class="xbtn" onclick="closeM('repModal')">×</button></div>
@@ -546,7 +588,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 </div>
 </div>
 
-<!-- Add Expense -->
+<!-- ADD EXPENSE -->
 <div id="expModal" class="modal">
 <div class="mc">
   <div class="mh"><div class="mt" id="m-exp-title">ONGEZA GHARAMA</div><button class="xbtn" onclick="closeM('expModal')">×</button></div>
@@ -554,9 +596,10 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
     <div class="fg"><label class="fl" id="lbl-exp-type">Aina ya Gharama</label>
       <select class="fi" id="exType" required>
         <option value="">Chagua Aina</option>
-        <option value="Mafuta">⛽ Mafuta</option><option value="Ukarabati">🔧 Ukarabati / Huduma</option>
+        <option value="Mafuta">⛽ Mafuta</option><option value="Ukarabati">🔧 Ukarabati</option>
         <option value="Bima">🛡️ Bima</option><option value="Leseni">📄 Leseni</option>
-        <option value="Tairi">🔴 Tairi</option><option value="Kuosha">🫧 Kuosha</option><option value="Nyingine">📋 Nyingine</option>
+        <option value="Tairi">🔴 Tairi</option><option value="Kuosha">🫧 Kuosha</option>
+        <option value="Nyingine">📋 Nyingine</option>
       </select>
     </div>
     <div class="frow">
@@ -569,7 +612,7 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 </div>
 </div>
 
-<!-- Receipt Viewer -->
+<!-- RECEIPT VIEWER -->
 <div id="rvModal" class="modal">
 <div class="rv-wrap">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
@@ -580,34 +623,30 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 </div>
 </div>
 
-<!-- Delete Confirm -->
+<!-- DELETE CONFIRM -->
 <div id="delModal" class="modal">
 <div class="mc" style="max-height:none">
   <div class="mh"><div class="mt" id="m-del-title">FUTA REKODI</div><button class="xbtn" onclick="closeM('delModal')">×</button></div>
   <p style="margin-bottom:1rem;color:var(--g600);font-size:.9rem" id="lbl-del-confirm">Una uhakika? Kitendo hiki hakiwezi kubatilishwa.</p>
   <div style="display:flex;gap:.65rem">
     <button class="btn btn-ghost" onclick="closeM('delModal')" id="lbl-cancel">Ghairi</button>
-    <button class="btn btn-danger" id="confirmDelBtn" onclick="doDelete()" id="lbl-del-btn">Futa</button>
+    <button class="btn btn-danger" onclick="doDelete()" id="lbl-del-btn">Futa</button>
   </div>
 </div>
 </div>
 
 <script>
-// ══════════════════════════════════════
-// CONFIG — replace with your values
-// ══════════════════════════════════════
+// ── CONFIG ──
 const SUPABASE_URL = 'https://bcrgwjvankalaibyzddt.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjcmd3anZhbmthbGFpYnl6ZGR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1MjMxMzIsImV4cCI6MjA5MjA5OTEzMn0.HHC3MOAJD8Q5s9VPYanB2Enjuy6gVPACncJc-dJJ3hI';
-const { createClient } = supabase;
+const {createClient} = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ══════════════════════════════════════
-// TRANSLATIONS
-// ══════════════════════════════════════
+// ── TRANSLATIONS ──
 const T = {
   sw:{
     'lh-sub':'Fuatilia Safari Yako ya Umiliki',
-    'lbl-phone':'Nambari ya Simu','lbl-phone-hint':'Ingiza nambari bila +255, mfano: 765827355',
+    'lbl-phone':'Nambari ya Simu','lbl-phone-hint':'Ingiza nambari bila +255',
     'lbl-otp':'Nambari ya Uthibitisho (OTP)',
     'lbl-signin':'🔑 Ingia','lbl-signup':'✨ Jisajili','lbl-verify':'✓ Thibitisha','lbl-back':'← Rudi',
     'sub-title':'CHAGUA MPANGO WAKO','sub-sub':'Fungua upatikanaji kamili wa Boda Tracker',
@@ -619,25 +658,11 @@ const T = {
     'lbl-pd':'Kimelipwa','lbl-rm':'Kilichobaki','lbl-freq-d':'Mzunguko','lbl-days':'Siku Zilizobaki',
     'lbl-prog':'Maendeleo ya Mkopo','lbl-start':'Anza','lbl-end':'Mwisho','lbl-next':'Malipo Yajayo',
     'lbl-setup':'⚙️ Sanidi Mkopo','lbl-logout-btn':'Toka',
-    'nav-home':'Nyumbani','nav-pay':'Malipo','nav-exp':'Gharama','nav-ana':'Takwimu',
+    'nav-home':'Nyumbani','nav-pay':'Malipo','nav-exp':'Gharama','nav-cal':'Hesabu',
     'nav-home2':'Nyumbani','nav-pay2':'Malipo','nav-exp2':'Gharama','nav-ana2':'Takwimu',
     'rep-title':'MALIPO','lbl-add-rep':'Ongeza Malipo',
     'exp-title':'GHARAMA','lbl-add-exp':'Ongeza Gharama',
     'ana-title':'TAKWIMU','lbl-ana-sub':'Muhtasari wa fedha',
-    'm-loan-title':'SANIDI MKOPO','lbl-name':'Jina Kamili','lbl-email-f':'Barua pepe',
-    'lbl-phone-f':'Simu','lbl-region':'Mkoa','lbl-model':'Mfano wa Pikipiki',
-    'lbl-mv-f':'Thamani (TZS)','lbl-tr-f':'Jumla Kulipa (TZS)',
-    'lbl-sd':'Tarehe ya Kuanza','lbl-ed':'Tarehe ya Mwisho','lbl-freq':'Mzunguko wa Malipo','lbl-save':'💾 Hifadhi Taarifa',
-    'm-rep-title':'ONGEZA MALIPO','lbl-amt-paid':'Kiasi Kilicholipwa (TZS)','lbl-pay-date':'Tarehe ya Malipo',
-    'lbl-pay-method':'Njia ya Malipo','lbl-notes':'Maelezo (si lazima)','lbl-receipt':'Picha ya Risiti (si lazima)',
-    'lbl-upload':'Bonyeza kupiga picha au kupakia','lbl-rec-pay':'✓ Rekodi Malipo',
-    'm-exp-title':'ONGEZA GHARAMA','lbl-exp-type':'Aina ya Gharama','lbl-exp-amt':'Kiasi (TZS)',
-    'lbl-exp-date':'Tarehe','lbl-exp-notes':'Maelezo','lbl-add-exp-btn':'✓ Ongeza Gharama',
-    'm-del-title':'FUTA REKODI','lbl-del-confirm':'Una uhakika? Kitendo hiki hakiwezi kubatilishwa.',
-    'lbl-cancel':'Ghairi','lbl-del-btn':'Futa',
-    'health-good':'✓ Uko Sawa','health-warn':'⚠ Kidogo Nyuma','health-bad':'✗ Nyuma Sana',
-    'lbl-export':'📥 Hamisha Excel','lbl-share':'📤 Shiriki',
-    'nav-cal':'Hesabu','nav-cal2':'Hesabu',
     'cal-title':'HESABU MKOPO','cal-sub':'Panga malipo yako',
     'lbl-cal-repay':'JUMLA YA KULIPA (TZS)','lbl-cal-deposit':'MALIPO YA AWALI — Si Lazima',
     'lbl-cal-freq':'MZUNGUKO WA MALIPO','lbl-cal-months':'MUDA (MIEZI)',
@@ -649,11 +674,27 @@ const T = {
     'lbl-cal-cta-h':'Tumia hesabu hii kwenye mkopo wako!',
     'lbl-cal-cta-s':'Nenda kwenye Sanidi Mkopo ubandike taarifa hizi.',
     'lbl-cal-goto':'Nenda →','co-daily':'Kila Siku','co-weekly':'Kila Wiki','co-monthly':'Kila Mwezi',
-    'th-date':'Tarehe','th-amt':'Kiasi','th-rem':'Kilichobaki','toast-deleted':'Rekodi imefutwa','toast-pay':'✓ Malipo yamerekodi','toast-exp':'✓ Gharama zimeongezwa',
+    'th-date':'Tarehe','th-amt':'Kiasi','th-rem':'Kilichobaki',
+    'm-loan-title':'SANIDI MKOPO','lbl-name':'Jina Kamili','lbl-email-f':'Barua pepe',
+    'lbl-phone-f':'Simu','lbl-region':'Mkoa','lbl-model':'Mfano wa Pikipiki',
+    'lbl-mv-f':'Thamani ya Pikipiki (TZS)','lbl-freq':'Mzunguko wa Malipo',
+    'lbl-repay-amt':'Kiasi cha Malipo kwa Kila Mzunguko (TZS)',
+    'lbl-months':'Idadi ya Miezi','lbl-sd':'Tarehe ya Kuanza','lbl-ed':'Tarehe ya Mwisho','lbl-save':'💾 Hifadhi Taarifa',
+    'm-rep-title':'ONGEZA MALIPO','lbl-amt-paid':'Kiasi Kilicholipwa (TZS)','lbl-pay-date':'Tarehe ya Malipo',
+    'lbl-pay-method':'Njia ya Malipo','lbl-notes':'Maelezo (si lazima)','lbl-receipt':'Picha ya Risiti (si lazima)',
+    'lbl-upload':'Bonyeza kupiga picha au kupakia','lbl-rec-pay':'✓ Rekodi Malipo',
+    'm-exp-title':'ONGEZA GHARAMA','lbl-exp-type':'Aina ya Gharama','lbl-exp-amt':'Kiasi (TZS)',
+    'lbl-exp-date':'Tarehe','lbl-exp-notes':'Maelezo','lbl-add-exp-btn':'✓ Ongeza Gharama',
+    'm-del-title':'FUTA REKODI','lbl-del-confirm':'Una uhakika? Kitendo hiki hakiwezi kubatilishwa.',
+    'lbl-cancel':'Ghairi','lbl-del-btn':'Futa',
+    'health-good':'✓ Uko Sawa','health-warn':'⚠ Kidogo Nyuma','health-bad':'✗ Nyuma Sana',
+    'lbl-export':'📥 Hamisha Excel','lbl-share':'📤 Shiriki',
+    'toast-saved':'✓ Taarifa zimehifadhiwa','toast-deleted':'Rekodi imefutwa',
+    'toast-pay':'✓ Malipo yamerekodi','toast-exp':'✓ Gharama zimeongezwa',
   },
   en:{
     'lh-sub':'Track Your Journey to Ownership',
-    'lbl-phone':'Phone Number','lbl-phone-hint':'Enter number without +255, e.g. 765827355',
+    'lbl-phone':'Phone Number','lbl-phone-hint':'Enter number without +255',
     'lbl-otp':'OTP Code',
     'lbl-signin':'🔑 Sign In','lbl-signup':'✨ Sign Up','lbl-verify':'✓ Verify','lbl-back':'← Back',
     'sub-title':'CHOOSE YOUR PLAN','sub-sub':'Unlock full access to Boda Tracker',
@@ -665,25 +706,11 @@ const T = {
     'lbl-pd':'Total Paid','lbl-rm':'Remaining','lbl-freq-d':'Frequency','lbl-days':'Days Left',
     'lbl-prog':'Loan Repayment Progress','lbl-start':'Start','lbl-end':'End','lbl-next':'Next Payment Due',
     'lbl-setup':'⚙️ Setup Loan','lbl-logout-btn':'Logout',
-    'nav-home':'Home','nav-pay':'Payments','nav-exp':'Expenses','nav-ana':'Analytics',
+    'nav-home':'Home','nav-pay':'Payments','nav-exp':'Expenses','nav-cal':'Calc',
     'nav-home2':'Home','nav-pay2':'Payments','nav-exp2':'Expenses','nav-ana2':'Analytics',
     'rep-title':'REPAYMENTS','lbl-add-rep':'Add Payment',
     'exp-title':'EXPENSES','lbl-add-exp':'Add Expense',
     'ana-title':'ANALYTICS','lbl-ana-sub':'Your financial overview',
-    'm-loan-title':'LOAN SETUP','lbl-name':'Full Name','lbl-email-f':'Email',
-    'lbl-phone-f':'Phone','lbl-region':'Region','lbl-model':'Motorcycle Model',
-    'lbl-mv-f':'Value (TZS)','lbl-tr-f':'Total Repayment (TZS)',
-    'lbl-sd':'Start Date','lbl-ed':'End Date','lbl-freq':'Repayment Frequency','lbl-save':'💾 Save Information',
-    'm-rep-title':'ADD PAYMENT','lbl-amt-paid':'Amount Paid (TZS)','lbl-pay-date':'Payment Date',
-    'lbl-pay-method':'Payment Method','lbl-notes':'Notes (optional)','lbl-receipt':'Receipt Photo (optional)',
-    'lbl-upload':'Tap to take photo or upload','lbl-rec-pay':'✓ Record Payment',
-    'm-exp-title':'ADD EXPENSE','lbl-exp-type':'Expense Type','lbl-exp-amt':'Amount (TZS)',
-    'lbl-exp-date':'Date','lbl-exp-notes':'Notes','lbl-add-exp-btn':'✓ Add Expense',
-    'm-del-title':'DELETE RECORD','lbl-del-confirm':'Are you sure? This cannot be undone.',
-    'lbl-cancel':'Cancel','lbl-del-btn':'Delete',
-    'health-good':'✓ On Track','health-warn':'⚠ Slightly Behind','health-bad':'✗ Behind Schedule',
-    'lbl-export':'📥 Export Excel','lbl-share':'📤 Share',
-    'nav-cal':'Calculator','nav-cal2':'Calculator',
     'cal-title':'CALCULATOR','cal-sub':'Plan your payments',
     'lbl-cal-repay':'TOTAL REPAYMENT (TZS)','lbl-cal-deposit':'INITIAL DEPOSIT — Optional',
     'lbl-cal-freq':'PAYMENT FREQUENCY','lbl-cal-months':'DURATION (MONTHS)',
@@ -695,69 +722,54 @@ const T = {
     'lbl-cal-cta-h':'Use these figures for your loan!',
     'lbl-cal-cta-s':'Go to Setup Loan and fill in these details.',
     'lbl-cal-goto':'Go →','co-daily':'Daily','co-weekly':'Weekly','co-monthly':'Monthly',
-    'th-date':'Date','th-amt':'Amount','th-rem':'Remaining','toast-deleted':'Record deleted','toast-pay':'✓ Payment recorded','toast-exp':'✓ Expense added',
+    'th-date':'Date','th-amt':'Amount','th-rem':'Remaining',
+    'm-loan-title':'LOAN SETUP','lbl-name':'Full Name','lbl-email-f':'Email',
+    'lbl-phone-f':'Phone','lbl-region':'Region','lbl-model':'Motorcycle Model',
+    'lbl-mv-f':'Motorcycle Value (TZS)','lbl-freq':'Repayment Frequency',
+    'lbl-repay-amt':'Payment Amount per Period (TZS)',
+    'lbl-months':'Number of Months','lbl-sd':'Start Date','lbl-ed':'End Date','lbl-save':'💾 Save Information',
+    'm-rep-title':'ADD PAYMENT','lbl-amt-paid':'Amount Paid (TZS)','lbl-pay-date':'Payment Date',
+    'lbl-pay-method':'Payment Method','lbl-notes':'Notes (optional)','lbl-receipt':'Receipt Photo (optional)',
+    'lbl-upload':'Tap to take photo or upload','lbl-rec-pay':'✓ Record Payment',
+    'm-exp-title':'ADD EXPENSE','lbl-exp-type':'Expense Type','lbl-exp-amt':'Amount (TZS)',
+    'lbl-exp-date':'Date','lbl-exp-notes':'Notes','lbl-add-exp-btn':'✓ Add Expense',
+    'm-del-title':'DELETE RECORD','lbl-del-confirm':'Are you sure? This cannot be undone.',
+    'lbl-cancel':'Cancel','lbl-del-btn':'Delete',
+    'health-good':'✓ On Track','health-warn':'⚠ Slightly Behind','health-bad':'✗ Behind Schedule',
+    'lbl-export':'📥 Export Excel','lbl-share':'📤 Share',
+    'toast-saved':'✓ Information saved','toast-deleted':'Record deleted',
+    'toast-pay':'✓ Payment recorded','toast-exp':'✓ Expense added',
   }
 };
 
 let lang = localStorage.getItem('lang') || 'sw';
-function t(k){ return (T[lang]||T.sw)[k] || k; }
+function t(k){ return (T[lang]||T.sw)[k]||k; }
 
 function applyLang(){
   document.documentElement.lang = lang;
-  document.querySelectorAll('[id]').forEach(el => {
-    if(T[lang][el.id]) el.textContent = T[lang][el.id];
-  });
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-  document.getElementById('swView').classList.toggle('hidden', lang !== 'sw');
-  document.getElementById('enView').classList.toggle('hidden', lang !== 'en');
-  // reload loader text
-  document.getElementById('loaderText').textContent = lang === 'sw' ? 'Inapakia...' : 'Loading...';
+  document.querySelectorAll('[id]').forEach(el=>{ if(T[lang][el.id]) el.textContent=T[lang][el.id]; });
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  document.getElementById('swView').classList.toggle('hidden', lang!=='sw');
+  document.getElementById('enView').classList.toggle('hidden', lang!=='en');
+  document.getElementById('loaderText').textContent = lang==='sw'?'Inapakia...':'Loading...';
 }
+function setLang(l){ lang=l; localStorage.setItem('lang',l); applyLang(); }
 
-function setLang(l){
-  lang = l;
-  localStorage.setItem('lang', l);
-  applyLang();
-}
-
-// ══════════════════════════════════════
-// COMMA FORMATTING
-// ══════════════════════════════════════
+// ── UTILS ──
 function fmtComma(v){ return v.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
-function parseAmt(v){ return parseFloat(v.replace(/,/g,'')) || 0; }
-function attachComma(id){
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const pos = el.selectionStart;
-    const raw = el.value.replace(/,/g,'');
-    if(!isNaN(raw) && raw !== ''){
-      const formatted = fmtComma(raw);
-      el.value = formatted;
-      // restore cursor roughly
-      el.selectionStart = el.selectionEnd = formatted.length;
-    }
-  });
-}
-['lnMV','lnTR','rpAmt','exAmt'].forEach(attachComma);
+function parseAmt(v){ return parseFloat((v||'0').replace(/,/g,''))||0; }
+function lnComma(id){ const el=document.getElementById(id); if(!el) return; const raw=el.value.replace(/,/g,''); if(raw!==''&&!isNaN(raw)) el.value=fmtComma(parseFloat(raw)||0); }
+function fmt(n){ return isNaN(n)||n===null?'—':'TZS '+fmtComma(Math.round(n)); }
+function fmtD(d){ if(!d) return '—'; return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function todayStr(){ return new Date().toISOString().split('T')[0]; }
+const EXP_COLORS={Mafuta:'#FF6B35',Ukarabati:'#EF476F',Bima:'#06D6A0',Leseni:'#185FA5',Tairi:'#F7B801',Kuosha:'#7F77DD',Nyingine:'#888780'};
 
-// ══════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════
-const fmt = n => isNaN(n)||n===null ? '—' : 'TZS ' + fmtComma(Math.round(n));
-const fmtD = d => { if(!d) return '—'; return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); };
-const todayStr = () => new Date().toISOString().split('T')[0];
-const EXP_COLORS = {Mafuta:'#FF6B35',Ukarabati:'#EF476F',Bima:'#06D6A0',Leseni:'#185FA5',Tairi:'#F7B801',Kuosha:'#7F77DD',Nyingine:'#888780',Fuel:'#FF6B35',Repair:'#EF476F',Insurance:'#06D6A0',License:'#185FA5',Tyres:'#F7B801',Wash:'#7F77DD',Other:'#888780'};
-
-function showToast(msg, dur=2400){
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), dur);
-}
-function setLoading(on, msg){ document.getElementById('loader').classList.toggle('hidden',!on); if(msg) document.getElementById('loaderText').textContent=msg; }
+function showToast(msg,dur=2400){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),dur); }
+function setLoading(on){ document.getElementById('loader').classList.toggle('hidden',!on); }
 function openM(id){ document.getElementById(id).classList.add('active'); }
 function closeM(id){ document.getElementById(id).classList.remove('active'); }
 
+// ── NAV ──
 function nav(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(page+'Page').classList.add('active');
@@ -766,115 +778,84 @@ function nav(page){
   if(page==='repayments') loadRepayments();
   if(page==='expenses') loadExpenses();
   if(page==='analytics') loadAnalytics();
+  if(page==='calculator'){ const s=document.getElementById('calStart'); if(!s.value) s.value=todayStr(); calUpdate(); }
 }
 
-// ══════════════════════════════════════
-// AUTH STATE
-// ══════════════════════════════════════
-let currentUser = null;
-sb.auth.onAuthStateChange(async (event, session)=>{
+// ── AUTH ──
+let currentUser=null;
+sb.auth.onAuthStateChange(async(event,session)=>{
   setLoading(false);
-  if(session?.user){
-    currentUser = session.user;
-    const prof = await getProfile();
-    nav(prof?.subscribed ? 'dashboard' : 'subscription');
-  } else {
-    currentUser = null;
-    nav('login');
-  }
+  if(session?.user){ currentUser=session.user; const p=await getProfile(); nav(p?.subscribed?'dashboard':'subscription'); }
+  else{ currentUser=null; nav('login'); }
 });
-async function getProfile(){
-  if(!currentUser) return null;
-  const {data} = await sb.from('profiles').select('*').eq('id',currentUser.id).single();
-  return data;
-}
+async function getProfile(){ if(!currentUser) return null; const {data}=await sb.from('profiles').select('*').eq('id',currentUser.id).single(); return data; }
 
-// ══════════════════════════════════════
-// SWAHILI LOGIN
-// ══════════════════════════════════════
-let swMode = '';
+// ── SWAHILI LOGIN ──
 async function swAction(mode){
-  const num = document.getElementById('phoneInput').value.trim();
-  const errEl = document.getElementById('phoneErr');
-  errEl.classList.add('hidden');
-  if(!num || num.length < 9){ errEl.textContent = t('lbl-phone-hint'); errEl.classList.remove('hidden'); return; }
-  const phone = '+255' + num.replace(/^0/,'');
-  swMode = mode;
-  const btn = mode==='signin' ? document.getElementById('swSignInBtn') : document.getElementById('swSignUpBtn');
-  const orig = btn.innerHTML;
-  btn.innerHTML = '<div class="spinner"></div>';
-  btn.disabled = true;
-  const {error} = await sb.auth.signInWithOtp({phone});
-  btn.innerHTML = orig; btn.disabled = false;
-  if(error){ errEl.textContent = error.message; errEl.classList.remove('hidden'); return; }
+  const num=document.getElementById('phoneInput').value.trim();
+  const errEl=document.getElementById('phoneErr'); errEl.classList.add('hidden');
+  if(!num||num.length<9){ errEl.textContent=t('lbl-phone-hint'); errEl.classList.remove('hidden'); return; }
+  const phone='+255'+num.replace(/^0/,'');
+  const btn=mode==='signin'?document.getElementById('swSignInBtn'):document.getElementById('swSignUpBtn');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
+  const {error}=await sb.auth.signInWithOtp({phone});
+  btn.innerHTML=`<span>${t(mode==='signin'?'lbl-signin':'lbl-signup')}</span>`; btn.disabled=false;
+  if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); return; }
   document.getElementById('swAuthBtns').classList.add('hidden');
   document.getElementById('swOTPStep').classList.remove('hidden');
   document.getElementById('swVerifyBtns').classList.remove('hidden');
 }
 async function verifyOTP(){
-  const num = document.getElementById('phoneInput').value.trim();
-  const token = document.getElementById('otpInput').value.trim();
-  const phone = '+255' + num.replace(/^0/,'');
-  const errEl = document.getElementById('phoneErr');
-  errEl.classList.add('hidden');
-  if(token.length < 6){ errEl.textContent = lang==='sw'?'Ingiza nambari 6 za OTP':'Enter the 6-digit code'; errEl.classList.remove('hidden'); return; }
-  const btn = document.getElementById('swVerifyBtn');
-  btn.innerHTML = '<div class="spinner"></div>'; btn.disabled = true;
-  const {error} = await sb.auth.verifyOtp({phone, token, type:'sms'});
-  btn.innerHTML = `<span>${t('lbl-verify')}</span>`; btn.disabled = false;
-  if(error){ errEl.textContent = error.message; errEl.classList.remove('hidden'); }
+  const num=document.getElementById('phoneInput').value.trim();
+  const token=document.getElementById('otpInput').value.trim();
+  const phone='+255'+num.replace(/^0/,'');
+  const errEl=document.getElementById('phoneErr'); errEl.classList.add('hidden');
+  if(token.length<6){ errEl.textContent=lang==='sw'?'Ingiza nambari 6 za OTP':'Enter the 6-digit code'; errEl.classList.remove('hidden'); return; }
+  const btn=document.getElementById('swVerifyBtn');
+  btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
+  const {error}=await sb.auth.verifyOtp({phone,token,type:'sms'});
+  btn.innerHTML=`<span>${t('lbl-verify')}</span>`; btn.disabled=false;
+  if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); }
 }
 function cancelOTP(){
   document.getElementById('swAuthBtns').classList.remove('hidden');
   document.getElementById('swOTPStep').classList.add('hidden');
   document.getElementById('swVerifyBtns').classList.add('hidden');
-  document.getElementById('otpInput').value = '';
+  document.getElementById('otpInput').value='';
 }
 
-// ══════════════════════════════════════
-// ENGLISH LOGIN
-// ══════════════════════════════════════
+// ── ENGLISH LOGIN ──
 function enTab(tab){
   document.querySelectorAll('.etab[data-etab]').forEach(b=>b.classList.toggle('active',b.dataset.etab===tab));
-  document.getElementById('enPhoneTab').classList.toggle('hidden', tab!=='phone');
-  document.getElementById('enEmailTab').classList.toggle('hidden', tab!=='email');
+  document.getElementById('enPhoneTab').classList.toggle('hidden',tab!=='phone');
+  document.getElementById('enEmailTab').classList.toggle('hidden',tab!=='email');
 }
 async function enSendOTP(){
-  const num = document.getElementById('enPhoneInput').value.trim();
-  const phone = '+255' + num.replace(/^0/,'');
-  const errEl = document.getElementById('enPhoneErr');
-  errEl.classList.add('hidden');
-  if(!num || num.length < 9){ errEl.textContent='Enter a valid 9-digit number'; errEl.classList.remove('hidden'); return; }
-  const btn = document.getElementById('enSendOTPBtn');
+  const num=document.getElementById('enPhoneInput').value.trim();
+  const phone='+255'+num.replace(/^0/,'');
+  const errEl=document.getElementById('enPhoneErr'); errEl.classList.add('hidden');
+  if(!num||num.length<9){ errEl.textContent='Enter a valid 9-digit number'; errEl.classList.remove('hidden'); return; }
+  const btn=document.getElementById('enSendOTPBtn');
   btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
-  const {error} = await sb.auth.signInWithOtp({phone});
+  const {error}=await sb.auth.signInWithOtp({phone});
   btn.innerHTML='Send OTP →'; btn.disabled=false;
   if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); return; }
-  document.getElementById('enOTPSentTo').textContent = num;
+  document.getElementById('enOTPSentTo').textContent=num;
   document.getElementById('enOTPStep1').classList.add('hidden');
   document.getElementById('enOTPStep2').classList.remove('hidden');
 }
 async function enVerifyOTP(){
-  const num = document.getElementById('enPhoneInput').value.trim();
-  const token = document.getElementById('enOTPInput').value.trim();
-  const phone = '+255'+num.replace(/^0/,'');
-  const errEl = document.getElementById('enOTPErr');
-  errEl.classList.add('hidden');
+  const num=document.getElementById('enPhoneInput').value.trim();
+  const token=document.getElementById('enOTPInput').value.trim();
+  const phone='+255'+num.replace(/^0/,'');
+  const errEl=document.getElementById('enOTPErr'); errEl.classList.add('hidden');
   if(token.length<6){ errEl.textContent='Enter the 6-digit code'; errEl.classList.remove('hidden'); return; }
-  const {error} = await sb.auth.verifyOtp({phone,token,type:'sms'});
+  const {error}=await sb.auth.verifyOtp({phone,token,type:'sms'});
   if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); }
 }
-function enCancelOTP(){
-  document.getElementById('enOTPStep1').classList.remove('hidden');
-  document.getElementById('enOTPStep2').classList.add('hidden');
-  document.getElementById('enOTPInput').value='';
-}
+function enCancelOTP(){ document.getElementById('enOTPStep1').classList.remove('hidden'); document.getElementById('enOTPStep2').classList.add('hidden'); document.getElementById('enOTPInput').value=''; }
 let emailMode='signin';
-function setEmailMode(m){
-  emailMode=m;
-  document.querySelectorAll('.etab[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));
-  document.getElementById('emailAuthBtn').textContent = m==='signup'?'Create Account':'Sign In';
-}
+function setEmailMode(m){ emailMode=m; document.querySelectorAll('.etab[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===m)); document.getElementById('emailAuthBtn').textContent=m==='signup'?'Create Account':'Sign In'; }
 async function emailAuth(){
   const email=document.getElementById('emailIn').value.trim();
   const pass=document.getElementById('passIn').value;
@@ -882,22 +863,14 @@ async function emailAuth(){
   const btn=document.getElementById('emailAuthBtn');
   btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
   let error;
-  if(emailMode==='signup'){
-    ({error}=await sb.auth.signUp({email,password:pass}));
-    if(!error) showToast('✓ Account created — check email');
-  } else {
-    ({error}=await sb.auth.signInWithPassword({email,password:pass}));
-  }
+  if(emailMode==='signup'){ ({error}=await sb.auth.signUp({email,password:pass})); if(!error) showToast('✓ Account created'); }
+  else { ({error}=await sb.auth.signInWithPassword({email,password:pass})); }
   btn.innerHTML=emailMode==='signup'?'Create Account':'Sign In'; btn.disabled=false;
   if(error){ errEl.textContent=error.message; errEl.classList.remove('hidden'); }
 }
 
-// ══════════════════════════════════════
-// SUBSCRIPTION
-// ══════════════════════════════════════
-document.querySelectorAll('.pm').forEach(m=>{
-  m.addEventListener('click',()=>{ document.querySelectorAll('.pm').forEach(x=>x.classList.remove('sel')); m.classList.add('sel'); });
-});
+// ── SUBSCRIPTION ──
+document.querySelectorAll('.pm').forEach(m=>{ m.addEventListener('click',()=>{ document.querySelectorAll('.pm').forEach(x=>x.classList.remove('sel')); m.classList.add('sel'); }); });
 async function subscribe(){
   if(!document.querySelector('.pm.sel')){ showToast(lang==='sw'?'Chagua njia ya malipo':'Select a payment method'); return; }
   const btn=document.getElementById('subscribeBtn');
@@ -909,158 +882,76 @@ async function subscribe(){
   nav('dashboard');
   setTimeout(()=>openM('loanModal'),400);
 }
-
-// ══════════════════════════════════════
-// LOGOUT
-// ══════════════════════════════════════
 async function logout(){ await sb.auth.signOut(); }
 
-// ══════════════════════════════════════
-// LOAN MODAL — open & prefill
-// ══════════════════════════════════════
+// ── LOAN MODAL ──
 async function openLoanModal(){
-  const [{data:prof},{data:loan}] = await Promise.all([
+  const [{data:prof},{data:loan}]=await Promise.all([
     sb.from('profiles').select('*').eq('id',currentUser.id).single(),
     sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single()
   ]);
-  if(prof){
-    document.getElementById('lnName').value  = prof.full_name || '';
-    document.getElementById('lnEmail').value = prof.email    || '';
-    document.getElementById('lnPhone').value = prof.phone    || '';
-    document.getElementById('lnRegion').value= prof.region   || '';
-  }
-  if(loan){
-    document.getElementById('lnModel').value     = loan.model      || '';
-    document.getElementById('lnMV').value        = loan.moto_value     ? fmtComma(loan.moto_value)     : '';
-    document.getElementById('lnRepayAmt').value  = loan.repay_per_period? fmtComma(loan.repay_per_period):'';
-    document.getElementById('lnFreq').value      = loan.frequency   || '';
-    document.getElementById('lnMonths').value    = loan.months      || '';
-    document.getElementById('lnSD').value        = loan.start_date  || '';
-  }
+  if(prof){ document.getElementById('lnName').value=prof.full_name||''; document.getElementById('lnEmail').value=prof.email||''; document.getElementById('lnPhone').value=prof.phone||''; document.getElementById('lnRegion').value=prof.region||''; }
+  if(loan){ document.getElementById('lnModel').value=loan.model||''; document.getElementById('lnMV').value=loan.moto_value?fmtComma(loan.moto_value):''; document.getElementById('lnRepayAmt').value=loan.repay_per_period?fmtComma(loan.repay_per_period):''; document.getElementById('lnFreq').value=loan.frequency||''; document.getElementById('lnMonths').value=loan.months||''; document.getElementById('lnSD').value=loan.start_date||''; }
   lnCalc();
   openM('loanModal');
 }
-
-// ── helpers ──
-function lnSetM(n){
-  document.getElementById('lnMonths').value = n;
-  document.querySelectorAll('#loanModal .cal-q').forEach(b=>b.classList.toggle('cal-q-on',parseInt(b.textContent)===n));
-  lnCalc();
-}
-
+function lnSetM(n){ document.getElementById('lnMonths').value=n; document.querySelectorAll('#loanModal .cal-q').forEach(b=>b.classList.toggle('cal-q-on',parseInt(b.textContent)===n)); lnCalc(); }
 function lnCalc(){
-  const months   = parseInt(document.getElementById('lnMonths').value) || 0;
-  const startStr = document.getElementById('lnSD').value;
-  const repayAmt = parseAmt(document.getElementById('lnRepayAmt').value);
-  const motoVal  = parseAmt(document.getElementById('lnMV').value);
-  const freq     = document.getElementById('lnFreq').value;
-
-  // month hint
-  const hint = document.getElementById('lnMonthsHint');
+  const months=parseInt(document.getElementById('lnMonths').value)||0;
+  const startStr=document.getElementById('lnSD').value;
+  const repayAmt=parseAmt(document.getElementById('lnRepayAmt').value);
+  const motoVal=parseAmt(document.getElementById('lnMV').value);
+  const freq=document.getElementById('lnFreq').value;
+  const hint=document.getElementById('lnMonthsHint');
   if(months<=0) hint.textContent='';
-  else if(months<12)        hint.textContent=`Mwezi ${months}`;
-  else if(months===12)      hint.textContent='Mwaka 1';
-  else if(months%12===0)    hint.textContent=`Miaka ${months/12}`;
+  else if(months<12) hint.textContent=`Mwezi ${months}`;
+  else if(months===12) hint.textContent='Mwaka 1';
+  else if(months%12===0) hint.textContent=`Miaka ${months/12}`;
   else{ const y=Math.floor(months/12),m=months%12; hint.textContent=`Miaka ${y}, Miezi ${m}`; }
-
-  // sync quick buttons
   document.querySelectorAll('#loanModal .cal-q').forEach(b=>b.classList.toggle('cal-q-on',parseInt(b.textContent)===months));
-
-  // end date
-  if(startStr && months){
-    const ed=new Date(startStr); ed.setMonth(ed.getMonth()+months);
-    document.getElementById('lnED').value = fmtD(ed.toISOString().split('T')[0]);
-  } else {
-    document.getElementById('lnED').value='';
-  }
-
-  // summary
-  if(!startStr || !months || !repayAmt || !freq){
-    document.getElementById('lnSummary').style.display='none'; return;
-  }
-  const s=new Date(startStr), e=new Date(startStr);
-  e.setMonth(e.getMonth()+months);
-  const totalDays = Math.round((e-s)/86400000);
-  const periods   = freq==='Daily'?totalDays:freq==='Weekly'?Math.ceil(totalDays/7):months;
-  const totalRepay= repayAmt * periods;
-  const profit    = motoVal>0 ? totalRepay - motoVal : null;
-
-  document.getElementById('lnTotalDays').textContent  = fmtComma(totalDays)+' siku';
-  document.getElementById('lnPayCount').textContent   = fmtComma(periods);
-  document.getElementById('lnTotalRepay').textContent = fmt(totalRepay);
-  document.getElementById('lnProfit').textContent     = profit!==null ? fmt(profit) : '—';
-  document.getElementById('lnSummary').style.display  = 'block';
+  if(startStr&&months){ const ed=new Date(startStr); ed.setMonth(ed.getMonth()+months); document.getElementById('lnED').value=fmtD(ed.toISOString().split('T')[0]); }
+  else document.getElementById('lnED').value='';
+  if(!startStr||!months||!repayAmt||!freq){ document.getElementById('lnSummary').style.display='none'; return; }
+  const s=new Date(startStr),e=new Date(startStr); e.setMonth(e.getMonth()+months);
+  const totalDays=Math.round((e-s)/86400000);
+  const periods=freq==='Daily'?totalDays:freq==='Weekly'?Math.ceil(totalDays/7):months;
+  const totalRepay=repayAmt*periods;
+  const profit=motoVal>0?totalRepay-motoVal:null;
+  document.getElementById('lnTotalDays').textContent=fmtComma(totalDays)+(lang==='sw'?' siku':' days');
+  document.getElementById('lnPayCount').textContent=fmtComma(periods);
+  document.getElementById('lnTotalRepay').textContent=fmt(totalRepay);
+  document.getElementById('lnProfit').textContent=profit!==null?fmt(profit):'—';
+  document.getElementById('lnSummary').style.display='block';
 }
-
-// auto-comma on MV and RepayAmt
-['lnMV','lnRepayAmt'].forEach(id=>{
-  const el=document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input',function(){
-    const raw=this.value.replace(/,/g,'');
-    if(raw!==''&&!isNaN(raw)) this.value=fmtComma(parseFloat(raw)||0);
-    lnCalc();
-  });
-});
-
-// ── save ──
 async function saveLoan(e){
   e.preventDefault();
   const btn=e.target.querySelector('button[type=submit]');
   btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
-
-  const months   = parseInt(document.getElementById('lnMonths').value)||0;
-  const startStr = document.getElementById('lnSD').value;
-  const repayAmt = parseAmt(document.getElementById('lnRepayAmt').value);
-  const motoVal  = parseAmt(document.getElementById('lnMV').value);
-  const freq     = document.getElementById('lnFreq').value;
-
-  // derive totals
-  const s=new Date(startStr), eDate=new Date(startStr);
-  eDate.setMonth(eDate.getMonth()+months);
-  const totalDays  = Math.round((eDate-s)/86400000);
-  const periods    = freq==='Daily'?totalDays:freq==='Weekly'?Math.ceil(totalDays/7):months;
-  const totalRepay = repayAmt * periods;
-
-  await sb.from('profiles').update({
-    full_name: document.getElementById('lnName').value,
-    email:     document.getElementById('lnEmail').value,
-    phone:     document.getElementById('lnPhone').value,
-    region:    document.getElementById('lnRegion').value
-  }).eq('id',currentUser.id);
-
+  const months=parseInt(document.getElementById('lnMonths').value)||0;
+  const startStr=document.getElementById('lnSD').value;
+  const repayAmt=parseAmt(document.getElementById('lnRepayAmt').value);
+  const motoVal=parseAmt(document.getElementById('lnMV').value);
+  const freq=document.getElementById('lnFreq').value;
+  const s=new Date(startStr),eDate=new Date(startStr); eDate.setMonth(eDate.getMonth()+months);
+  const totalDays=Math.round((eDate-s)/86400000);
+  const periods=freq==='Daily'?totalDays:freq==='Weekly'?Math.ceil(totalDays/7):months;
+  const totalRepay=repayAmt*periods;
+  await sb.from('profiles').update({full_name:document.getElementById('lnName').value,email:document.getElementById('lnEmail').value,phone:document.getElementById('lnPhone').value,region:document.getElementById('lnRegion').value}).eq('id',currentUser.id);
   await sb.from('loans').delete().eq('user_id',currentUser.id);
-
-  const {error}=await sb.from('loans').insert({
-    user_id:          currentUser.id,
-    model:            document.getElementById('lnModel').value,
-    moto_value:       motoVal,
-    repay_per_period: repayAmt,
-    repay_amount:     totalRepay,
-    interest_amount:  0,
-    start_date:       startStr,
-    end_date:         eDate.toISOString().split('T')[0],
-    months:           months,
-    frequency:        freq
-  });
-
+  const {error}=await sb.from('loans').insert({user_id:currentUser.id,model:document.getElementById('lnModel').value,moto_value:motoVal,repay_per_period:repayAmt,repay_amount:totalRepay,interest_amount:0,start_date:startStr,end_date:eDate.toISOString().split('T')[0],months,frequency:freq});
   btn.innerHTML=`<span>${t('lbl-save')}</span>`; btn.disabled=false;
   if(error){ showToast('Error: '+error.message); return; }
-  closeM('loanModal');
-  showToast(t('toast-saved'));
-  loadDashboard();
+  closeM('loanModal'); showToast(t('toast-saved')); loadDashboard();
 }
 
-// ══════════════════════════════════════
-// DASHBOARD
-// ══════════════════════════════════════
+// ── DASHBOARD ──
 async function loadDashboard(){
   const [pr,lr,rr]=await Promise.all([
     sb.from('profiles').select('*').eq('id',currentUser.id).single(),
     sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single(),
     sb.from('repayments').select('amount').eq('user_id',currentUser.id)
   ]);
-  const prof=pr.data, loan=lr.data, reps=rr.data||[];
+  const prof=pr.data,loan=lr.data,reps=rr.data||[];
   document.getElementById('dashName').textContent=prof?.full_name||(lang==='sw'?'Dereva':'Rider');
   document.getElementById('dashMoto').textContent=loan?'🏍️ '+loan.model:'';
   document.getElementById('noLoanBanner').classList.toggle('hidden',!!loan);
@@ -1068,7 +959,7 @@ async function loadDashboard(){
   const totalPaid=reps.reduce((s,r)=>s+parseFloat(r.amount),0);
   const remaining=Math.max(loan.repay_amount-totalPaid,0);
   const pct=Math.min((totalPaid/loan.repay_amount)*100,100);
-  const endDate=new Date(loan.end_date), startDate=new Date(loan.start_date), today=new Date();
+  const endDate=new Date(loan.end_date),startDate=new Date(loan.start_date),today=new Date();
   const daysLeft=Math.max(Math.ceil((endDate-today)/86400000),0);
   const daysTotal=Math.ceil((endDate-startDate)/86400000);
   const daysPassed=daysTotal-daysLeft;
@@ -1093,29 +984,17 @@ async function loadDashboard(){
 }
 function nextPayDate(freq){ const d=new Date(); if(freq==='Daily')d.setDate(d.getDate()+1); else if(freq==='Weekly')d.setDate(d.getDate()+7); else d.setMonth(d.getMonth()+1); return d.toISOString().split('T')[0]; }
 
-// ══════════════════════════════════════
-// REPAYMENTS
-// ══════════════════════════════════════
-function openRepModal(){
-  document.getElementById('repForm').reset();
-  document.getElementById('rpDate').value=todayStr();
-  document.getElementById('rpPrev').innerHTML='';
-  document.getElementById('rpPrev').classList.add('hidden');
-  openM('repModal');
-}
-document.getElementById('rpRecFile').addEventListener('change',e=>{
-  const f=e.target.files[0]; if(!f) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{ const p=document.getElementById('rpPrev'); p.innerHTML=`<img src="${ev.target.result}">`; p.classList.remove('hidden'); };
-  reader.readAsDataURL(f);
-});
+// ── REPAYMENTS ──
+function openRepModal(){ document.getElementById('repForm').reset(); document.getElementById('rpDate').value=todayStr(); document.getElementById('rpPrev').innerHTML=''; document.getElementById('rpPrev').classList.add('hidden'); openM('repModal'); }
+document.getElementById('rpRecFile').addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ const p=document.getElementById('rpPrev'); p.innerHTML=`<img src="${ev.target.result}">`; p.classList.remove('hidden'); }; r.readAsDataURL(f); });
+document.getElementById('rpAmt').addEventListener('input',function(){ const raw=this.value.replace(/,/g,''); if(raw!==''&&!isNaN(raw)) this.value=fmtComma(parseFloat(raw)||0); });
 async function saveRep(e){
   e.preventDefault();
   const btn=e.target.querySelector('button[type=submit]');
   btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
   let receipt_url=null;
   const file=document.getElementById('rpRecFile').files[0];
-  if(file){ const path=`${currentUser.id}/${Date.now()}_${file.name}`; const {data:ud,error:ue}=await sb.storage.from('receipts').upload(path,file); if(!ue){ const {data:url}=sb.storage.from('receipts').getPublicUrl(path); receipt_url=url?.publicUrl||null; } }
+  if(file){ const path=`${currentUser.id}/${Date.now()}_${file.name}`; const {error:ue}=await sb.storage.from('receipts').upload(path,file); if(!ue){ const {data:url}=sb.storage.from('receipts').getPublicUrl(path); receipt_url=url?.publicUrl||null; } }
   const {data:lr}=await sb.from('loans').select('id').eq('user_id',currentUser.id).limit(1).single();
   const {error}=await sb.from('repayments').insert({user_id:currentUser.id,loan_id:lr?.data?.id||null,amount:parseAmt(document.getElementById('rpAmt').value),paid_on:document.getElementById('rpDate').value,method:document.getElementById('rpMethod').value,notes:document.getElementById('rpNotes').value,receipt_url});
   btn.innerHTML=`<span>${t('lbl-rec-pay')}</span>`; btn.disabled=false;
@@ -1131,9 +1010,7 @@ async function loadRepayments(){
   if(!items.length){ el.innerHTML=`<div class="empty"><div class="empty-ico">💰</div><p>${lang==='sw'?'Hakuna malipo yaliyorekodiwa':'No payments recorded yet'}</p></div>`; return; }
   el.innerHTML=items.map(r=>`
     <div class="swipe-wrap" id="wrap-${r.id}">
-      <div class="del-bg" onclick="confirmDel('repayments','${r.id}')">
-        <span class="del-bg-icon">🗑️</span><span>${lang==='sw'?'Futa':'Delete'}</span>
-      </div>
+      <div class="del-bg" onclick="confirmDel('repayments','${r.id}')"><span class="del-bg-icon">🗑️</span><span>${lang==='sw'?'Futa':'Delete'}</span></div>
       <div class="ic" id="ic-${r.id}" data-id="${r.id}" data-table="repayments">
         <div class="ic-head"><div class="ic-amt">${fmt(r.amount)}</div><div class="ic-date">${fmtD(r.paid_on)}</div></div>
         <div class="ic-detail">💳 ${r.method}</div>
@@ -1144,14 +1021,9 @@ async function loadRepayments(){
   attachSwipe();
 }
 
-// ══════════════════════════════════════
-// EXPENSES
-// ══════════════════════════════════════
-function openExpModal(){
-  document.getElementById('expForm').reset();
-  document.getElementById('exDate').value=todayStr();
-  openM('expModal');
-}
+// ── EXPENSES ──
+function openExpModal(){ document.getElementById('expForm').reset(); document.getElementById('exDate').value=todayStr(); openM('expModal'); }
+document.getElementById('exAmt').addEventListener('input',function(){ const raw=this.value.replace(/,/g,''); if(raw!==''&&!isNaN(raw)) this.value=fmtComma(parseFloat(raw)||0); });
 async function saveExp(e){
   e.preventDefault();
   const btn=e.target.querySelector('button[type=submit]');
@@ -1170,9 +1042,7 @@ async function loadExpenses(){
   if(!items.length){ el.innerHTML=`<div class="empty"><div class="empty-ico">🧾</div><p>${lang==='sw'?'Hakuna gharama zilizoongezwa':'No expenses recorded yet'}</p></div>`; return; }
   el.innerHTML=items.map(ex=>`
     <div class="swipe-wrap" id="wrap-${ex.id}">
-      <div class="del-bg" onclick="confirmDel('expenses','${ex.id}')">
-        <span class="del-bg-icon">🗑️</span><span>${lang==='sw'?'Futa':'Delete'}</span>
-      </div>
+      <div class="del-bg" onclick="confirmDel('expenses','${ex.id}')"><span class="del-bg-icon">🗑️</span><span>${lang==='sw'?'Futa':'Delete'}</span></div>
       <div class="ic exp" id="ic-${ex.id}" data-id="${ex.id}" data-table="expenses">
         <div class="ic-head"><div class="ic-amt">${fmt(ex.amount)}</div><div class="ic-date">${fmtD(ex.expense_on)}</div></div>
         <div style="display:flex;align-items:center;gap:.45rem;margin-top:.15rem">
@@ -1185,42 +1055,22 @@ async function loadExpenses(){
   attachSwipe();
 }
 
-// ══════════════════════════════════════
-// SWIPE TO DELETE
-// ══════════════════════════════════════
+// ── SWIPE DELETE ──
 function attachSwipe(){
   document.querySelectorAll('.ic').forEach(card=>{
-    let startX=0, curX=0, swiped=false;
-    const threshold=60;
-    function onStart(e){ startX=e.touches?e.touches[0].clientX:e.clientX; curX=0; }
-    function onMove(e){
-      const x=(e.touches?e.touches[0].clientX:e.clientX)-startX;
-      if(x<0){ curX=Math.max(x,-80); card.style.transform=`translateX(${curX}px)`; swiped=curX<-threshold; if(e.cancelable)e.preventDefault(); }
-    }
-    function onEnd(){
-      if(swiped){ card.style.transform='translateX(-80px)'; }
-      else{ card.style.transform='translateX(0)'; }
-    }
-    card.addEventListener('touchstart',onStart,{passive:true});
-    card.addEventListener('touchmove',onMove,{passive:false});
-    card.addEventListener('touchend',onEnd);
-    // Click anywhere on card resets
-    card.addEventListener('click',()=>{ if(card.style.transform!=='translateX(0px)'&&card.style.transform!==''&&card.style.transform!=='translateX(0)'){ card.style.transform='translateX(0)'; } });
+    let startX=0,curX=0,swiped=false;
+    card.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; curX=0; },{passive:true});
+    card.addEventListener('touchmove',e=>{ const x=e.touches[0].clientX-startX; if(x<0){ curX=Math.max(x,-80); card.style.transform=`translateX(${curX}px)`; swiped=curX<-60; if(e.cancelable)e.preventDefault(); } },{passive:false});
+    card.addEventListener('touchend',()=>{ card.style.transform=swiped?'translateX(-80px)':'translateX(0)'; });
+    card.addEventListener('click',()=>{ if(card.style.transform&&card.style.transform!=='translateX(0px)'&&card.style.transform!=='translateX(0)') card.style.transform='translateX(0)'; });
   });
-  // tap outside swipe reset
-  document.addEventListener('touchstart',e=>{
-    if(!e.target.closest('.swipe-wrap')){ document.querySelectorAll('.ic').forEach(c=>c.style.transform='translateX(0)'); }
-  },{passive:true});
+  document.addEventListener('touchstart',e=>{ if(!e.target.closest('.swipe-wrap')) document.querySelectorAll('.ic').forEach(c=>c.style.transform='translateX(0)'); },{passive:true});
 }
 
-// ══════════════════════════════════════
-// RECEIPT VIEWER
-// ══════════════════════════════════════
+// ── RECEIPT ──
 function viewReceipt(url){ document.getElementById('rvImg').src=url; openM('rvModal'); }
 
-// ══════════════════════════════════════
-// DELETE
-// ══════════════════════════════════════
+// ── DELETE ──
 let _del=null;
 function confirmDel(table,id){ _del={table,id}; openM('delModal'); }
 async function doDelete(){
@@ -1234,16 +1084,14 @@ async function doDelete(){
   _del=null;
 }
 
-// ══════════════════════════════════════
-// ANALYTICS + EXPORT
-// ══════════════════════════════════════
+// ── ANALYTICS ──
 async function loadAnalytics(){
   const [lr,rr,er]=await Promise.all([
     sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single(),
     sb.from('repayments').select('*').eq('user_id',currentUser.id),
     sb.from('expenses').select('*').eq('user_id',currentUser.id)
   ]);
-  const loan=lr.data, reps=rr.data||[], exps=er.data||[];
+  const loan=lr.data,reps=rr.data||[],exps=er.data||[];
   const el=document.getElementById('analyticsContent');
   const totalPaid=reps.reduce((s,r)=>s+parseFloat(r.amount),0);
   const totalExp=exps.reduce((s,e)=>s+parseFloat(e.amount),0);
@@ -1255,9 +1103,7 @@ async function loadAnalytics(){
   exps.forEach(e=>{ byCat[e.type]=(byCat[e.type]||0)+parseFloat(e.amount); });
   const cats=Object.keys(byCat).sort((a,b)=>byCat[b]-byCat[a]);
   const maxExp=Math.max(...cats.map(c=>byCat[c]),1);
-  let html=`<button class="export-btn" onclick="exportExcel()">
-    ${t('lbl-export')} &nbsp; ${t('lbl-share')}
-  </button>`;
+  let html=`<button class="export-btn" onclick="exportExcel()">${t('lbl-export')} &nbsp; ${t('lbl-share')}</button>`;
   if(loan){
     const pct=loan.repay_amount>0?Math.round((totalPaid/loan.repay_amount)*100):0;
     html+=`<div class="chart-card"><div class="ct">${lang==='sw'?'Muhtasari wa Mkopo':'Loan Summary'}</div>
@@ -1278,182 +1124,82 @@ async function loadAnalytics(){
     cats.forEach(c=>{ const w=Math.round((byCat[c]/maxExp)*100); const col=EXP_COLORS[c]||'#888'; html+=`<div class="bar-row"><div class="bar-label" style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:${col};flex-shrink:0;display:inline-block"></span>${c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${col}"></div></div><div class="bar-val">${(byCat[c]/1000).toFixed(0)}k</div></div>`; });
     html+=`<div style="margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--g100);display:flex;justify-content:space-between;font-size:.88rem"><span style="color:var(--g600)">${lang==='sw'?'Jumla':'Total'}</span><strong>${fmt(totalExp)}</strong></div></div>`;
   }
-  el.innerHTML = html || `<div class="empty"><div class="empty-ico">📊</div><p>${lang==='sw'?'Haina data bado. Endelea kurekodi!':'Not enough data yet.'}</p></div>`;
+  el.innerHTML=html||`<div class="empty"><div class="empty-ico">📊</div><p>${lang==='sw'?'Haina data bado.':'Not enough data yet.'}</p></div>`;
 }
 
-// ══════════════════════════════════════
-// EXCEL EXPORT + SHARE
-// ══════════════════════════════════════
+// ── EXPORT ──
 async function exportExcel(){
   const [lr,rr,er]=await Promise.all([
     sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single(),
     sb.from('repayments').select('*').eq('user_id',currentUser.id).order('paid_on',{ascending:false}),
     sb.from('expenses').select('*').eq('user_id',currentUser.id).order('expense_on',{ascending:false})
   ]);
-  const loan=lr.data, reps=rr.data||[], exps=er.data||[];
-
-  // Build CSV content for each sheet
-  let csvContent = '';
-
-  // Loan sheet
-  csvContent += lang==='sw'?'TAARIFA ZA MKOPO\n':'LOAN INFORMATION\n';
-  csvContent += lang==='sw'?`Pikipiki,${loan?.model||''}\nThamani,${loan?.moto_value||''}\nJumla Kulipa,${loan?.repay_amount||''}\nTarehe Kuanza,${loan?.start_date||''}\nTarehe Mwisho,${loan?.end_date||''}\nMzunguko,${loan?.frequency||''}\n\n`
-    :`Motorcycle,${loan?.model||''}\nValue,${loan?.moto_value||''}\nTotal Repayment,${loan?.repay_amount||''}\nStart Date,${loan?.start_date||''}\nEnd Date,${loan?.end_date||''}\nFrequency,${loan?.frequency||''}\n\n`;
-
-  // Repayments sheet
-  csvContent += lang==='sw'?'MALIPO\nTarehe,Kiasi,Njia,Maelezo\n':'REPAYMENTS\nDate,Amount,Method,Notes\n';
-  reps.forEach(r=>{ csvContent+=`${r.paid_on},${r.amount},${r.method},"${r.notes||''}"\n`; });
-
-  csvContent+='\n';
-
-  // Expenses sheet
-  csvContent+=lang==='sw'?'GHARAMA\nTarehe,Aina,Kiasi,Maelezo\n':'EXPENSES\nDate,Type,Amount,Notes\n';
-  exps.forEach(e=>{ csvContent+=`${e.expense_on},${e.type},${e.amount},"${e.notes||''}"\n`; });
-
-  const blob = new Blob(['\uFEFF'+csvContent],{type:'text/csv;charset=utf-8;'});
+  const loan=lr.data,reps=rr.data||[],exps=er.data||[];
+  let csv='';
+  csv+=lang==='sw'?'TAARIFA ZA MKOPO\n':'LOAN INFORMATION\n';
+  csv+=lang==='sw'?`Pikipiki,${loan?.model||''}\nThamani,${loan?.moto_value||''}\nJumla Kulipa,${loan?.repay_amount||''}\nTarehe Kuanza,${loan?.start_date||''}\nTarehe Mwisho,${loan?.end_date||''}\nMzunguko,${loan?.frequency||''}\n\n`:`Motorcycle,${loan?.model||''}\nValue,${loan?.moto_value||''}\nTotal Repayment,${loan?.repay_amount||''}\nStart Date,${loan?.start_date||''}\nEnd Date,${loan?.end_date||''}\nFrequency,${loan?.frequency||''}\n\n`;
+  csv+=lang==='sw'?'MALIPO\nTarehe,Kiasi,Njia,Maelezo\n':'REPAYMENTS\nDate,Amount,Method,Notes\n';
+  reps.forEach(r=>{ csv+=`${r.paid_on},${r.amount},${r.method},"${r.notes||''}"\n`; });
+  csv+='\n';
+  csv+=lang==='sw'?'GHARAMA\nTarehe,Aina,Kiasi,Maelezo\n':'EXPENSES\nDate,Type,Amount,Notes\n';
+  exps.forEach(e=>{ csv+=`${e.expense_on},${e.type},${e.amount},"${e.notes||''}"\n`; });
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
   const filename=`BodaTracker_${new Date().toISOString().slice(0,10)}.csv`;
-
-  // Try native share first (mobile)
-  if(navigator.share && navigator.canShare){
-    try{
-      const file=new File([blob],filename,{type:'text/csv'});
-      if(navigator.canShare({files:[file]})){
-        await navigator.share({files:[file],title:'Boda Tracker Data',text:lang==='sw'?'Taarifa za Boda Tracker':'Boda Tracker Records'});
-        return;
-      }
-    }catch(e){ if(e.name!=='AbortError') console.log(e); }
+  if(navigator.share&&navigator.canShare){
+    try{ const file=new File([blob],filename,{type:'text/csv'}); if(navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Boda Tracker Data'}); return;} }catch(e){ if(e.name!=='AbortError') console.log(e); }
   }
-  // Fallback: download
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=filename; a.click();
-  URL.revokeObjectURL(url);
+  const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; a.click(); URL.revokeObjectURL(url);
   showToast(lang==='sw'?'✓ Faili limepakuliwa':'✓ File downloaded');
 }
 
-// ══════════════════════════════════════
-// CALCULATOR
-// ══════════════════════════════════════
-(function(){
-  // init today
-  const s = document.getElementById('calStart');
-  if(s) s.value = todayStr();
-  calUpdate();
-})();
+// ── CALCULATOR ──
+function calSetM(n){ document.getElementById('calMonths').value=n; document.querySelectorAll('#calculatorPage .cal-q').forEach(b=>b.classList.toggle('cal-q-on',parseInt(b.textContent)===n)); calMHint(n); calUpdate(); }
+function calMHint(m){ m=parseInt(m)||0; const el=document.getElementById('calMonthsHint'); if(!el) return; if(m<=0) el.textContent=''; else if(m<12) el.textContent=`Mwezi ${m}`; else if(m===12) el.textContent='Mwaka 1'; else if(m%12===0) el.textContent=`Miaka ${m/12}`; else{ const y=Math.floor(m/12),mo=m%12; el.textContent=`Miaka ${y}, Miezi ${mo}`; } }
+function calUpdate(){ const start=document.getElementById('calStart').value; const months=parseInt(document.getElementById('calMonths').value)||0; document.querySelectorAll('#calculatorPage .cal-q').forEach(b=>b.classList.toggle('cal-q-on',parseInt(b.textContent)===months)); calMHint(months); if(!start||!months){ document.getElementById('calEnd').value=''; return; } const ed=new Date(start); ed.setMonth(ed.getMonth()+months); document.getElementById('calEnd').value=fmtD(ed.toISOString().split('T')[0]); }
 
-['calRepay','calDeposit'].forEach(id => {
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', function(){
-    const raw = this.value.replace(/,/g,'');
-    if(raw !== '' && !isNaN(raw)) this.value = fmtComma(parseFloat(raw)||0);
-  });
-});
+document.getElementById('calRepay').addEventListener('input',function(){ const raw=this.value.replace(/,/g,''); if(raw!==''&&!isNaN(raw)) this.value=fmtComma(parseFloat(raw)||0); });
+document.getElementById('calDeposit').addEventListener('input',function(){ const raw=this.value.replace(/,/g,''); if(raw!==''&&!isNaN(raw)) this.value=fmtComma(parseFloat(raw)||0); });
 
-function calSetM(n){
-  document.getElementById('calMonths').value = n;
-  document.querySelectorAll('.cal-q').forEach(b => b.classList.toggle('cal-q-on', parseInt(b.textContent) === n));
-  calMHint(n);
-  calUpdate();
-}
-
-function calMHint(m){
-  m = parseInt(m)||0;
-  const el = document.getElementById('calMonthsHint');
-  if(!el) return;
-  if(m <= 0) el.textContent = '';
-  else if(m < 12) el.textContent = `Mwezi ${m}`;
-  else if(m === 12) el.textContent = 'Mwaka 1';
-  else if(m % 12 === 0) el.textContent = `Miaka ${m/12}`;
-  else { const y=Math.floor(m/12),mo=m%12; el.textContent=`Miaka ${y}, Miezi ${mo}`; }
-}
-
-function calUpdate(){
-  const start = document.getElementById('calStart').value;
-  const months = parseInt(document.getElementById('calMonths').value)||0;
-  document.querySelectorAll('.cal-q').forEach(b => b.classList.toggle('cal-q-on', parseInt(b.textContent) === months));
-  calMHint(months);
-  if(!start || !months){ document.getElementById('calEnd').value = ''; return; }
-  const ed = new Date(start); ed.setMonth(ed.getMonth() + months);
-  document.getElementById('calEnd').value = fmtD(ed.toISOString().split('T')[0]);
-}
-
-let _calSch = [], _calSchOpen = false;
-
+let _calSchOpen=false;
 function calCalculate(){
-  const repay = parseAmt(document.getElementById('calRepay').value);
-  const deposit = parseAmt(document.getElementById('calDeposit').value);
-  const freq = document.getElementById('calFreq').value;
-  const months = parseInt(document.getElementById('calMonths').value)||0;
-  const startStr = document.getElementById('calStart').value;
-  if(!repay || !startStr || !months){
-    showToast(lang==='sw'?'Jaza: Jumla ya Kulipa, Muda na Tarehe':'Fill: Repayment, Duration and Start Date');
-    return;
-  }
-  const s = new Date(startStr), e = new Date(startStr);
-  e.setMonth(e.getMonth() + months);
-  const totalDays = Math.round((e - s) / 86400000);
-  const periods = freq==='daily' ? totalDays : freq==='weekly' ? Math.ceil(totalDays/7) : months;
-  const balance = Math.max(repay - deposit, 0);
-  const perPay = periods > 0 ? balance / periods : 0;
-  const freqLbl = freq==='daily' ? (lang==='sw'?'Kila Siku':'Daily') : freq==='weekly' ? (lang==='sw'?'Kila Wiki':'Weekly') : (lang==='sw'?'Kila Mwezi':'Monthly');
-
-  // build schedule
-  _calSch = [];
-  let rem = balance, cur = new Date(s);
-  if(deposit > 0) _calSch.push({n:'🎯', date: fmtD(s.toISOString().split('T')[0]), amt: deposit, rem, dep: true});
-  for(let i=1; i<=periods; i++){
-    const pay = i===periods ? rem : Math.round(perPay);
-    rem = Math.max(rem - pay, 0);
-    _calSch.push({n:i, date:fmtD(new Date(cur).toISOString().split('T')[0]), amt:pay, rem, dep:false});
-    if(freq==='daily') cur.setDate(cur.getDate()+1);
-    else if(freq==='weekly') cur.setDate(cur.getDate()+7);
-    else cur.setMonth(cur.getMonth()+1);
-  }
-
-  document.getElementById('rPerPay').textContent = fmt(Math.round(perPay));
-  document.getElementById('rTotalPay').textContent = fmt(repay);
-  document.getElementById('rDepPay').textContent = deposit > 0 ? fmt(deposit) : (lang==='sw'?'Hakuna':'None');
-  document.getElementById('rBalPay').textContent = fmt(balance);
-  document.getElementById('rCountPay').textContent = fmtComma(periods) + ' · ' + freqLbl;
-  document.getElementById('rDaysPay').textContent = fmtComma(totalDays) + (lang==='sw'?' siku':' days');
-
-  const today = new Date();
-  document.getElementById('calSchBody').innerHTML = _calSch.map(r => `
-    <tr style="${new Date(r.date) < today && !r.dep ? 'color:var(--success)' : ''}">
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${r.n}</td>
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${r.date}</td>
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${fmt(r.amt)}${r.dep?' ★':''}</td>
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${fmt(r.rem)}</td>
-    </tr>`).join('');
-
-  document.getElementById('calResults').style.display = 'block';
-  document.getElementById('calSchWrap').style.display = 'none';
-  _calSchOpen = false;
-  document.getElementById('calSchTxt').textContent = lang==='sw'?'Ona Ratiba Kamili':'View Full Schedule';
+  const repay=parseAmt(document.getElementById('calRepay').value);
+  const deposit=parseAmt(document.getElementById('calDeposit').value);
+  const freq=document.getElementById('calFreq').value;
+  const months=parseInt(document.getElementById('calMonths').value)||0;
+  const startStr=document.getElementById('calStart').value;
+  if(!repay||!startStr||!months){ showToast(lang==='sw'?'Jaza: Jumla ya Kulipa, Muda na Tarehe':'Fill: Repayment, Duration and Start Date'); return; }
+  const s=new Date(startStr),e=new Date(startStr); e.setMonth(e.getMonth()+months);
+  const totalDays=Math.round((e-s)/86400000);
+  const periods=freq==='daily'?totalDays:freq==='weekly'?Math.ceil(totalDays/7):months;
+  const balance=Math.max(repay-deposit,0);
+  const perPay=periods>0?balance/periods:0;
+  const freqLbl=freq==='daily'?(lang==='sw'?'Kila Siku':'Daily'):freq==='weekly'?(lang==='sw'?'Kila Wiki':'Weekly'):(lang==='sw'?'Kila Mwezi':'Monthly');
+  let sch=[],rem=balance,cur=new Date(s);
+  if(deposit>0) sch.push({n:'🎯',date:fmtD(s.toISOString().split('T')[0]),amt:deposit,rem,dep:true});
+  for(let i=1;i<=periods;i++){ const pay=i===periods?rem:Math.round(perPay); rem=Math.max(rem-pay,0); sch.push({n:i,date:fmtD(new Date(cur).toISOString().split('T')[0]),amt:pay,rem,dep:false}); if(freq==='daily')cur.setDate(cur.getDate()+1); else if(freq==='weekly')cur.setDate(cur.getDate()+7); else cur.setMonth(cur.getMonth()+1); }
+  document.getElementById('rPerPay').textContent=fmt(Math.round(perPay));
+  document.getElementById('rTotalPay').textContent=fmt(repay);
+  document.getElementById('rDepPay').textContent=deposit>0?fmt(deposit):(lang==='sw'?'Hakuna':'None');
+  document.getElementById('rBalPay').textContent=fmt(balance);
+  document.getElementById('rCountPay').textContent=fmtComma(periods)+' · '+freqLbl;
+  document.getElementById('rDaysPay').textContent=fmtComma(totalDays)+(lang==='sw'?' siku':' days');
+  const today=new Date();
+  document.getElementById('calSchBody').innerHTML=sch.map(r=>`<tr style="${new Date(r.date)<today&&!r.dep?'color:var(--success)':''}"><td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${r.n}</td><td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${r.date}</td><td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${fmt(r.amt)}${r.dep?' ★':''}</td><td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${fmt(r.rem)}</td></tr>`).join('');
+  document.getElementById('calResults').style.display='block';
+  document.getElementById('calSchWrap').style.display='none';
+  _calSchOpen=false;
+  document.getElementById('calSchTxt').textContent=lang==='sw'?'Ona Ratiba Kamili':'View Full Schedule';
   setTimeout(()=>document.getElementById('calResults').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
 }
+function calToggleSch(){ _calSchOpen=!_calSchOpen; document.getElementById('calSchWrap').style.display=_calSchOpen?'block':'none'; document.getElementById('calSchTxt').textContent=_calSchOpen?(lang==='sw'?'Ficha Ratiba':'Hide Schedule'):(lang==='sw'?'Ona Ratiba Kamili':'View Full Schedule'); }
 
-function calToggleSch(){
-  _calSchOpen = !_calSchOpen;
-  document.getElementById('calSchWrap').style.display = _calSchOpen ? 'block' : 'none';
-  document.getElementById('calSchTxt').textContent = _calSchOpen
-    ? (lang==='sw'?'Ficha Ratiba':'Hide Schedule')
-    : (lang==='sw'?'Ona Ratiba Kamili':'View Full Schedule');
-}
-
-// ══════════════════════════════════════
-// BOTTOM NAV
-// ══════════════════════════════════════
+// ── BOTTOM NAV ──
 document.querySelectorAll('.ni').forEach(n=>{ n.addEventListener('click',()=>nav(n.dataset.page)); });
 
-// ══════════════════════════════════════
-// SERVICE WORKER
-// ══════════════════════════════════════
+// ── SERVICE WORKER ──
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js').catch(()=>{}); }); }
 
-// ══════════════════════════════════════
-// INIT
-// ══════════════════════════════════════
+// ── INIT ──
 setLoading(true);
 applyLang();
 </script>
