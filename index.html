@@ -423,6 +423,9 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 <div class="mc">
   <div class="mh"><div class="mt" id="m-loan-title">SANIDI MKOPO</div><button class="xbtn" onclick="closeM('loanModal')">×</button></div>
   <form id="loanForm" onsubmit="saveLoan(event)">
+
+    <div style="font-size:.72rem;font-weight:700;color:var(--primary);letter-spacing:.5px;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--g100)">TAARIFA ZA KIBINAFSI</div>
+
     <div class="fg"><label class="fl" id="lbl-name">Jina Kamili</label><input type="text" class="fi" id="lnName" required></div>
     <div class="fg"><label class="fl" id="lbl-email-f">Barua pepe</label><input type="email" class="fi" id="lnEmail"></div>
     <div class="fg"><label class="fl" id="lbl-phone-f">Simu</label><input type="tel" class="fi" id="lnPhone" required></div>
@@ -434,20 +437,83 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
         <option>Kagera</option><option>Mara</option>
       </select>
     </div>
+
+    <div style="font-size:.72rem;font-weight:700;color:var(--primary);letter-spacing:.5px;margin:.85rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--g100)">TAARIFA ZA PIKIPIKI NA MKOPO</div>
+
     <div class="fg"><label class="fl" id="lbl-model">Mfano wa Pikipiki</label><input type="text" class="fi" id="lnModel" placeholder="TVS HLX 150, Bajaj Boxer" required></div>
-    <div class="frow">
-      <div class="fg"><label class="fl" id="lbl-mv-f">Thamani (TZS)</label><input type="text" inputmode="numeric" class="fi" id="lnMV" placeholder="3,500,000" required></div>
-      <div class="fg"><label class="fl" id="lbl-tr-f">Jumla Kulipa (TZS)</label><input type="text" inputmode="numeric" class="fi" id="lnTR" placeholder="4,200,000" required></div>
+
+    <div class="fg">
+      <label class="fl" id="lbl-mv-f">Thamani ya Pikipiki (TZS)</label>
+      <div style="position:relative">
+        <span style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:var(--g500);pointer-events:none">TZS</span>
+        <input type="text" inputmode="numeric" class="fi" id="lnMV" placeholder="3,500,000" style="padding-left:3rem" required oninput="lnCalc()">
+      </div>
+      <div style="font-size:.72rem;color:var(--g500);margin-top:.3rem" id="lbl-mv-hint">Inatumika kuhesabu faida ya mmiliki tu</div>
     </div>
-    <div class="frow">
-      <div class="fg"><label class="fl" id="lbl-sd">Tarehe ya Kuanza</label><input type="date" class="fi" id="lnSD" required></div>
-      <div class="fg"><label class="fl" id="lbl-ed">Tarehe ya Mwisho</label><input type="date" class="fi" id="lnED" required></div>
-    </div>
+
     <div class="fg"><label class="fl" id="lbl-freq">Mzunguko wa Malipo</label>
-      <select class="fi" id="lnFreq" required>
-        <option value="">Chagua</option><option value="Daily">Kila Siku</option><option value="Weekly">Kila Wiki</option><option value="Monthly">Kila Mwezi</option>
+      <select class="fi" id="lnFreq" required onchange="lnCalc()">
+        <option value="">Chagua</option>
+        <option value="Daily">Kila Siku</option>
+        <option value="Weekly">Kila Wiki</option>
+        <option value="Monthly">Kila Mwezi</option>
       </select>
     </div>
+
+    <div class="fg">
+      <label class="fl" id="lbl-repay-amt">Kiasi cha Malipo kwa Kila Mzunguko (TZS)</label>
+      <div style="position:relative">
+        <span style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;color:var(--g500);pointer-events:none">TZS</span>
+        <input type="text" inputmode="numeric" class="fi" id="lnRepayAmt" placeholder="150,000" style="padding-left:3rem" required oninput="lnCalc()">
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl" id="lbl-months">Idadi ya Miezi</label>
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.4rem">
+        <input type="number" class="fi" id="lnMonths" min="1" max="120" inputmode="numeric" placeholder="12" style="flex:1" required oninput="lnCalc()">
+        <span style="font-size:.72rem;font-weight:600;color:var(--primary);white-space:nowrap;min-width:70px;text-align:right" id="lnMonthsHint"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.3rem">
+        <button type="button" class="cal-q" onclick="lnSetM(3)">3</button>
+        <button type="button" class="cal-q" onclick="lnSetM(6)">6</button>
+        <button type="button" class="cal-q" onclick="lnSetM(9)">9</button>
+        <button type="button" class="cal-q" onclick="lnSetM(12)">12</button>
+        <button type="button" class="cal-q" onclick="lnSetM(18)">18</button>
+        <button type="button" class="cal-q" onclick="lnSetM(24)">24</button>
+        <button type="button" class="cal-q" onclick="lnSetM(36)">36</button>
+        <button type="button" class="cal-q" onclick="lnSetM(48)">48</button>
+      </div>
+    </div>
+
+    <div class="frow">
+      <div class="fg"><label class="fl" id="lbl-sd">Tarehe ya Kuanza</label><input type="date" class="fi" id="lnSD" required onchange="lnCalc()"></div>
+      <div class="fg"><label class="fl" id="lbl-ed">Tarehe ya Mwisho (Otomatiki)</label><input type="text" class="fi" id="lnED" readonly placeholder="—" style="opacity:.6;cursor:not-allowed"></div>
+    </div>
+
+    <!-- Auto-calculated summary -->
+    <div id="lnSummary" style="display:none;background:var(--g50);border:1px solid var(--g200);border-radius:var(--rsm);padding:.9rem;margin-bottom:1rem">
+      <div style="font-size:.72rem;font-weight:700;color:var(--g600);letter-spacing:.5px;margin-bottom:.65rem">MUHTASARI WA MKOPO</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+        <div style="background:var(--white);border-radius:var(--rsm);padding:.65rem .75rem;border:1px solid var(--g100)">
+          <div style="font-size:.62rem;color:var(--g600);font-weight:600;margin-bottom:.2rem">JUMLA YA SIKU</div>
+          <div style="font-family:var(--fd);font-size:1.2rem;color:var(--dark)" id="lnTotalDays">—</div>
+        </div>
+        <div style="background:var(--white);border-radius:var(--rsm);padding:.65rem .75rem;border:1px solid var(--g100)">
+          <div style="font-size:.62rem;color:var(--g600);font-weight:600;margin-bottom:.2rem">IDADI YA MALIPO</div>
+          <div style="font-family:var(--fd);font-size:1.2rem;color:var(--dark)" id="lnPayCount">—</div>
+        </div>
+        <div style="background:var(--white);border-radius:var(--rsm);padding:.65rem .75rem;border:1px solid var(--g100);grid-column:1/-1">
+          <div style="font-size:.62rem;color:var(--g600);font-weight:600;margin-bottom:.2rem">JUMLA YA KULIPA (TOTAL REPAYMENT)</div>
+          <div style="font-family:var(--fd);font-size:1.35rem;color:var(--primary)" id="lnTotalRepay">—</div>
+        </div>
+        <div style="background:rgba(6,214,160,.08);border:1px solid rgba(6,214,160,.25);border-radius:var(--rsm);padding:.65rem .75rem;grid-column:1/-1">
+          <div style="font-size:.62rem;color:var(--success);font-weight:600;margin-bottom:.2rem">FAIDA YA MMILIKI (Total Repayment − Thamani)</div>
+          <div style="font-family:var(--fd);font-size:1.35rem;color:var(--success)" id="lnProfit">—</div>
+        </div>
+      </div>
+    </div>
+
     <button type="submit" class="btn btn-p"><span id="lbl-save">💾 Hifadhi Taarifa</span></button>
   </form>
 </div>
@@ -850,27 +916,139 @@ async function subscribe(){
 async function logout(){ await sb.auth.signOut(); }
 
 // ══════════════════════════════════════
-// LOAN MODAL
+// LOAN MODAL — open & prefill
 // ══════════════════════════════════════
 async function openLoanModal(){
   const [{data:prof},{data:loan}] = await Promise.all([
     sb.from('profiles').select('*').eq('id',currentUser.id).single(),
     sb.from('loans').select('*').eq('user_id',currentUser.id).limit(1).single()
   ]);
-  if(prof){ document.getElementById('lnName').value=prof.full_name||''; document.getElementById('lnEmail').value=prof.email||''; document.getElementById('lnPhone').value=prof.phone||''; document.getElementById('lnRegion').value=prof.region||''; }
-  if(loan){ document.getElementById('lnModel').value=loan.model||''; document.getElementById('lnMV').value=loan.moto_value?fmtComma(loan.moto_value):''; document.getElementById('lnTR').value=loan.repay_amount?fmtComma(loan.repay_amount):''; document.getElementById('lnSD').value=loan.start_date||''; document.getElementById('lnED').value=loan.end_date||''; document.getElementById('lnFreq').value=loan.frequency||''; }
+  if(prof){
+    document.getElementById('lnName').value  = prof.full_name || '';
+    document.getElementById('lnEmail').value = prof.email    || '';
+    document.getElementById('lnPhone').value = prof.phone    || '';
+    document.getElementById('lnRegion').value= prof.region   || '';
+  }
+  if(loan){
+    document.getElementById('lnModel').value     = loan.model      || '';
+    document.getElementById('lnMV').value        = loan.moto_value     ? fmtComma(loan.moto_value)     : '';
+    document.getElementById('lnRepayAmt').value  = loan.repay_per_period? fmtComma(loan.repay_per_period):'';
+    document.getElementById('lnFreq').value      = loan.frequency   || '';
+    document.getElementById('lnMonths').value    = loan.months      || '';
+    document.getElementById('lnSD').value        = loan.start_date  || '';
+  }
+  lnCalc();
   openM('loanModal');
 }
+
+// ── helpers ──
+function lnSetM(n){
+  document.getElementById('lnMonths').value = n;
+  document.querySelectorAll('#loanModal .cal-q').forEach(b=>b.classList.toggle('cal-q-on',parseInt(b.textContent)===n));
+  lnCalc();
+}
+
+function lnCalc(){
+  const months   = parseInt(document.getElementById('lnMonths').value) || 0;
+  const startStr = document.getElementById('lnSD').value;
+  const repayAmt = parseAmt(document.getElementById('lnRepayAmt').value);
+  const motoVal  = parseAmt(document.getElementById('lnMV').value);
+  const freq     = document.getElementById('lnFreq').value;
+
+  // month hint
+  const hint = document.getElementById('lnMonthsHint');
+  if(months<=0) hint.textContent='';
+  else if(months<12)        hint.textContent=`Mwezi ${months}`;
+  else if(months===12)      hint.textContent='Mwaka 1';
+  else if(months%12===0)    hint.textContent=`Miaka ${months/12}`;
+  else{ const y=Math.floor(months/12),m=months%12; hint.textContent=`Miaka ${y}, Miezi ${m}`; }
+
+  // sync quick buttons
+  document.querySelectorAll('#loanModal .cal-q').forEach(b=>b.classList.toggle('cal-q-on',parseInt(b.textContent)===months));
+
+  // end date
+  if(startStr && months){
+    const ed=new Date(startStr); ed.setMonth(ed.getMonth()+months);
+    document.getElementById('lnED').value = fmtD(ed.toISOString().split('T')[0]);
+  } else {
+    document.getElementById('lnED').value='';
+  }
+
+  // summary
+  if(!startStr || !months || !repayAmt || !freq){
+    document.getElementById('lnSummary').style.display='none'; return;
+  }
+  const s=new Date(startStr), e=new Date(startStr);
+  e.setMonth(e.getMonth()+months);
+  const totalDays = Math.round((e-s)/86400000);
+  const periods   = freq==='Daily'?totalDays:freq==='Weekly'?Math.ceil(totalDays/7):months;
+  const totalRepay= repayAmt * periods;
+  const profit    = motoVal>0 ? totalRepay - motoVal : null;
+
+  document.getElementById('lnTotalDays').textContent  = fmtComma(totalDays)+' siku';
+  document.getElementById('lnPayCount').textContent   = fmtComma(periods);
+  document.getElementById('lnTotalRepay').textContent = fmt(totalRepay);
+  document.getElementById('lnProfit').textContent     = profit!==null ? fmt(profit) : '—';
+  document.getElementById('lnSummary').style.display  = 'block';
+}
+
+// auto-comma on MV and RepayAmt
+['lnMV','lnRepayAmt'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input',function(){
+    const raw=this.value.replace(/,/g,'');
+    if(raw!==''&&!isNaN(raw)) this.value=fmtComma(parseFloat(raw)||0);
+    lnCalc();
+  });
+});
+
+// ── save ──
 async function saveLoan(e){
   e.preventDefault();
   const btn=e.target.querySelector('button[type=submit]');
   btn.innerHTML='<div class="spinner"></div>'; btn.disabled=true;
-  await sb.from('profiles').update({full_name:document.getElementById('lnName').value,email:document.getElementById('lnEmail').value,phone:document.getElementById('lnPhone').value,region:document.getElementById('lnRegion').value}).eq('id',currentUser.id);
+
+  const months   = parseInt(document.getElementById('lnMonths').value)||0;
+  const startStr = document.getElementById('lnSD').value;
+  const repayAmt = parseAmt(document.getElementById('lnRepayAmt').value);
+  const motoVal  = parseAmt(document.getElementById('lnMV').value);
+  const freq     = document.getElementById('lnFreq').value;
+
+  // derive totals
+  const s=new Date(startStr), eDate=new Date(startStr);
+  eDate.setMonth(eDate.getMonth()+months);
+  const totalDays  = Math.round((eDate-s)/86400000);
+  const periods    = freq==='Daily'?totalDays:freq==='Weekly'?Math.ceil(totalDays/7):months;
+  const totalRepay = repayAmt * periods;
+
+  await sb.from('profiles').update({
+    full_name: document.getElementById('lnName').value,
+    email:     document.getElementById('lnEmail').value,
+    phone:     document.getElementById('lnPhone').value,
+    region:    document.getElementById('lnRegion').value
+  }).eq('id',currentUser.id);
+
   await sb.from('loans').delete().eq('user_id',currentUser.id);
-  const {error}=await sb.from('loans').insert({user_id:currentUser.id,model:document.getElementById('lnModel').value,moto_value:parseAmt(document.getElementById('lnMV').value),repay_amount:parseAmt(document.getElementById('lnTR').value),interest_amount:0,start_date:document.getElementById('lnSD').value,end_date:document.getElementById('lnED').value,frequency:document.getElementById('lnFreq').value});
+
+  const {error}=await sb.from('loans').insert({
+    user_id:          currentUser.id,
+    model:            document.getElementById('lnModel').value,
+    moto_value:       motoVal,
+    repay_per_period: repayAmt,
+    repay_amount:     totalRepay,
+    interest_amount:  0,
+    start_date:       startStr,
+    end_date:         eDate.toISOString().split('T')[0],
+    months:           months,
+    frequency:        freq
+  });
+
   btn.innerHTML=`<span>${t('lbl-save')}</span>`; btn.disabled=false;
   if(error){ showToast('Error: '+error.message); return; }
-  closeM('loanModal'); showToast(t('toast-saved')); loadDashboard();
+  closeM('loanModal');
+  showToast(t('toast-saved'));
+  loadDashboard();
 }
 
 // ══════════════════════════════════════
