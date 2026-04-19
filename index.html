@@ -189,16 +189,6 @@ select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns=
 .spinner{border:2.5px solid rgba(255,255,255,.3);border-top:2.5px solid var(--white);border-radius:50%;width:16px;height:16px;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .alert-e{background:rgba(239,71,111,.1);color:var(--danger);border:1px solid rgba(239,71,111,.3);padding:.75rem .9rem;border-radius:var(--rsm);margin-bottom:.85rem;font-size:.85rem}
-/* ── CALCULATOR RESULT BOXES ── */
-.cal-rbox{background:var(--g50);border-radius:var(--rsm);padding:.7rem .8rem;border:1px solid var(--g100)}
-.cal-rlbl{font-size:.63rem;font-weight:600;color:var(--g600);letter-spacing:.4px;margin-bottom:.25rem}
-.cal-rval{font-family:var(--fd);font-size:1.25rem;letter-spacing:.5px}
-.cal-rbox.hi .cal-rval{color:var(--primary)}
-.cal-rbox.wa .cal-rval{color:var(--warn)}
-.cal-rbox.su .cal-rval{color:var(--success)}
-.cal-q{background:var(--g100);border:1px solid var(--g200);border-radius:6px;color:var(--g600);font-family:var(--fb);font-size:.74rem;font-weight:600;padding:.28rem .55rem;cursor:pointer;transition:all .18s;line-height:1}
-.cal-q:hover{border-color:var(--primary);color:var(--primary)}
-.cal-q.cal-q-on{background:rgba(255,107,53,.12);border-color:var(--primary);color:var(--primary)}
 .hidden{display:none!important}
 </style>
 </head>
@@ -571,19 +561,7 @@ const T = {
     'lbl-cancel':'Ghairi','lbl-del-btn':'Futa',
     'health-good':'✓ Uko Sawa','health-warn':'⚠ Kidogo Nyuma','health-bad':'✗ Nyuma Sana',
     'lbl-export':'📥 Hamisha Excel','lbl-share':'📤 Shiriki',
-    'nav-cal':'Hesabu','nav-cal2':'Hesabu',
-    'cal-title':'HESABU MKOPO','cal-sub':'Panga malipo yako',
-    'lbl-cal-repay':'JUMLA YA KULIPA (TZS)','lbl-cal-deposit':'MALIPO YA AWALI — Si Lazima',
-    'lbl-cal-freq':'MZUNGUKO WA MALIPO','lbl-cal-months':'MUDA (MIEZI)',
-    'lbl-cal-start':'TAREHE YA KUANZA','lbl-cal-end':'TAREHE YA MWISHO',
-    'lbl-cal-btn':'Hesabu Malipo','lbl-cal-results':'📊 MATOKEO',
-    'lbl-r-per':'KWA KILA MZUNGUKO','lbl-r-total':'JUMLA YA KULIPA',
-    'lbl-r-dep':'MALIPO YA AWALI','lbl-r-bal':'KILICHOBAKI',
-    'lbl-r-count':'IDADI YA MALIPO','lbl-r-days':'JUMLA YA SIKU',
-    'lbl-cal-cta-h':'Tumia hesabu hii kwenye mkopo wako!',
-    'lbl-cal-cta-s':'Nenda kwenye Sanidi Mkopo ubandike taarifa hizi.',
-    'lbl-cal-goto':'Nenda →','co-daily':'Kila Siku','co-weekly':'Kila Wiki','co-monthly':'Kila Mwezi',
-    'th-date':'Tarehe','th-amt':'Kiasi','th-rem':'Kilichobaki','toast-deleted':'Rekodi imefutwa','toast-pay':'✓ Malipo yamerekodi','toast-exp':'✓ Gharama zimeongezwa',
+    'toast-saved':'✓ Taarifa zimehifadhiwa','toast-deleted':'Rekodi imefutwa','toast-pay':'✓ Malipo yamerekodi','toast-exp':'✓ Gharama zimeongezwa',
   },
   en:{
     'lh-sub':'Track Your Journey to Ownership',
@@ -617,19 +595,7 @@ const T = {
     'lbl-cancel':'Cancel','lbl-del-btn':'Delete',
     'health-good':'✓ On Track','health-warn':'⚠ Slightly Behind','health-bad':'✗ Behind Schedule',
     'lbl-export':'📥 Export Excel','lbl-share':'📤 Share',
-    'nav-cal':'Calculator','nav-cal2':'Calculator',
-    'cal-title':'CALCULATOR','cal-sub':'Plan your payments',
-    'lbl-cal-repay':'TOTAL REPAYMENT (TZS)','lbl-cal-deposit':'INITIAL DEPOSIT — Optional',
-    'lbl-cal-freq':'PAYMENT FREQUENCY','lbl-cal-months':'DURATION (MONTHS)',
-    'lbl-cal-start':'START DATE','lbl-cal-end':'END DATE',
-    'lbl-cal-btn':'Calculate','lbl-cal-results':'📊 RESULTS',
-    'lbl-r-per':'PER PAYMENT','lbl-r-total':'TOTAL REPAYMENT',
-    'lbl-r-dep':'INITIAL DEPOSIT','lbl-r-bal':'BALANCE REMAINING',
-    'lbl-r-count':'NO. OF PAYMENTS','lbl-r-days':'TOTAL DAYS',
-    'lbl-cal-cta-h':'Use these figures for your loan!',
-    'lbl-cal-cta-s':'Go to Setup Loan and fill in these details.',
-    'lbl-cal-goto':'Go →','co-daily':'Daily','co-weekly':'Weekly','co-monthly':'Monthly',
-    'th-date':'Date','th-amt':'Amount','th-rem':'Remaining','toast-deleted':'Record deleted','toast-pay':'✓ Payment recorded','toast-exp':'✓ Expense added',
+    'toast-saved':'✓ Information saved','toast-deleted':'Record deleted','toast-pay':'✓ Payment recorded','toast-exp':'✓ Expense added',
   }
 };
 
@@ -1150,117 +1116,6 @@ async function exportExcel(){
   const a=document.createElement('a'); a.href=url; a.download=filename; a.click();
   URL.revokeObjectURL(url);
   showToast(lang==='sw'?'✓ Faili limepakuliwa':'✓ File downloaded');
-}
-
-// ══════════════════════════════════════
-// CALCULATOR
-// ══════════════════════════════════════
-(function(){
-  // init today
-  const s = document.getElementById('calStart');
-  if(s) s.value = todayStr();
-  calUpdate();
-})();
-
-['calRepay','calDeposit'].forEach(id => {
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', function(){
-    const raw = this.value.replace(/,/g,'');
-    if(raw !== '' && !isNaN(raw)) this.value = fmtComma(parseFloat(raw)||0);
-  });
-});
-
-function calSetM(n){
-  document.getElementById('calMonths').value = n;
-  document.querySelectorAll('.cal-q').forEach(b => b.classList.toggle('cal-q-on', parseInt(b.textContent) === n));
-  calMHint(n);
-  calUpdate();
-}
-
-function calMHint(m){
-  m = parseInt(m)||0;
-  const el = document.getElementById('calMonthsHint');
-  if(!el) return;
-  if(m <= 0) el.textContent = '';
-  else if(m < 12) el.textContent = `Mwezi ${m}`;
-  else if(m === 12) el.textContent = 'Mwaka 1';
-  else if(m % 12 === 0) el.textContent = `Miaka ${m/12}`;
-  else { const y=Math.floor(m/12),mo=m%12; el.textContent=`Miaka ${y}, Miezi ${mo}`; }
-}
-
-function calUpdate(){
-  const start = document.getElementById('calStart').value;
-  const months = parseInt(document.getElementById('calMonths').value)||0;
-  document.querySelectorAll('.cal-q').forEach(b => b.classList.toggle('cal-q-on', parseInt(b.textContent) === months));
-  calMHint(months);
-  if(!start || !months){ document.getElementById('calEnd').value = ''; return; }
-  const ed = new Date(start); ed.setMonth(ed.getMonth() + months);
-  document.getElementById('calEnd').value = fmtD(ed.toISOString().split('T')[0]);
-}
-
-let _calSch = [], _calSchOpen = false;
-
-function calCalculate(){
-  const repay = parseAmt(document.getElementById('calRepay').value);
-  const deposit = parseAmt(document.getElementById('calDeposit').value);
-  const freq = document.getElementById('calFreq').value;
-  const months = parseInt(document.getElementById('calMonths').value)||0;
-  const startStr = document.getElementById('calStart').value;
-  if(!repay || !startStr || !months){
-    showToast(lang==='sw'?'Jaza: Jumla ya Kulipa, Muda na Tarehe':'Fill: Repayment, Duration and Start Date');
-    return;
-  }
-  const s = new Date(startStr), e = new Date(startStr);
-  e.setMonth(e.getMonth() + months);
-  const totalDays = Math.round((e - s) / 86400000);
-  const periods = freq==='daily' ? totalDays : freq==='weekly' ? Math.ceil(totalDays/7) : months;
-  const balance = Math.max(repay - deposit, 0);
-  const perPay = periods > 0 ? balance / periods : 0;
-  const freqLbl = freq==='daily' ? (lang==='sw'?'Kila Siku':'Daily') : freq==='weekly' ? (lang==='sw'?'Kila Wiki':'Weekly') : (lang==='sw'?'Kila Mwezi':'Monthly');
-
-  // build schedule
-  _calSch = [];
-  let rem = balance, cur = new Date(s);
-  if(deposit > 0) _calSch.push({n:'🎯', date: fmtD(s.toISOString().split('T')[0]), amt: deposit, rem, dep: true});
-  for(let i=1; i<=periods; i++){
-    const pay = i===periods ? rem : Math.round(perPay);
-    rem = Math.max(rem - pay, 0);
-    _calSch.push({n:i, date:fmtD(new Date(cur).toISOString().split('T')[0]), amt:pay, rem, dep:false});
-    if(freq==='daily') cur.setDate(cur.getDate()+1);
-    else if(freq==='weekly') cur.setDate(cur.getDate()+7);
-    else cur.setMonth(cur.getMonth()+1);
-  }
-
-  document.getElementById('rPerPay').textContent = fmt(Math.round(perPay));
-  document.getElementById('rTotalPay').textContent = fmt(repay);
-  document.getElementById('rDepPay').textContent = deposit > 0 ? fmt(deposit) : (lang==='sw'?'Hakuna':'None');
-  document.getElementById('rBalPay').textContent = fmt(balance);
-  document.getElementById('rCountPay').textContent = fmtComma(periods) + ' · ' + freqLbl;
-  document.getElementById('rDaysPay').textContent = fmtComma(totalDays) + (lang==='sw'?' siku':' days');
-
-  const today = new Date();
-  document.getElementById('calSchBody').innerHTML = _calSch.map(r => `
-    <tr style="${new Date(r.date) < today && !r.dep ? 'color:var(--success)' : ''}">
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${r.n}</td>
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${r.date}</td>
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${fmt(r.amt)}${r.dep?' ★':''}</td>
-      <td style="padding:.45rem .6rem;border-bottom:1px solid var(--g100)">${fmt(r.rem)}</td>
-    </tr>`).join('');
-
-  document.getElementById('calResults').style.display = 'block';
-  document.getElementById('calSchWrap').style.display = 'none';
-  _calSchOpen = false;
-  document.getElementById('calSchTxt').textContent = lang==='sw'?'Ona Ratiba Kamili':'View Full Schedule';
-  setTimeout(()=>document.getElementById('calResults').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
-}
-
-function calToggleSch(){
-  _calSchOpen = !_calSchOpen;
-  document.getElementById('calSchWrap').style.display = _calSchOpen ? 'block' : 'none';
-  document.getElementById('calSchTxt').textContent = _calSchOpen
-    ? (lang==='sw'?'Ficha Ratiba':'Hide Schedule')
-    : (lang==='sw'?'Ona Ratiba Kamili':'View Full Schedule');
 }
 
 // ══════════════════════════════════════
